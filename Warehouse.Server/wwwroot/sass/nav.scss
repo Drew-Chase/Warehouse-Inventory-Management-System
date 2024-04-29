@@ -1,0 +1,46 @@
+﻿nav {
+  flex-wrap: nowrap;
+
+  svg {
+    height: 1rem;
+
+    path {
+      fill: var(--fgl000);
+    }
+  }
+
+  #nav-items {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+
+    .nav-item {
+      opacity: .5;
+      border: 1px solid var(--fgl-100);
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      padding: 5px 1rem;
+      gap: 1rem;
+      transition: opacity, background-color, border, color;
+      transition-duration: .2s;
+
+      svg {
+        margin-block: auto;
+      }
+
+      &.active, &:hover {
+        cursor: pointer;
+        background-color: var(--bgl200);
+        border: 1px solid var(--bgl200);
+        color: var(--fgl100);
+        opacity: 1;
+      }
+
+      &.active svg path {
+        fill: var(--pl100);
+      }
+    }
+  }
+}
