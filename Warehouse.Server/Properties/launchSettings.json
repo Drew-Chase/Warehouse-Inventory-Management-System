@@ -1,22 +1,29 @@
 ﻿{
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:14326",
-      "sslPort": 0
-    }
-  },
-  "profiles": {
-    "server": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "https://localhost:7100;http://localhost:5100",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    }
-  }
+	"$schema": "https://json.schemastore.org/launchsettings.json",
+	"profiles": {
+		"httpsWatch": {
+			"commandName": "Executable",
+			"executablePath": "dotnet",
+			"workingDirectory": "$(ProjectDir)",
+			"hotReloadEnabled": true,
+			"hotReloadProfile": "aspnetcore",
+			"commandLineArgs": "watch run",
+			"launchBrowser": true,
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			},
+			"applicationUrl": "https://localhost:3251;http://localhost:6362"
+		},
+		"server": {
+			"commandName": "Project",
+			"dotnetRunMessages": true,
+			"launchBrowser": false,
+			"hotReloadEnabled": true,
+			"hotReloadProfile": "aspnetcore",
+			"applicationUrl": "https://localhost:7100;http://localhost:5100",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
+		}
+	}
 }
