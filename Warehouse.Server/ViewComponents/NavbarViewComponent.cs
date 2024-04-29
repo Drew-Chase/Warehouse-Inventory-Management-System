@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Warehouse.ViewComponents;
-public record navbar(string Page);
+
+public record Navbar(string Page);
+
 public class NavbarViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke(navbar options)
+    public IViewComponentResult Invoke(Navbar options)
     {
         return View((object)options);
     }
