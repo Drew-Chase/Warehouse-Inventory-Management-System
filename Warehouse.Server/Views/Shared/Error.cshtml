@@ -1,0 +1,13 @@
+﻿@using Warehouse.ViewComponents
+@model Warehouse.Controllers.Views.ErrorViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+@await Component.InvokeAsync("Navbar", new Navbar("error"))
+<main class="center col" style="height: 70dvh">
+    <h1>@Model.Code Error</h1>
+    <p class="1" style="margin-block: 1rem">@Model.Message</p>
+    <a href="/">Return to the home page</a>
+</main>
