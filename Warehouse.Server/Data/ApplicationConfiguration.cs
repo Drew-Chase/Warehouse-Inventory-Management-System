@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Serilog.Events;
 
-namespace PIMA.Data;
+namespace Warehouse.Data;
 
 public class ApplicationConfiguration : AppConfigBase<ApplicationConfiguration>
 {

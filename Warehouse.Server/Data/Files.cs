@@ -1,6 +1,6 @@
-﻿namespace PIMA.Data;
+﻿namespace Warehouse.Data;
 
-using static PIMA.Data.Directories;
+using static Warehouse.Data.Directories;
 
 public static class Files
 {

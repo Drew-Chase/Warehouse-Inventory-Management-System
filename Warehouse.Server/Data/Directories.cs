@@ -1,4 +1,4 @@
-﻿namespace PIMA.Data;
+﻿namespace Warehouse.Data;
 
 public static class Directories
 {

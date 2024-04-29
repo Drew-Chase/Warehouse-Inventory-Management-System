@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 
-namespace PIMA.Data;
+namespace Warehouse.Data;
 
 public static class ApplicationData
 {
-    public static string ApplicationName { get; } = "Warehouse.Server";
+    public static string ApplicationName { get; } = "Warehouse";
     public static TimeSpan UpTime => DateTime.Now - ApplicationConfiguration.Instance.StartupTime;
     public static Assembly MainAssembly { get; } = Assembly.GetExecutingAssembly();
     public static AssemblyName? AssemblyName { get; } = MainAssembly.GetName();

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Serilog;
 
-namespace PIMA.Data;
+namespace Warehouse.Data;
 
 public static class CrashHandler
 {
