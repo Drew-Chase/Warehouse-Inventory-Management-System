@@ -1,46 +1,88 @@
 ﻿nav {
-  flex-wrap: nowrap;
-
-  svg {
-    height: 1rem;
-
-    path {
-      fill: var(--fgl000);
-    }
-  }
-
-  #nav-items {
-    display: flex;
     flex-wrap: nowrap;
-    gap: 1rem;
 
-    .nav-item {
-      opacity: .5;
-      border: 1px solid var(--fgl-100);
-      border-radius: 100px;
-      display: flex;
-      justify-content: center;
-      align-content: center;
-      padding: 5px 1rem;
-      gap: 1rem;
-      transition: opacity, background-color, border, color;
-      transition-duration: .2s;
+    svg {
 
-      svg {
-        margin-block: auto;
-      }
-
-      &.active, &:hover {
-        cursor: pointer;
-        background-color: var(--bgl200);
-        border: 1px solid var(--bgl200);
-        color: var(--fgl100);
-        opacity: 1;
-      }
-
-      &.active svg path {
-        fill: var(--pl100);
-      }
+        path {
+            fill: var(--fgl000);
+        }
     }
-  }
+
+    #nav-items {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        margin-block: auto;
+
+        .nav-item {
+            text-decoration: none;
+            color: inherit;
+            height: 36px;
+            opacity: .5;
+            border: 1px solid var(--fgl-100);
+            border-radius: 100px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            padding: 0 1rem;
+            gap: 1rem;
+            transition: opacity, background-color, border, color;
+            transition-duration: .2s;
+
+            span {
+                margin-block: auto;
+                transform: translateY(-2px);
+            }
+
+            svg {
+                margin-block: auto;
+                height: 1rem;
+            }
+
+            &.active, &:hover {
+                cursor: pointer;
+                background-color: var(--bgl200);
+                border: 1px solid var(--bgl200);
+                color: var(--fgl100);
+                opacity: 1;
+            }
+
+            &.active svg path {
+                fill: var(--pl100);
+            }
+        }
+    }
+
+    #nav-actions {
+        gap: 5px;
+
+        .nav-item {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            width: 36px;
+            aspect-ratio: 1;
+            gap: 1rem;
+            border-radius: 10px;
+            color: var(--fgl100);
+            transition: opacity, background-color, border, color;
+            transition-duration: .2s;
+
+            &#settings-button {
+                background-color: var(--bgl200);
+            }
+
+            svg {
+                margin-block: auto;
+                width: 18px;
+            }
+
+            &.active, &:hover {
+                cursor: pointer;
+                color: var(--fgl100);
+                opacity: 1;
+            }
+        }
+    }
+
 }
