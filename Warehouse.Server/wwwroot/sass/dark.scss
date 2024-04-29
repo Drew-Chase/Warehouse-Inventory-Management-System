@@ -1,0 +1,24 @@
+﻿// Background Colors
+$bgl-100: hsla(197, 26%, 8%, 1);
+$bgl000: hsla(197, 26%, 11%, 1);
+$bgl100: hsla(202, 27%, 14%, 1);
+$bgl200: hsla(202, 26%, 17%, 1);
+
+// Foreground Colors
+$fgl-200: hsla(180, 4%, 70%, 1);
+$fgl-100: hsla(180, 4%, 75%, 1);
+$fgl000: hsla(180, 4%, 80%, 1);
+
+// Primary Colors
+$pl000: hsla(145, 69%, 54%, 1);
+$pl100: hsla(145, 88%, 59%, 1);
+
+// Accent Colors
+$al000: hsla(75, 82%, 63%, 1); // Accent
+$il000: hsla(201, 78%, 61%, 1); // Information
+$wl000: hsla(34, 100%, 66%, 1); // Warning
+
+body {
+  background-color: $bgl000;
+  color: $fgl-200;
+}
