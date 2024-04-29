@@ -1,7 +1,68 @@
-﻿body{
+﻿body {
   font-family: Mundial, sans-serif;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  background-color: var(--bgl000);
+  color: var(--fgl000);
+}
+
+
+.col, .row, .grid, .center {
+  display: flex;
+}
+
+.fill {
+  &:not(.vertical):not(.horizontal) {
+    width: 100%;
+    width: -webkit-fill-available;
+    width: -moz-available;
+    height: 100%;
+    height: -webkit-fill-available;
+    height: -moz-available;
+  }
+
+  &.horizontal {
+    width: 100%;
+    width: -webkit-fill-available;
+    width: -moz-available;
+  }
+
+  &.vertical {
+    height: 100%;
+    height: -webkit-fill-available;
+    height: -moz-available;
+  }
+}
+
+.grid {
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.col {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.center {
+  &:not(.vertical):not(.horizontal) {
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+
+  &.vertical {
+    align-items: center;
+    margin-block: auto;
+  }
+
+  &.horizontal {
+    justify-content: center;
+    margin-inline: auto;
+  }
 }
