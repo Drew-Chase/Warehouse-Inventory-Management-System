@@ -21,7 +21,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="wwwroot\css\" />
+      <TypeScriptCompile Include="wwwroot\ts\theme-switcher.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Shared\Components\SettingsNav\Default.cshtml" />
     </ItemGroup>
 
 </Project>
