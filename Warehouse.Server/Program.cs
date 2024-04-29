@@ -1,9 +1,9 @@
 ﻿using Serilog;
 using Serilog.Events;
 using System.IO.Compression;
-using PIMA.Data;
+using Warehouse.Data;
 
-namespace PIMA;
+namespace Warehouse;
 
 internal static class Program
 {
