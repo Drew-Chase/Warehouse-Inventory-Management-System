@@ -18,8 +18,9 @@ internal static class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddSerilog();
-        builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
-        builder.Services.AddRazorPages().WithRazorPagesRoot("/Pages").AddViewComponentsAsServices();
+        builder.Services.AddMvc(options => { options.EnableEndpointRouting = false; });
+        // builder.Services.AddRazorPages().WithRazorPagesRoot("/Views").AddViewComponentsAsServices();
+        builder.Services.AddServerSideBlazor();
 
         var app = builder.Build();
 
@@ -32,11 +33,11 @@ internal static class Program
         }
         else
         {
-            app.UseStatusCodePagesWithRedirects("/error/{0}");
             app.UseForwardedHeaders();
             app.UseHttpsRedirection();
         }
 
+        app.UseStatusCodePagesWithRedirects("/error/{0}");
 
         app.UseRouting();
         app.MapControllers();
