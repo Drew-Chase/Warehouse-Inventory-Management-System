@@ -1,9 +1,9 @@
 ﻿// LFInteractive LLC. 2021-2024
 
 using Microsoft.AspNetCore.Mvc;
-using PIMA.Data;
+using Warehouse.Data;
 
-namespace PIMA.Controllers;
+namespace Warehouse.Controllers;
 
 [Route("/api")]
 [ApiController]
