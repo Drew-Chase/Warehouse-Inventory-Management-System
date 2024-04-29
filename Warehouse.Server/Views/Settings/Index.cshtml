@@ -1,0 +1,24 @@
+﻿@using Warehouse.ViewComponents
+
+@await Component.InvokeAsync("Navbar", new Navbar("settings"))
+
+<link rel="stylesheet" href="/css/page-form.css">
+
+<div class="form-window col">
+    <h5>Settings</h5>
+    <h2>General</h2>
+    <div class="row">
+        @await Component.InvokeAsync("SettingsNav", new SettingsNav(""))
+        <div class="col form-panel">
+            <label for="theme">Theme</label>
+            <select name="theme" id="theme">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button id="reset-button">Reset</button>
+        <button id="save-button" class="primary">Save</button>
+    </div>
+</div>
