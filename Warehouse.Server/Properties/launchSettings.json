@@ -1,7 +1,7 @@
 ﻿{
 	"$schema": "https://json.schemastore.org/launchsettings.json",
 	"profiles": {
-		"httpsWatch": {
+		"live reload": {
 			"commandName": "Executable",
 			"executablePath": "dotnet",
 			"workingDirectory": "$(ProjectDir)",
@@ -9,10 +9,11 @@
 			"hotReloadProfile": "aspnetcore",
 			"commandLineArgs": "watch run",
 			"launchBrowser": true,
+			"httpPort": 8080,
 			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development"
 			},
-			"applicationUrl": "https://localhost:3251;http://localhost:6362"
+			"applicationUrl": "https://localhost:3251;http://localhost:8080"
 		},
 		"server": {
 			"commandName": "Project",
@@ -20,7 +21,6 @@
 			"launchBrowser": false,
 			"hotReloadEnabled": true,
 			"hotReloadProfile": "aspnetcore",
-			"applicationUrl": "https://localhost:7100;http://localhost:5100",
 			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development"
 			}
