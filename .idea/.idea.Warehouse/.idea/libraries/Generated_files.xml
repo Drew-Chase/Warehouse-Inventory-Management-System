@@ -2,10 +2,22 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/calendar.min.js" />
+        <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/fuzzy-search.min.js" />
+        <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/inputs.min.js" />
+        <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/labels.min.js" />
+        <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/purchase-orders.min.js" />
+        <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/settings.min.js" />
         <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/theme-switcher.min.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/calendar.min.js" />
+      <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/fuzzy-search.min.js" />
+      <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/inputs.min.js" />
+      <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/labels.min.js" />
+      <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/purchase-orders.min.js" />
+      <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/settings.min.js" />
       <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/theme-switcher.min.js" />
     </CLASSES>
     <JAVADOC />
