@@ -28,7 +28,8 @@ button, .button {
 
     &.primary {
         background-color: var(--pl100);
-        color: var(--bgl000);
+        color: #2C3C46;
+
         &:hover {
             background-color: var(--pl000);
         }
@@ -36,12 +37,108 @@ button, .button {
 
     &:not(.primary):hover {
         background-color: var(--pl100);
-        color: var(--bgl000);
+        color: #2C3C46;
     }
 
     &:disabled {
         background-color: var(--bgl200);
         color: var(--pl000);
         cursor: not-allowed;
+    }
+}
+
+.global-label {
+    position: fixed;
+    background-color: var(--bgl200);
+    color: var(--fgl-100);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity .2s;
+    pointer-events: none;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .5);
+}
+
+[data-title] * {
+    pointer-events: none;
+}
+
+.selector {
+    position: relative;
+    border: 1px solid #2C3C46;
+    border-radius: 5px;
+    padding: 1rem .5rem;
+    cursor: pointer;
+
+    .selector-body {
+        cursor: default;
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--bgl100);
+        border: 1px solid var(--bgl200);
+        border-radius: 5px;
+        padding: 1rem;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
+        z-index: 1;
+
+        .selector-option {
+            padding: 1rem 0.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-block: 5px;
+            transition: background-color;
+            transition-duration: 0.2s;
+
+            &[selected] {
+                background-color: var(--bgl200);
+            }
+
+            &:hover {
+                background-color: var(--bgl200);
+            }
+        }
+    }
+
+    &:focus .selector-body, &.active .selector-body {
+        display: flex;
+    }
+
+    &::before {
+        content: '';
+        background-image: url("../images/icons/arrow.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 1rem;
+        height: 1rem;
+
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(calc(-50% + .25rem));
+        transition: transform .2s;
+    }
+
+    &:focus::before, &.active::before {
+        transform: rotate(180deg) translateY(calc(50% + .25rem));
+    }
+}
+
+input {
+    background-color: transparent;
+    border: 1px solid #2C3C46;
+    border-radius: 5px;
+    padding: 1rem 0.5rem;
+    transition: border-color;
+    transition-duration: 0.2s;
+
+    &:focus {
+        border-color: var(--pl100);
+        outline: none;
     }
 }
