@@ -10,11 +10,7 @@
     <div class="row">
         @await Component.InvokeAsync("SettingsNav", new SettingsNav(""))
         <div class="col form-panel">
-            <label for="theme">Theme</label>
-            <select name="theme" id="theme">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-            </select>
+            @await Component.InvokeAsync("Selector", new SelectorViewModel("Theme", false, [new SelectorOption("Light", "light"), new SelectorOption("Dark", "dark")]))
         </div>
     </div>
     <div class="form-actions">
@@ -22,3 +18,5 @@
         <button id="save-button" class="primary">Save</button>
     </div>
 </div>
+
+<script src="js/settings.min.js" type="module"></script>
