@@ -19,7 +19,7 @@ internal static class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddSerilog();
         builder.Services.AddMvc(options => { options.EnableEndpointRouting = false; });
-        // builder.Services.AddRazorPages().WithRazorPagesRoot("/Views").AddViewComponentsAsServices();
+        builder.Services.AddRazorPages().WithRazorPagesRoot("/Views").AddViewComponentsAsServices();
         builder.Services.AddServerSideBlazor();
 
         var app = builder.Build();
