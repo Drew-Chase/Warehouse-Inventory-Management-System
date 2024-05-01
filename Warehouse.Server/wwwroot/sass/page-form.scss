@@ -10,11 +10,18 @@
     .form-panel {
         background-color: var(--bgl100);
         width: 50%;
-        height: 65dvh;
+        height: auto;
+        min-height: 259px;
         padding: 2.5rem;
         margin-inline: auto;
         overflow-y: auto;
         border-radius: 2.5rem 2.5rem 0 0;
+        position: absolute;
+        bottom: 137px;
+        top: 230px;
+        left: 0;
+        right: 0;
+        padding-bottom: 340px;
     }
 
     .form-nav {
@@ -27,15 +34,48 @@
             margin-block: 5px;
             padding: 5px 10px;
             border-radius: 10px;
+            width: 200px;
+            position: relative;
+            margin-left: 1.5rem;
+
+            transition: background-color, color;
+            transition-duration: .2s;
+
+            svg {
+                height: 20px;
+                path {
+                    fill: var(--fgl000);
+                }
+            }
+
+            &:hover, &.active {
+                background-color: var(--bgl200);
+            }
+
 
             &.active {
-                background-color: var(--bgl200);
                 color: var(--fg000);
+                box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
 
                 p.title {
-                    font-weight: bold;
+                    font-weight: normal;
                     color: var(--pl000)
                 }
+
+                svg path {
+                    fill: var(--pl000);
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 20px;
+                    height: 10px;
+                    background-color: var(--pl000);
+                    border-radius: 100px;
+                    left: -1.7rem;
+                }
+
 
             }
 
@@ -47,6 +87,7 @@
                 &.sub-title {
                     font-size: 1rem;
                     opacity: .7;
+                    text-transform: uppercase;
                 }
             }
 
@@ -67,7 +108,7 @@
         height: 100px;
         background-color: var(--bgl100);
         border-top: 5px solid var(--bgl200);
-        box-shadow: -10px 0 20px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: -10px 0 20px 0 rgba(0, 0, 0, .5);
         gap: 1rem;
         display: flex;
         justify-content: end;
