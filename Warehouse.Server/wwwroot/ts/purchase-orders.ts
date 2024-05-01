@@ -1,2 +1,2 @@
-﻿import {openCalendar, populateMonth} from "./calendar.js";
+﻿import {openCalendar, selectMonthYear} from "./calendar.js";
 $("")

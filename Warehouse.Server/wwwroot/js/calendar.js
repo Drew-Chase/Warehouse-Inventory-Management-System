@@ -32,11 +32,15 @@ var days;
     days[days["Saturday"] = 6] = "Saturday";
 })(days || (days = {}));
 $(".calendar-input").on('click', e => {
-    const x = e.clientX;
-    const y = e.clientY;
-    const calendar = openCalendar(x, y);
+    var _a, _b, _c, _d;
     const input = $(e.currentTarget);
-    calendar.on('change', (e, date) => {
+    const x = (_b = (_a = input.offset()) === null || _a === void 0 ? void 0 : _a.left) !== null && _b !== void 0 ? _b : e.clientX;
+    const y = (_d = (_c = input.offset()) === null || _c === void 0 ? void 0 : _c.top) !== null && _d !== void 0 ? _d : e.clientY;
+    const calendar = openCalendar(x, y);
+    const selectedDateAttribute = input.attr('selected-date');
+    const selectedDate = selectedDateAttribute ? new Date(selectedDateAttribute) : new Date();
+    selectMonthYear(calendar, selectedDate.getMonth() + 1, selectedDate.getFullYear());
+    calendar.on('change', (_, date) => {
         var _a, _b;
         console.log(date);
         const dayOfWeekString = (_a = days[date.getDay()]) !== null && _a !== void 0 ? _a : "Unknown";
@@ -44,7 +48,7 @@ $(".calendar-input").on('click', e => {
         const dayModifier = date.getDate() % 10 === 1 ? "st" : date.getDate() % 10 === 2 ? "nd" : date.getDate() % 10 === 3 ? "rd" : "th";
         const dayString = `${date.getDate()}${dayModifier}`;
         const dateString = `${dayOfWeekString}, ${monthString} ${dayString}, ${date.getFullYear()}`;
-        input.attr('selected-date', dateString);
+        input.attr('selected-date', date.getTime());
         input.html(`<p class="3 calendar-name">Select date</p><p class="3 value">${dateString}</p>`);
     });
 });
@@ -104,7 +108,7 @@ function openCalendar(x, y) {
         </div>
     `);
     calendar.css({ left: x, top: y, position: 'fixed' });
-    populateMonth(calendar, new Date().getMonth() + 1, new Date().getFullYear());
+    selectMonthYear(calendar, new Date().getMonth() + 1, new Date().getFullYear());
     calendar.on('blur', e => {
         const newTarget = e.relatedTarget;
         if (newTarget == null) {
@@ -126,10 +130,10 @@ function openCalendar(x, y) {
         const currentYear = new Date().getFullYear();
         const month = Number.parseInt((_a = Object.keys(months).find(key => months[Number.parseInt(key)] === currentMonth)) !== null && _a !== void 0 ? _a : "1");
         if (month === 1) {
-            populateMonth(calendar, 12, currentYear - 1);
+            selectMonthYear(calendar, 12, currentYear - 1);
             return;
         }
-        populateMonth(calendar, month - 1, currentYear);
+        selectMonthYear(calendar, month - 1, currentYear);
     });
     calendar.find('.next-button').on('click', () => {
         var _a;
@@ -137,10 +141,10 @@ function openCalendar(x, y) {
         const currentYear = new Date().getFullYear();
         const month = Number.parseInt((_a = Object.keys(months).find(key => months[Number.parseInt(key)] === currentMonth)) !== null && _a !== void 0 ? _a : "1");
         if (month === 12) {
-            populateMonth(calendar, 1, currentYear + 1);
+            selectMonthYear(calendar, 1, currentYear + 1);
             return;
         }
-        populateMonth(calendar, month + 1, currentYear);
+        selectMonthYear(calendar, month + 1, currentYear);
     });
     calendar.find('.current-month').on('click', () => {
         toggleMonthSelector(calendar);
@@ -151,19 +155,19 @@ function openCalendar(x, y) {
     $('body').append(calendar);
     calendar.trigger("focus");
     calendar.find('.calendar-month').on('click', e => {
+        var _a;
         const month = $(e.target).attr('month');
         if (month == null)
             return;
-        const year = new Date().getFullYear();
-        populateMonth(calendar, Number.parseInt(month), year);
+        selectMonthYear(calendar, Number.parseInt(month), Number.parseInt((_a = calendar.attr("year")) !== null && _a !== void 0 ? _a : new Date().getFullYear().toString()));
         hideMonthSelector(calendar);
     });
     calendar.find('.calendar-year').on('click', e => {
+        var _a;
         const year = $(e.target).attr('year');
         if (year == null)
             return;
-        const month = new Date().getMonth() + 1;
-        populateMonth(calendar, month, Number.parseInt(year));
+        selectMonthYear(calendar, Number.parseInt((_a = calendar.attr("month")) !== null && _a !== void 0 ? _a : "1"), Number.parseInt(year));
         hideYearSelector(calendar);
     });
     return calendar;
@@ -177,7 +181,7 @@ function openCalendar(x, y) {
  *
  * @return {void}
  */
-function populateMonth(calendar, month, year) {
+function selectMonthYear(calendar, month, year) {
     const LastCentury = new Date().getFullYear() - 100;
     const NextCentury = new Date().getFullYear() + 100;
     if (year < LastCentury || year > NextCentury) {
@@ -194,7 +198,7 @@ function populateMonth(calendar, month, year) {
     calendar.find('.current-year').text(year);
     const daysInMonth = new Date(year, month, 0).getDate();
     const firstDay = new Date(year, month - 1, 1).getDay();
-    const lastDay = new Date(year, month, 0).getDay();
+    // const lastDay = new Date(year, month, 0).getDay();
     const body = calendar.find('.calendar-body');
     body.empty();
     let day = 1;
@@ -293,7 +297,7 @@ function showYearSelector(calendar) {
             const year = $(e.target).attr('year');
             if (year == null)
                 return;
-            populateMonth(calendar, Number.parseInt((_a = calendar.attr('month')) !== null && _a !== void 0 ? _a : '1'), Number.parseInt(year));
+            selectMonthYear(calendar, Number.parseInt((_a = calendar.attr('month')) !== null && _a !== void 0 ? _a : '1'), Number.parseInt(year));
             hideYearSelector(calendar);
         });
         yearSelector.append(item);
@@ -323,5 +327,5 @@ function toggleYearSelector(calendar) {
         showYearSelector(calendar);
     }
 }
-export { openCalendar, populateMonth };
+export { openCalendar, selectMonthYear };
 //# sourceMappingURL=calendar.js.map
