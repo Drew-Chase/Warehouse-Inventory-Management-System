@@ -32,10 +32,16 @@ var days;
     days[days["Saturday"] = 6] = "Saturday";
 })(days || (days = {}));
 $(".calendar-input").on('click', e => {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     const input = $(e.currentTarget);
+    console.log(input);
     const x = (_b = (_a = input.offset()) === null || _a === void 0 ? void 0 : _a.left) !== null && _b !== void 0 ? _b : e.clientX;
-    const y = (_d = (_c = input.offset()) === null || _c === void 0 ? void 0 : _c.top) !== null && _d !== void 0 ? _d : e.clientY;
+    let y = ((_d = (_c = input.offset()) === null || _c === void 0 ? void 0 : _c.top) !== null && _d !== void 0 ? _d : -1) + ((_e = input.height()) !== null && _e !== void 0 ? _e : -1);
+    console.log(x, y, input.offset(), input.height());
+    if (y <= 0)
+        y = e.clientY;
+    else
+        y += 16; // Add some padding to the top of the calendar
     const calendar = openCalendar(x, y);
     const selectedDateAttribute = input.attr('selected-date');
     const selectedDate = selectedDateAttribute ? new Date(selectedDateAttribute) : new Date();
@@ -54,7 +60,7 @@ $(".calendar-input").on('click', e => {
 });
 /**
  * Opens a calendar at the specified coordinates.
- *
+ *z``12345=-/*789456123
  * @param {number} x - The x-coordinate to position the calendar.
  * @param {number} y - The y-coordinate to position the calendar.
  * @returns {JQuery<HTMLElement>} The jQuery element representing the calendar.
@@ -112,12 +118,18 @@ function openCalendar(x, y) {
     calendar.on('blur', e => {
         const newTarget = e.relatedTarget;
         if (newTarget == null) {
-            calendar.remove();
+            calendar.addClass('hide');
+            setTimeout(() => {
+                // calendar.remove();
+            }, 300);
             return;
         }
         const isChildOfCalendar = $(newTarget).closest('.calendar').length > 0;
         if (!isChildOfCalendar) {
-            calendar.remove();
+            calendar.addClass('hide');
+            setTimeout(() => {
+                // calendar.remove();
+            }, 300);
             return;
         }
         setTimeout(() => {

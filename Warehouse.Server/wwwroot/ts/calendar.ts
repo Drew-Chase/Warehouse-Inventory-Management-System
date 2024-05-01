@@ -33,8 +33,13 @@ enum days {
 
 $(".calendar-input").on('click', e => {
     const input = $(e.currentTarget);
+    console.log(input)
     const x: number = input.offset()?.left ?? e.clientX;
-    const y: number = input.offset()?.top ?? e.clientY;
+    let y: number = (input.offset()?.top ?? -1) + (input.height() ?? -1);
+    console.log(x, y, input.offset(), input.height())
+
+    if (y <= 0) y = e.clientY;
+    else y += 16; // Add some padding to the top of the calendar
     const calendar = openCalendar(x, y);
 
     const selectedDateAttribute: string | undefined = input.attr('selected-date');
@@ -57,7 +62,7 @@ $(".calendar-input").on('click', e => {
 
 /**
  * Opens a calendar at the specified coordinates.
- *
+ *z``12345=-/*789456123
  * @param {number} x - The x-coordinate to position the calendar.
  * @param {number} y - The y-coordinate to position the calendar.
  * @returns {JQuery<HTMLElement>} The jQuery element representing the calendar.
@@ -116,12 +121,18 @@ function openCalendar(x: number, y: number): JQuery {
     calendar.on('blur', e => {
         const newTarget = e.relatedTarget;
         if (newTarget == null) {
-            calendar.remove();
+            calendar.addClass('hide');
+            setTimeout(() => {
+                // calendar.remove();
+            }, 300)
             return;
         }
         const isChildOfCalendar = $(newTarget).closest('.calendar').length > 0;
         if (!isChildOfCalendar) {
-            calendar.remove();
+            calendar.addClass('hide');
+            setTimeout(() => {
+                // calendar.remove();
+            }, 300)
             return;
         }
 
