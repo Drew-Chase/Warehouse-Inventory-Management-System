@@ -1,4 +1,8 @@
-﻿enum months {
+﻿/**
+ * Enum representing the months of the year.
+ * @enum {number}
+ */
+enum months {
     January = 1,
     February = 2,
     March = 3,
@@ -13,6 +17,10 @@
     December = 12
 }
 
+/**
+ * Enum representing the days of the week.
+ * @enum {number}
+ */
 enum days {
     Sunday = 0,
     Monday = 1,
@@ -42,6 +50,13 @@ $(".calendar-input").on('click', e => {
 })
 
 
+/**
+ * Opens a calendar at the specified coordinates.
+ *
+ * @param {number} x - The x-coordinate to position the calendar.
+ * @param {number} y - The y-coordinate to position the calendar.
+ * @returns {JQuery<HTMLElement>} The jQuery element representing the calendar.
+ */
 function openCalendar(x: number, y: number): JQuery<HTMLElement> {
     const calendar = $(`
         <div class="calendar" tabindex="-1">
@@ -163,7 +178,16 @@ function openCalendar(x: number, y: number): JQuery<HTMLElement> {
     return calendar;
 }
 
-function populateMonth(calendar: JQuery<HTMLElement>, month: months, year: number) {
+/**
+ * Populates the calendar month with the specified month and year.
+ *
+ * @param {JQuery<HTMLElement>} calendar - The calendar element.
+ * @param {months} month - The month to populate (1-12).
+ * @param {number} year - The year to populate.
+ *
+ * @return {void}
+ */
+function populateMonth(calendar: JQuery<HTMLElement>, month: months, year: number): void {
     const LastCentury = new Date().getFullYear() - 100;
     const NextCentury = new Date().getFullYear() + 100;
     if (year < LastCentury || year > NextCentury) {
@@ -220,18 +244,38 @@ function populateMonth(calendar: JQuery<HTMLElement>, month: months, year: numbe
     }
 }
 
-function showMonthSelector(calendar: JQuery<HTMLElement>) {
+/**
+ * Displays the month selector in the calendar.
+ *
+ * @param {JQuery<HTMLElement>} calendar - The calendar element.
+ *
+ * @return {void}
+ */
+function showMonthSelector(calendar: JQuery<HTMLElement>): void {
     hideYearSelector(calendar);
     const monthSelector = calendar.find('.calendar-month-grid');
     monthSelector.addClass('show');
 }
 
-function hideMonthSelector(calendar: JQuery<HTMLElement>) {
+/**
+ * Hides the month selector in the calendar.
+ *
+ * @param {JQuery<HTMLElement>} calendar - The calendar element to hide the month selector for.
+ *
+ * @return {void}
+ */
+function hideMonthSelector(calendar: JQuery<HTMLElement>): void {
     const monthSelector = calendar.find('.calendar-month-grid');
     monthSelector.removeClass('show');
 }
 
-function toggleMonthSelector(calendar: JQuery<HTMLElement>) {
+/**
+ * Toggles the visibility of the month selector in the calendar.
+ *
+ * @param {JQuery<HTMLElement>} calendar - The calendar element.
+ * @return {void}
+ */
+function toggleMonthSelector(calendar: JQuery<HTMLElement>): void {
     if (calendar.find('.calendar-month-grid').hasClass('show')) {
         hideMonthSelector(calendar);
     } else {
@@ -239,7 +283,13 @@ function toggleMonthSelector(calendar: JQuery<HTMLElement>) {
     }
 }
 
-function showYearSelector(calendar: JQuery<HTMLElement>) {
+/**
+ * Displays the year selector for the calendar.
+ *
+ * @param {JQuery<HTMLElement>} calendar - The jQuery object representing the calendar.
+ * @return {void}
+ */
+function showYearSelector(calendar: JQuery<HTMLElement>): void {
     hideMonthSelector(calendar);
     const yearSelector = calendar.find('.calendar-year-grid');
     yearSelector.addClass('show');
@@ -259,12 +309,24 @@ function showYearSelector(calendar: JQuery<HTMLElement>) {
     }
 }
 
-function hideYearSelector(calendar: JQuery<HTMLElement>) {
+/**
+ * Hides the year selector in the given calendar.
+ *
+ * @param {JQuery<HTMLElement>} calendar - The calendar element to hide the year selector in.
+ * @return {void}
+ */
+function hideYearSelector(calendar: JQuery<HTMLElement>): void {
     const yearSelector = calendar.find('.calendar-year-grid');
     yearSelector.removeClass('show');
 }
 
-function toggleYearSelector(calendar: JQuery<HTMLElement>) {
+/**
+ * Toggles the visibility of the year selector in the calendar.
+ *
+ * @param {JQuery<HTMLElement>} calendar - The jQuery object representing the calendar element.
+ * @return {void}
+ */
+function toggleYearSelector(calendar: JQuery<HTMLElement>): void {
     if (calendar.find('.calendar-year-grid').hasClass('show')) {
         hideYearSelector(calendar);
     } else {
