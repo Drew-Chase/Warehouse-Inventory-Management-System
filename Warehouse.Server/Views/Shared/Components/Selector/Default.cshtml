@@ -1,0 +1,25 @@
+﻿@using System.Text.RegularExpressions
+@using Warehouse.ViewComponents
+@model Warehouse.ViewComponents.SelectorViewModel
+@{
+    string id = Regex.Replace(Model.Title, "/[^A-z]/g", "-").ToLower();
+    SelectorOption? selectedItem = Model.Options.FirstOrDefault(i => i.Selected);
+    bool hasSelectedItem = selectedItem != null;
+}
+
+<label for="@id">@Model.Title</label>
+<div class="selector" name="@id" id="@id" tabindex="-1" value="@(selectedItem?.Value ?? "")">
+    <span class="name">@(selectedItem?.Text ?? Model.Title)</span>
+
+    <div class="selector-body">
+        @if (Model.HasSearch)
+        {
+            <input placeholder="Search @Model.Title"/>
+        }
+        @foreach (SelectorOption option in Model.Options.OrderBy(i => i.Selected))
+        {
+            <div class="selector-option" name="@option.Text" value="@option.Value"@(option.Selected ? " selected" : "")>@option.Text</div>
+        }
+    </div>
+
+</div>
