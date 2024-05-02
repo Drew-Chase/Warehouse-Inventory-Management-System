@@ -17,7 +17,9 @@
     // Accent Colors
     --al000: hsla(75, 82%, 53%, 1); // Accent
     --il000: hsla(201, 78%, 51%, 1); // Information
+    --il100: hsla(201, 78%, 51%, .5); // Information
     --wl000: hsla(34, 100%, 56%, 1); // Warning
+    --wl100: hsla(34, 100%, 56%, 0.5); // Warning
 }
 
 html {
