@@ -17,11 +17,10 @@
 }
 
 button, .button {
-    background-color: var(--bgl100);
-    color: var(--pl100);
-    border: 1px solid var(--pl100);
+    font-size: 1rem;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
+    border: none;
     cursor: pointer;
     transition: background-color, color;
     transition-duration: 0.2s;
@@ -30,20 +29,101 @@ button, .button {
         background-color: var(--pl100);
         color: #2C3C46;
 
+        &.outline {
+            background-color: var(--bgl100);
+            color: var(--pl100);
+            border: 1px solid var(--pl100);
+        }
+
         &:hover {
             background-color: var(--pl000);
         }
     }
 
-    &:not(.primary):hover {
-        background-color: var(--pl100);
-        color: #2C3C46;
+    &.secondary {
+        &.outline {
+            background-color: transparent;
+            color: var(--fgl000);
+            border: 3px solid var(--bgl100);
+
+            &:hover {
+                background-color: var(--bgl100);
+                color: var(--fgl000);
+            }
+        }
+
+        &:hover {
+            background-color: var(--pl100);
+            color: #2C3C46;
+        }
     }
+
 
     &:disabled {
         background-color: var(--bgl200);
         color: var(--pl000);
         cursor: not-allowed;
+    }
+
+    &.dropdown {
+        position: relative;
+        background-color: var(--bgl100);
+
+        &:focus {
+            .dropdown-body {
+                display: flex;
+            }
+        }
+
+        &:hover {
+            background-color: var(--bgl100);
+
+            .dropdown-item {
+                color: var(--fgl000);
+            }
+        }
+
+        .dropdown-body {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            right: 0;
+            min-width: 100px;
+            min-height: 50px;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: var(--bgl100);
+            border: 1px solid var(--bgl200);
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
+            z-index: 1;
+            transform: translateX(-50%);
+
+            .dropdown-item {
+                text-align: start;
+                font-size: 1rem;
+                padding: 0.5rem;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background-color, color;
+                transition-duration: 0.2s;
+                pointer-events: all;
+                color: var(--fgl000);
+
+                &[selected] {
+                    background-color: var(--bgl200);
+                }
+
+                &:hover {
+                    color: var(--fgl100);
+                    background-color: var(--bgl000);
+                    cursor: pointer;
+                }
+            }
+        }
     }
 }
 
@@ -56,7 +136,7 @@ button, .button {
     opacity: 0;
     transition: opacity .2s;
     pointer-events: none;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .5);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, .75);
 }
 
 [data-title] * {
@@ -132,13 +212,84 @@ button, .button {
 input {
     background-color: transparent;
     border: 1px solid #2C3C46;
-    border-radius: 5px;
     padding: 1rem 0.5rem;
     transition: border-color;
     transition-duration: 0.2s;
+    border-radius: 10px;
 
     &:focus {
         border-color: var(--pl100);
         outline: none;
     }
+}
+
+.scroll-zone {
+    overflow-y: auto;
+    max-height: 100%;
+    padding-right: 2rem;
+}
+
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.vertical-divider{
+    width: 2px;
+    background-color: var(--fgl-100);
+    margin: auto 1rem;
+    height: 70%;
+    min-height: 18px;
+    border-radius: 100px;
+    opacity: .25;
+}
+
+.dot-separator{
+    --size: 5px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 100%;
+    background-color: var(--fgl-100);
+    margin: auto 1rem;
+    opacity: .25;
+}
+
+
+.user-icon{
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: 100% !important;
+    background-color: var(--fgl-100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bgl-100);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: bold;
+
+    &.buyer-icon{
+        background-color: var(--wl000);
+        color: var(--bgl-100);
+        outline: 3px solid var(--wl100);
+        svg path{
+            fill: var(--bgl-100);
+        }
+    }
+    &.vendor-icon{
+        background-color: var(--il000);
+        color: var(--bgl-100);
+        outline: 3px solid var(--il100);
+        svg path{
+            fill: var(--bgl-100);
+        }
+    }
+
 }
