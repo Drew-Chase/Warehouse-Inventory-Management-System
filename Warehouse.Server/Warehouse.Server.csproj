@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <TypeScriptCompile Include="wwwroot\ts\calendar.ts" />
+      <TypeScriptCompile Include="wwwroot\ts\filter-panel.ts" />
       <TypeScriptCompile Include="wwwroot\ts\fuzzy-search.ts" />
       <TypeScriptCompile Include="wwwroot\ts\inputs.ts" />
       <TypeScriptCompile Include="wwwroot\ts\labels.ts" />
