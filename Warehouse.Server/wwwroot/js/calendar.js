@@ -32,35 +32,33 @@ var days;
     days[days["Saturday"] = 6] = "Saturday";
 })(days || (days = {}));
 $(".calendar-input").on('click', e => {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
     const input = $(e.currentTarget);
-    console.log(input);
     const x = (_b = (_a = input.offset()) === null || _a === void 0 ? void 0 : _a.left) !== null && _b !== void 0 ? _b : e.clientX;
     let y = ((_d = (_c = input.offset()) === null || _c === void 0 ? void 0 : _c.top) !== null && _d !== void 0 ? _d : -1) + ((_e = input.height()) !== null && _e !== void 0 ? _e : -1);
-    console.log(x, y, input.offset(), input.height());
     if (y <= 0)
         y = e.clientY;
     else
         y += 16; // Add some padding to the top of the calendar
     const calendar = openCalendar(x, y);
-    const selectedDateAttribute = input.attr('selected-date');
-    const selectedDate = selectedDateAttribute ? new Date(selectedDateAttribute) : new Date();
-    selectMonthYear(calendar, selectedDate.getMonth() + 1, selectedDate.getFullYear());
+    const selectedDateAttribute = Number.parseInt((_f = input.attr('selected-date')) !== null && _f !== void 0 ? _f : '-1');
+    const selectedDate = selectedDateAttribute && selectedDateAttribute > 0 ? new Date(selectedDateAttribute) : new Date();
+    selectMonthYear(calendar, selectedDate.getMonth() + 1, selectedDate.getFullYear(), selectedDate.getDate());
     calendar.on('change', (_, date) => {
         var _a, _b;
-        console.log(date);
         const dayOfWeekString = (_a = days[date.getDay()]) !== null && _a !== void 0 ? _a : "Unknown";
         const monthString = (_b = months[date.getMonth() + 1]) !== null && _b !== void 0 ? _b : "Unknown";
         const dayModifier = date.getDate() % 10 === 1 ? "st" : date.getDate() % 10 === 2 ? "nd" : date.getDate() % 10 === 3 ? "rd" : "th";
         const dayString = `${date.getDate()}${dayModifier}`;
         const dateString = `${dayOfWeekString}, ${monthString} ${dayString}, ${date.getFullYear()}`;
         input.attr('selected-date', date.getTime());
-        input.html(`<p class="3 calendar-name">Select date</p><p class="3 value">${dateString}</p>`);
+        input.find('.value').html(dateString);
+        input.trigger('change', date);
     });
 });
 /**
  * Opens a calendar at the specified coordinates.
- *z``12345=-/*789456123
+ *
  * @param {number} x - The x-coordinate to position the calendar.
  * @param {number} y - The y-coordinate to position the calendar.
  * @returns {JQuery<HTMLElement>} The jQuery element representing the calendar.
@@ -113,14 +111,14 @@ function openCalendar(x, y) {
             </div>
         </div>
     `);
-    calendar.css({ left: x, top: y, position: 'fixed' });
+    calendar.css({ left: x, top: y, position: 'absolute' });
     selectMonthYear(calendar, new Date().getMonth() + 1, new Date().getFullYear());
     calendar.on('blur', e => {
         const newTarget = e.relatedTarget;
         if (newTarget == null) {
             calendar.addClass('hide');
             setTimeout(() => {
-                // calendar.remove();
+                calendar.remove();
             }, 300);
             return;
         }
@@ -128,7 +126,7 @@ function openCalendar(x, y) {
         if (!isChildOfCalendar) {
             calendar.addClass('hide');
             setTimeout(() => {
-                // calendar.remove();
+                calendar.remove();
             }, 300);
             return;
         }
@@ -138,7 +136,7 @@ function openCalendar(x, y) {
     });
     calendar.find('.prev-button').on('click', () => {
         var _a;
-        const currentMonth = calendar.find('.current-month').text();
+        const currentMonth = calendar.find('.calendar-month-selector .current-month').text();
         const currentYear = new Date().getFullYear();
         const month = Number.parseInt((_a = Object.keys(months).find(key => months[Number.parseInt(key)] === currentMonth)) !== null && _a !== void 0 ? _a : "1");
         if (month === 1) {
@@ -149,7 +147,7 @@ function openCalendar(x, y) {
     });
     calendar.find('.next-button').on('click', () => {
         var _a;
-        const currentMonth = calendar.find('.current-month').text();
+        const currentMonth = calendar.find('.calendar-month-selector .current-month').text();
         const currentYear = new Date().getFullYear();
         const month = Number.parseInt((_a = Object.keys(months).find(key => months[Number.parseInt(key)] === currentMonth)) !== null && _a !== void 0 ? _a : "1");
         if (month === 12) {
@@ -190,10 +188,11 @@ function openCalendar(x, y) {
  * @param {JQuery<HTMLElement>} calendar - The calendar element.
  * @param {months} month - The month to populate (1-12).
  * @param {number} year - The year to populate.
+ * @param {number} selectedDay - The day to select.
  *
  * @return {void}
  */
-function selectMonthYear(calendar, month, year) {
+function selectMonthYear(calendar, month, year, selectedDay = -1) {
     const LastCentury = new Date().getFullYear() - 100;
     const NextCentury = new Date().getFullYear() + 100;
     if (year < LastCentury || year > NextCentury) {
@@ -202,15 +201,14 @@ function selectMonthYear(calendar, month, year) {
     }
     calendar.attr('year', year.toString());
     calendar.attr('month', month.toString());
-    calendar.find('.calendar-month.selected').removeClass('selected');
-    calendar.find(`.calendar-month[month=${month}]`).addClass('selected');
-    calendar.find(`.calendar-month[month=${new Date().getMonth() + 1}]`).addClass('current-month');
+    calendar.find('.calendar-month-grid .calendar-month.selected').removeClass('selected');
+    calendar.find(`.calendar-month-grid .calendar-month[month=${month}]`).addClass('selected');
+    calendar.find(`.calendar-month-grid .calendar-month[month=${new Date().getMonth() + 1}]`).addClass('current-month');
     const monthName = months[month];
-    calendar.find('.current-month').text(monthName);
-    calendar.find('.current-year').text(year);
+    calendar.find('.calendar-month-selector .current-month').text(monthName);
+    calendar.find('.calendar-month-selector .current-year').text(year);
     const daysInMonth = new Date(year, month, 0).getDate();
     const firstDay = new Date(year, month - 1, 1).getDay();
-    // const lastDay = new Date(year, month, 0).getDay();
     const body = calendar.find('.calendar-body');
     body.empty();
     let day = 1;
@@ -231,6 +229,9 @@ function selectMonthYear(calendar, month, year) {
                 }
                 if (isToday) {
                     dayItem.addClass('current-day');
+                }
+                if (day === selectedDay) {
+                    dayItem.addClass('selected-day');
                 }
                 dayItem.attr('date', `${year}-${month}-${day}`);
                 $(dayItem).on('click', e => {
