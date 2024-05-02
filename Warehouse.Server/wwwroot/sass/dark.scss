@@ -11,13 +11,15 @@
   --fgl000: hsla(180, 4%, 80%, 1);
 
   // Primary Colors
-  --pl000: hsla(145, 69%, 54%, 1);
+  --pl000: hsl(145, 69%, 54%);
   --pl100: hsla(145, 88%, 59%, 1);
 
   // Accent Colors
   --al000: hsla(75, 82%, 63%, 1); // Accent
   --il000: hsla(201, 78%, 61%, 1); // Information
+  --il100: hsla(201, 78%, 61%, .5); // Information
   --wl000: hsla(34, 100%, 66%, 1); // Warning
+  --wl100: hsla(34, 100%, 66%, 0.5); // Warning
 }
 
 html {
