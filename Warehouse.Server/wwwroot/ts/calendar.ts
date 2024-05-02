@@ -248,6 +248,7 @@ function selectMonthYear(calendar: JQuery, month: months, year: number, selected
                     calendar.trigger('change', new Date(dateString));
                     calendar.find('.selected-day').removeClass('selected-day');
                     dayItem.addClass('selected-day');
+                    calendar.trigger('blur')
 
 
                 });
