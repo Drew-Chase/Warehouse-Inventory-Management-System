@@ -3,6 +3,7 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/calendar.min.js" />
+        <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/filter-panel.min.js" />
         <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/fuzzy-search.min.js" />
         <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/inputs.min.js" />
         <item url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/labels.min.js" />
@@ -13,6 +14,7 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/calendar.min.js" />
+      <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/filter-panel.min.js" />
       <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/fuzzy-search.min.js" />
       <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/inputs.min.js" />
       <root url="file://$PROJECT_DIR$/Warehouse.Server/wwwroot/js/labels.min.js" />
