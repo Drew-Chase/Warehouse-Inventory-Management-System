@@ -1,9 +1,10 @@
 ﻿@using Warehouse.ViewComponents
 @await Component.InvokeAsync("Navbar", new Navbar("purchases"))
+<link rel="stylesheet" href="/css/content-page.css">
 
 <div class="row">
     <div class="col">
-        <h4>Purchase Orders</h4>
+        <h4 style="margin-left: 1rem">Purchase Orders</h4>
         <div class="col panel" id="filters-panel">
             <p class="3 filter-label">Order Status</p>
             <div class="grid" id="order-status-filter">
@@ -67,11 +68,13 @@
                         <div class="filter-item">
                             <div class="calendar-input" id="order-from-date">
                                 <p class="3 calendar-name">From</p>
+                                <p class="3 value"></p>
                             </div>
                         </div>
                         <div class="filter-item" id="order-to-date">
                             <div class="calendar-input">
                                 <p class="3 calendar-name">To</p>
+                                <p class="3 value"></p>
                             </div>
                         </div>
                     </div>
