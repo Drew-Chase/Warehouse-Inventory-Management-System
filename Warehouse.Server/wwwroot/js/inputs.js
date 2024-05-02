@@ -61,4 +61,10 @@ selectors.on('blur', e => {
     target.find("input").val("");
     target.find(".selector-option").show();
 });
+$(".expandable-filter").on("click", e => {
+    const target = $(e.target);
+    const current = $(e.currentTarget);
+    if (target.hasClass("name"))
+        current.toggleClass("active");
+});
 //# sourceMappingURL=inputs.js.map
