@@ -2,6 +2,7 @@
 using Serilog;
 using Serilog.Events;
 using Warehouse.Core.Constants;
+using Warehouse.SQL;
 
 namespace Warehouse;
 
@@ -61,6 +62,10 @@ internal static class Program
                 Log.Fatal(exception, "Unhandled exception: {REPORT}", CrashHandler.Report(exception));
             }
         };
+
+        // Initialize the database
+        ManagedDatabase.Initialize();
+
         app.Run($"http://localhost:{ApplicationConfiguration.Instance.Port}");
     }
 
@@ -83,7 +88,12 @@ internal static class Program
         TimeSpan flushTime = TimeSpan.FromSeconds(30);
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
-            .WriteTo.Console(ApplicationConfiguration.Instance.LogLevel,
+            .WriteTo.Console(
+#if DEBUG
+                LogEventLevel.Verbose,
+#else
+                ApplicationConfiguration.Instance.LogLevel,
+#endif
                 outputTemplate:
                 $"[{ApplicationData.ApplicationName}] [{{Timestamp:HH:mm:ss}} {{Level:u3}}] {{Message:lj}}{{NewLine}}{{Exception}}")
             .MinimumLevel.Verbose()
