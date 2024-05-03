@@ -26,6 +26,10 @@ public record DatabaseConfiguration
     [JsonProperty("database")]
     [JsonPropertyName("database")]
     public string Database { get; set; } = "warehouse";
+
+    [JsonProperty("ssl-mode")]
+    [JsonPropertyName("ssl-mode")]
+    public string SslMode { get; set; } = "Preferred";
 }
 
 public class ApplicationConfiguration : AppConfigBase<ApplicationConfiguration>
