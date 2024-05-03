@@ -1,7 +1,7 @@
 ﻿using System.IO.Compression;
 using Serilog;
 using Serilog.Events;
-using Warehouse.Data.Constants;
+using Warehouse.Core.Constants;
 
 namespace Warehouse;
 

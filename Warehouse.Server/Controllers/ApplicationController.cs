@@ -1,8 +1,8 @@
 ﻿// LFInteractive LLC. 2021-2024
 
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.Core.Constants;
 using Warehouse.Data;
-using Warehouse.Data.Constants;
 
 namespace Warehouse.Controllers;
 

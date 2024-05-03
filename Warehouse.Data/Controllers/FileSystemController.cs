@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Warehouse.Data.Constants;
+using Warehouse.Core.Constants;
 
 namespace Warehouse.Data.Controllers;
 

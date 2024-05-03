@@ -11,8 +11,4 @@
       <PackageReference Include="Serilog" Version="3.1.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Warehouse.Core\Warehouse.Core.csproj" />
-    </ItemGroup>
-
 </Project>

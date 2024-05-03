@@ -1,4 +1,4 @@
-﻿namespace Warehouse.Data.Constants;
+﻿namespace Warehouse.Core.Constants;
 
 public static class Directories
 {
