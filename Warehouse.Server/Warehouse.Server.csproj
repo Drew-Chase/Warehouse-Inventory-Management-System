@@ -10,10 +10,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Chase.CommonLib" Version="0.0.7"/>
+        <PackageReference Include="Chase.CommonLib" Version="0.0.8"/>
         <PackageReference Include="Chase.Search" Version="0.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13"/>
-        <PackageReference Include="Serilog" Version="3.0.1"/>
+        <PackageReference Include="Serilog" Version="3.1.1" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0"/>
         <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0"/>
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0"/>
@@ -34,6 +34,10 @@
 
     <ItemGroup>
       <AdditionalFiles Include="Views\Shared\Components\SettingsNav\Default.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Warehouse.Data\Warehouse.Data.csproj" />
     </ItemGroup>
 
 </Project>
