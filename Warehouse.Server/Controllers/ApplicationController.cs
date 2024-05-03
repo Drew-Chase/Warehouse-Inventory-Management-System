@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Warehouse.Data;
+using Warehouse.Data.Constants;
 
 namespace Warehouse.Controllers;
 
