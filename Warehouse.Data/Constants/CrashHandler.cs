@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Serilog;
 
-namespace Warehouse.Data;
+namespace Warehouse.Data.Constants;
 
 public static class CrashHandler
 {

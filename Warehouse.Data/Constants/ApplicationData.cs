@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Warehouse.Data;
+namespace Warehouse.Data.Constants;
 
 public static class ApplicationData
 {

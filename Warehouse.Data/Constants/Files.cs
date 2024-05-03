@@ -1,6 +1,6 @@
-﻿namespace Warehouse.Data;
+﻿namespace Warehouse.Data.Constants;
 
-using static Warehouse.Data.Directories;
+using static Directories;
 
 public static class Files
 {

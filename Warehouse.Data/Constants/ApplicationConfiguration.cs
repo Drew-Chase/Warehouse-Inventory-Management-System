@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Serilog.Events;
 
-namespace Warehouse.Data;
+namespace Warehouse.Data.Constants;
 
 public class ApplicationConfiguration : AppConfigBase<ApplicationConfiguration>
 {
