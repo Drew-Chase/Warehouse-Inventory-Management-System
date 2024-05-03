@@ -1,7 +1,7 @@
-﻿using Serilog;
+﻿using System.IO.Compression;
+using Serilog;
 using Serilog.Events;
-using System.IO.Compression;
-using Warehouse.Data;
+using Warehouse.Data.Constants;
 
 namespace Warehouse;
 
@@ -46,7 +46,7 @@ internal static class Program
         app.UseDefaultFiles();
         app.UseStaticFiles();
 
-        AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+        AppDomain.CurrentDomain.ProcessExit += (_, _) =>
         {
             ApplicationConfiguration.Instance.Save();
 
@@ -54,14 +54,13 @@ internal static class Program
             Log.CloseAndFlush();
         };
 
-        AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
         {
             if (e.ExceptionObject is Exception exception)
             {
                 Log.Fatal(exception, "Unhandled exception: {REPORT}", CrashHandler.Report(exception));
             }
         };
-
         app.Run($"http://localhost:{ApplicationConfiguration.Instance.Port}");
     }
 
@@ -87,7 +86,8 @@ internal static class Program
             .WriteTo.Console(ApplicationConfiguration.Instance.LogLevel,
                 outputTemplate:
                 $"[{ApplicationData.ApplicationName}] [{{Timestamp:HH:mm:ss}} {{Level:u3}}] {{Message:lj}}{{NewLine}}{{Exception}}")
-            .WriteTo.File(Files.DebugLog, LogEventLevel.Verbose, buffered: true, flushToDiskInterval: flushTime)
+            .MinimumLevel.Verbose()
+            .WriteTo.File(Files.DebugLog, buffered: true, flushToDiskInterval: flushTime)
             .WriteTo.File(Files.LatestLog, LogEventLevel.Information, buffered: true, flushToDiskInterval: flushTime)
             .WriteTo.File(Files.ErrorLog, LogEventLevel.Error, buffered: false)
             .CreateLogger();
