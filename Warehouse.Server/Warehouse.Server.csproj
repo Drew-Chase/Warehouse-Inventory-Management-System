@@ -38,6 +38,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Warehouse.Data\Warehouse.Data.csproj" />
+      <ProjectReference Include="..\Warehouse.SQL\Warehouse.SQL.csproj" />
     </ItemGroup>
 
 </Project>
