@@ -1,277 +1,200 @@
-﻿@using Warehouse.ViewComponents
+﻿@model Warehouse.Controllers.Views.PurchasesFilters
+@using Warehouse.Data.Models
+@using Warehouse.ViewComponents
 @await Component.InvokeAsync("Navbar", new Navbar("purchases"))
+
+
 <link rel="stylesheet" href="/css/content-page.css">
 
 <div class="row">
-<div class="col">
-    <h4 style="margin-left: 1rem">Purchase Orders</h4>
-    <div class="col panel" id="filters-panel">
-        <div class="scroll-zone">
-            <p class="3 filter-label">Order Status</p>
-            <div class="grid" id="order-status-filter">
-                <div class="order-status-filter-item active">
-                    <p class="order-status-filter-item-title">All</p>
-                    <span class="badge badge-primary badge-pill">32</span>
-                </div>
-                <div class="order-status-filter-item">
-                    <p class="order-status-filter-item-title">In Progress</p>
-                    <span class="badge badge-primary badge-pill">32</span>
-                </div>
-                <div class="order-status-filter-item">
-                    <p class="order-status-filter-item-title">Paid</p>
-                    <span class="badge badge-primary badge-pill">32</span>
-                </div>
-                <div class="order-status-filter-item">
-                    <p class="order-status-filter-item-title">Completed</p>
-                    <span class="badge badge-primary badge-pill">32</span>
-                </div>
-            </div>
+    <div class="col">
+        <h4 style="margin-left: 1rem">Purchase Orders</h4>
+        <div class="col panel" id="filters-panel">
+            <div class="scroll-zone">
+                <p class="3 filter-label">Order Status</p>
+                <div class="grid" id="order-status-filter">
+                    @foreach (Status status in Enum.GetValues(typeof(Status)))
+                    {
+                        string name = Enum.GetName(status) ?? "";
+                        for (int i = 0; i < name.Length; i++)
+                        {
+                            if (char.IsUpper(name[i]) && i > 0)
+                            {
+                                name = name.Insert(i, " ");
+                                break;
+                            }
+                        }
 
-            <p class="3 filter-label">Filter By</p>
-            <div class="col" id="primary-filters">
-                <div class="expandable-filter" id="location-filter">
-                    <p class="2 name">Location</p>
-                    <div class="expandable-filter-body">
-                        <div class="filter-item">
-                            <input type="checkbox" id="location-filter-1" name="location-filter-1" value="location-filter-1">
-                            <label for="location-filter-1">Location 1</label>
+                        <div class="order-status-filter-item @(Model.OrderStatus == status ? "active" : "")" title="@name" status="@((byte)status)">
+                            <p class="order-status-filter-item-title">@name</p >
+                            <span class="badge badge-primary badge-pill"> 32 </span >
                         </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="location-filter-2" name="location-filter-2" value="location-filter-2">
-                            <label for="location-filter-2">Location 2</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="location-filter-3" name="location-filter-3" value="location-filter-3">
-                            <label for="location-filter-3">Location 3</label>
-                        </div>
-                    </div>
+                    }
                 </div>
-                <div class="expandable-filter" id="vendor-filter">
-                    <p class="2 name">Vendor</p>
-                    <div class="expandable-filter-body">
-                        <div class="filter-item">
-                            <input type="checkbox" id="vendor-filter-1" name="vendor-filter-1" value="vendor-filter-1">
-                            <label for="vendor-filter-1">Vendor 1</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="vendor-filter-2" name="vendor-filter-2" value="vendor-filter-2">
-                            <label for="vendor-filter-2">Vendor 2</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="vendor-filter-3" name="vendor-filter-3" value="vendor-filter-3">
-                            <label for="vendor-filter-3">Vendor 3</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="expandable-filter" id="buyer-filter">
-                    <p class="2 name">Buyer</p>
-                    <div class="expandable-filter-body">
-                        <div class="filter-item">
-                            <input type="checkbox" id="buyer-filter-1" name="buyer-filter-1" value="buyer-filter-1">
-                            <label for="buyer-filter-1">Buyer 1</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="buyer-filter-2" name="buyer-filter-2" value="buyer-filter-2">
-                            <label for="buyer-filter-2">Buyer 2</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="buyer-filter-3" name="buyer-filter-3" value="buyer-filter-3">
-                            <label for="buyer-filter-3">Buyer 3</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="expandable-filter" id="order-date-filter">
-                    <p class="2 name">Order Date</p>
-                    <div class="expandable-filter-body">
-                        <div class="filter-item">
-                            <div class="calendar-input" id="order-from-date">
-                                <p class="3 calendar-name">From</p>
-                                <p class="3 value"></p>
+
+                <p class="3 filter-label">Filter By</p>
+                <div class="col" id="primary-filters">
+                    <div class="expandable-filter" id="location-filter">
+                        <p class="2 name">Location</p>
+                        <div class="expandable-filter-body">
+                            <div class="filter-item">
+                                <input type="checkbox" id="location-filter-1" name="location" value="1">
+                                <label for="location-filter-1">Location 1</label>
                             </div>
-                        </div>
-                        <div class="filter-item" id="order-to-date">
-                            <div class="calendar-input">
-                                <p class="3 calendar-name">To</p>
-                                <p class="3 value"></p>
+                            <div class="filter-item">
+                                <input type="checkbox" id="location-filter-2" name="location" value="2">
+                                <label for="location-filter-2">Location 2</label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="checkbox" id="location-filter-3" name="location" value="3">
+                                <label for="location-filter-3">Location 3</label>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="expandable-filter" id="purchase-price-filter">
-                    <p class="2 name">Purchase Price</p>
-                    <div class="expandable-filter-body">
-                        <div class="filter-item">
-                            <input type="number" step="0.01" min="0" id="purchase-price-min" name="purchase-price-min" class="price" placeholder="Min">
-                            <label for="purchase-price-min">
-                                <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.3 7.9C3.03 7.31 2.3 6.7 2.3 5.75C2.3 4.66 3.31 3.9 5 3.9C6.42 3.9 7.13 4.44 7.39 5.3C7.51 5.7 7.84 6 8.26 6H8.56C9.22 6 9.69 5.35 9.46 4.73C9.04 3.55 8.06 2.57 6.5 2.19V1.5C6.5 0.67 5.83 0 5 0C4.17 0 3.5 0.67 3.5 1.5V2.16C1.56 2.58 0 3.84 0 5.77C0 8.08 1.91 9.23 4.7 9.9C7.2 10.5 7.7 11.38 7.7 12.31C7.7 13 7.21 14.1 5 14.1C3.35 14.1 2.5 13.51 2.17 12.67C2.02 12.28 1.68 12 1.27 12H0.99C0.32 12 -0.15 12.68 0.0999999 13.3C0.67 14.69 2 15.51 3.5 15.83V16.5C3.5 17.33 4.17 18 5 18C5.83 18 6.5 17.33 6.5 16.5V15.85C8.45 15.48 10 14.35 10 12.3C10 9.46 7.57 8.49 5.3 7.9Z"
-                                        fill="#AFB6B6"/>
-                                </svg>
-                            </label>
+                    <div class="expandable-filter" id="vendor-filter">
+                        <p class="2 name">Vendor</p>
+                        <div class="expandable-filter-body">
+                            <div class="filter-item">
+                                <input type="checkbox" id="vendor-filter-1" name="vendor" value="1">
+                                <label for="vendor-filter-1">Vendor 1</label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="checkbox" id="vendor-filter-2" name="vendor" value="2">
+                                <label for="vendor-filter-2">Vendor 2</label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="checkbox" id="vendor-filter-3" name="vendor" value="3">
+                                <label for="vendor-filter-3">Vendor 3</label>
+                            </div>
                         </div>
-                        <div class="filter-item">
-                            <input type="number" step="0.01" min="0" id="purchase-price-max" name="purchase-price-min" class="price" placeholder="Min">
-                            <label for="purchase-price-max">
-                                <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.3 7.9C3.03 7.31 2.3 6.7 2.3 5.75C2.3 4.66 3.31 3.9 5 3.9C6.42 3.9 7.13 4.44 7.39 5.3C7.51 5.7 7.84 6 8.26 6H8.56C9.22 6 9.69 5.35 9.46 4.73C9.04 3.55 8.06 2.57 6.5 2.19V1.5C6.5 0.67 5.83 0 5 0C4.17 0 3.5 0.67 3.5 1.5V2.16C1.56 2.58 0 3.84 0 5.77C0 8.08 1.91 9.23 4.7 9.9C7.2 10.5 7.7 11.38 7.7 12.31C7.7 13 7.21 14.1 5 14.1C3.35 14.1 2.5 13.51 2.17 12.67C2.02 12.28 1.68 12 1.27 12H0.99C0.32 12 -0.15 12.68 0.0999999 13.3C0.67 14.69 2 15.51 3.5 15.83V16.5C3.5 17.33 4.17 18 5 18C5.83 18 6.5 17.33 6.5 16.5V15.85C8.45 15.48 10 14.35 10 12.3C10 9.46 7.57 8.49 5.3 7.9Z"
-                                        fill="#AFB6B6"/>
-                                </svg>
-                            </label>
+                    </div>
+                    <div class="expandable-filter" id="buyer-filter">
+                        <p class="2 name">Buyer</p>
+                        <div class="expandable-filter-body">
+                            <div class="filter-item">
+                                <input type="checkbox" id="buyer-filter-1" name="buyer" value="1">
+                                <label for="buyer-filter-1">Buyer 1</label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="checkbox" id="buyer-filter-2" name="buyer" value="2">
+                                <label for="buyer-filter-2">Buyer 2</label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="checkbox" id="buyer-filter-3" name="buyer" value="3">
+                                <label for="buyer-filter-3">Buyer 3</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="expandable-filter" id="order-date-filter">
+                        <p class="2 name">Order Date</p>
+                        <div class="expandable-filter-body">
+                            <div class="filter-item">
+                                <div class="calendar-input" id="order-from-date" name="from">
+                                    <p class="3 calendar-name">From</p>
+                                    <p class="3 value"></p>
+                                </div>
+                            </div>
+                            <div class="filter-item" id="order-to-date">
+                                <div class="calendar-input" name="to">
+                                    <p class="3 calendar-name">To</p>
+                                    <p class="3 value"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="expandable-filter" id="purchase-price-filter">
+                        <p class="2 name">Purchase Price</p>
+                        <div class="expandable-filter-body">
+                            <div class="filter-item">
+                                <input type="number" step="0.01" min="0" id="purchase-price-min" name="purchase-price-min" class="price" placeholder="Min">
+                                <label for="purchase-price-min">
+                                    <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.3 7.9C3.03 7.31 2.3 6.7 2.3 5.75C2.3 4.66 3.31 3.9 5 3.9C6.42 3.9 7.13 4.44 7.39 5.3C7.51 5.7 7.84 6 8.26 6H8.56C9.22 6 9.69 5.35 9.46 4.73C9.04 3.55 8.06 2.57 6.5 2.19V1.5C6.5 0.67 5.83 0 5 0C4.17 0 3.5 0.67 3.5 1.5V2.16C1.56 2.58 0 3.84 0 5.77C0 8.08 1.91 9.23 4.7 9.9C7.2 10.5 7.7 11.38 7.7 12.31C7.7 13 7.21 14.1 5 14.1C3.35 14.1 2.5 13.51 2.17 12.67C2.02 12.28 1.68 12 1.27 12H0.99C0.32 12 -0.15 12.68 0.0999999 13.3C0.67 14.69 2 15.51 3.5 15.83V16.5C3.5 17.33 4.17 18 5 18C5.83 18 6.5 17.33 6.5 16.5V15.85C8.45 15.48 10 14.35 10 12.3C10 9.46 7.57 8.49 5.3 7.9Z"
+                                            fill="#AFB6B6"/>
+                                    </svg>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="number" step="0.01" min="0" id="purchase-price-max" name="purchase-price-max" class="price" placeholder="Max">
+                                <label for="purchase-price-max">
+                                    <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.3 7.9C3.03 7.31 2.3 6.7 2.3 5.75C2.3 4.66 3.31 3.9 5 3.9C6.42 3.9 7.13 4.44 7.39 5.3C7.51 5.7 7.84 6 8.26 6H8.56C9.22 6 9.69 5.35 9.46 4.73C9.04 3.55 8.06 2.57 6.5 2.19V1.5C6.5 0.67 5.83 0 5 0C4.17 0 3.5 0.67 3.5 1.5V2.16C1.56 2.58 0 3.84 0 5.77C0 8.08 1.91 9.23 4.7 9.9C7.2 10.5 7.7 11.38 7.7 12.31C7.7 13 7.21 14.1 5 14.1C3.35 14.1 2.5 13.51 2.17 12.67C2.02 12.28 1.68 12 1.27 12H0.99C0.32 12 -0.15 12.68 0.0999999 13.3C0.67 14.69 2 15.51 3.5 15.83V16.5C3.5 17.33 4.17 18 5 18C5.83 18 6.5 17.33 6.5 16.5V15.85C8.45 15.48 10 14.35 10 12.3C10 9.46 7.57 8.49 5.3 7.9Z"
+                                            fill="#AFB6B6"/>
+                                    </svg>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="reset-filters-button" class="disabled">
-            <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M17.65 4.85L14.86 7.64C14.54 7.96 14.76 8.5 15.21 8.5H17C17 11.81 14.31 14.5 11 14.5C10.21 14.5 9.44003 14.35 8.75003 14.06C8.39003 13.91 7.98003 14.02 7.71003 14.29C7.20003 14.8 7.38003 15.66 8.05003 15.93C8.96003 16.3 9.96003 16.5 11 16.5C15.42 16.5 19 12.92 19 8.5H20.79C21.24 8.5 21.46 7.96 21.14 7.65L18.35 4.86C18.16 4.66 17.84 4.66 17.65 4.85ZM5.00003 8.5C5.00003 5.19 7.69003 2.5 11 2.5C11.79 2.5 12.56 2.65 13.25 2.94C13.61 3.09 14.02 2.98 14.29 2.71C14.8 2.2 14.62 1.34 13.95 1.07C13.04 0.7 12.04 0.5 11 0.5C6.58003 0.5 3.00003 4.08 3.00003 8.5H1.21003C0.760031 8.5 0.540031 9.04 0.860031 9.35L3.65003 12.14C3.85003 12.34 4.16003 12.34 4.36003 12.14L7.15003 9.35C7.46003 9.04 7.24003 8.5 6.79003 8.5H5.00003Z"
-                    fill="white"/>
-            </svg>
-
-            <span>Reset Filters</span>
-            <span class="value"></span>
-        </div>
-
-    </div>
-</div>
-<main id="content" class="col fill">
-    <div id="action-row" class="row">
-        <div class="search-area fill">
-            <input type="search" name="search" id="search" placeholder="Search purchase orders...">
-            <label for="search">
-                <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div id="reset-filters-button" class="disabled">
+                <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
-                        d="M12.5006 11.9716H11.7106L11.4306 11.7016C12.6306 10.3016 13.2506 8.39157 12.9106 6.36157C12.4406 3.58157 10.1206 1.36157 7.32063 1.02157C3.09063 0.501565 -0.469374 4.06156 0.0506256 8.29156C0.390626 11.0916 2.61063 13.4116 5.39063 13.8816C7.42063 14.2216 9.33063 13.6016 10.7306 12.4016L11.0006 12.6816V13.4716L15.2506 17.7216C15.6606 18.1316 16.3306 18.1316 16.7406 17.7216C17.1506 17.3116 17.1506 16.6416 16.7406 16.2316L12.5006 11.9716ZM6.50063 11.9716C4.01063 11.9716 2.00063 9.96157 2.00063 7.47157C2.00063 4.98157 4.01063 2.97157 6.50063 2.97157C8.99063 2.97157 11.0006 4.98157 11.0006 7.47157C11.0006 9.96157 8.99063 11.9716 6.50063 11.9716Z"
+                        d="M17.65 4.85L14.86 7.64C14.54 7.96 14.76 8.5 15.21 8.5H17C17 11.81 14.31 14.5 11 14.5C10.21 14.5 9.44003 14.35 8.75003 14.06C8.39003 13.91 7.98003 14.02 7.71003 14.29C7.20003 14.8 7.38003 15.66 8.05003 15.93C8.96003 16.3 9.96003 16.5 11 16.5C15.42 16.5 19 12.92 19 8.5H20.79C21.24 8.5 21.46 7.96 21.14 7.65L18.35 4.86C18.16 4.66 17.84 4.66 17.65 4.85ZM5.00003 8.5C5.00003 5.19 7.69003 2.5 11 2.5C11.79 2.5 12.56 2.65 13.25 2.94C13.61 3.09 14.02 2.98 14.29 2.71C14.8 2.2 14.62 1.34 13.95 1.07C13.04 0.7 12.04 0.5 11 0.5C6.58003 0.5 3.00003 4.08 3.00003 8.5H1.21003C0.760031 8.5 0.540031 9.04 0.860031 9.35L3.65003 12.14C3.85003 12.34 4.16003 12.34 4.36003 12.14L7.15003 9.35C7.46003 9.04 7.24003 8.5 6.79003 8.5H5.00003Z"
                         fill="white"/>
                 </svg>
-            </label>
+
+                <span>Reset Filters</span>
+                <span class="value"></span>
+            </div>
+
         </div>
-        <div class="row" id="views">
-            <div id="list-view" class="active view" title="List View">
-                <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M1.27778 7.05556H2.83333C3.26111 7.05556 3.61111 6.70556 3.61111 6.27778V4.72222C3.61111 4.29445 3.26111 3.94445 2.83333 3.94445H1.27778C0.85 3.94445 0.5 4.29445 0.5 4.72222V6.27778C0.5 6.70556 0.85 7.05556 1.27778 7.05556ZM1.27778 10.9444H2.83333C3.26111 10.9444 3.61111 10.5944 3.61111 10.1667V8.61111C3.61111 8.18334 3.26111 7.83333 2.83333 7.83333H1.27778C0.85 7.83333 0.5 8.18334 0.5 8.61111V10.1667C0.5 10.5944 0.85 10.9444 1.27778 10.9444ZM1.27778 3.16667H2.83333C3.26111 3.16667 3.61111 2.81667 3.61111 2.38889V0.833335C3.61111 0.405557 3.26111 0.0555573 2.83333 0.0555573H1.27778C0.85 0.0555573 0.5 0.405557 0.5 0.833335V2.38889C0.5 2.81667 0.85 3.16667 1.27778 3.16667ZM5.16667 7.05556H13.7222C14.15 7.05556 14.5 6.70556 14.5 6.27778V4.72222C14.5 4.29445 14.15 3.94445 13.7222 3.94445H5.16667C4.73889 3.94445 4.38889 4.29445 4.38889 4.72222V6.27778C4.38889 6.70556 4.73889 7.05556 5.16667 7.05556ZM5.16667 10.9444H13.7222C14.15 10.9444 14.5 10.5944 14.5 10.1667V8.61111C14.5 8.18334 14.15 7.83333 13.7222 7.83333H5.16667C4.73889 7.83333 4.38889 8.18334 4.38889 8.61111V10.1667C4.38889 10.5944 4.73889 10.9444 5.16667 10.9444ZM4.38889 0.833335V2.38889C4.38889 2.81667 4.73889 3.16667 5.16667 3.16667H13.7222C14.15 3.16667 14.5 2.81667 14.5 2.38889V0.833335C14.5 0.405557 14.15 0.0555573 13.7222 0.0555573H5.16667C4.73889 0.0555573 4.38889 0.405557 4.38889 0.833335Z"
-                        fill="#BDC2C2"/>
-                </svg>
+    </div>
+    <main id="content" class="col fill">
+        <div id="action-row" class="row">
+            <div class="search-area fill">
+                <input type="search" name="search" id="search" placeholder="Search purchase orders...">
+                <label for="search">
+                    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12.5006 11.9716H11.7106L11.4306 11.7016C12.6306 10.3016 13.2506 8.39157 12.9106 6.36157C12.4406 3.58157 10.1206 1.36157 7.32063 1.02157C3.09063 0.501565 -0.469374 4.06156 0.0506256 8.29156C0.390626 11.0916 2.61063 13.4116 5.39063 13.8816C7.42063 14.2216 9.33063 13.6016 10.7306 12.4016L11.0006 12.6816V13.4716L15.2506 17.7216C15.6606 18.1316 16.3306 18.1316 16.7406 17.7216C17.1506 17.3116 17.1506 16.6416 16.7406 16.2316L12.5006 11.9716ZM6.50063 11.9716C4.01063 11.9716 2.00063 9.96157 2.00063 7.47157C2.00063 4.98157 4.01063 2.97157 6.50063 2.97157C8.99063 2.97157 11.0006 4.98157 11.0006 7.47157C11.0006 9.96157 8.99063 11.9716 6.50063 11.9716Z"
+                            fill="white"/>
+                    </svg>
+                </label>
             </div>
-            <div id="grid-view" class="view" title="Grid View">
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2.05556 6.72222H5.16667C6.02222 6.72222 6.72222 6.02222 6.72222 5.16667V2.05556C6.72222 1.2 6.02222 0.5 5.16667 0.5H2.05556C1.2 0.5 0.5 1.2 0.5 2.05556V5.16667C0.5 6.02222 1.2 6.72222 2.05556 6.72222Z" fill="#BDC2C2"/>
-                    <path d="M2.05556 14.5H5.16667C6.02222 14.5 6.72222 13.8 6.72222 12.9444V9.83333C6.72222 8.97778 6.02222 8.27778 5.16667 8.27778H2.05556C1.2 8.27778 0.5 8.97778 0.5 9.83333V12.9444C0.5 13.8 1.2 14.5 2.05556 14.5Z" fill="#BDC2C2"/>
-                    <path d="M8.27778 2.05556V5.16667C8.27778 6.02222 8.97778 6.72222 9.83333 6.72222H12.9444C13.8 6.72222 14.5 6.02222 14.5 5.16667V2.05556C14.5 1.2 13.8 0.5 12.9444 0.5H9.83333C8.97778 0.5 8.27778 1.2 8.27778 2.05556Z" fill="#BDC2C2"/>
-                    <path d="M9.83333 14.5H12.9444C13.8 14.5 14.5 13.8 14.5 12.9444V9.83333C14.5 8.97778 13.8 8.27778 12.9444 8.27778H9.83333C8.97778 8.27778 8.27778 8.97778 8.27778 9.83333V12.9444C8.27778 13.8 8.97778 14.5 9.83333 14.5Z" fill="#BDC2C2"/>
-                </svg>
+            <div class="row" id="views">
+                <div id="list-view" class="active view" title="List View">
+                    <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.27778 7.05556H2.83333C3.26111 7.05556 3.61111 6.70556 3.61111 6.27778V4.72222C3.61111 4.29445 3.26111 3.94445 2.83333 3.94445H1.27778C0.85 3.94445 0.5 4.29445 0.5 4.72222V6.27778C0.5 6.70556 0.85 7.05556 1.27778 7.05556ZM1.27778 10.9444H2.83333C3.26111 10.9444 3.61111 10.5944 3.61111 10.1667V8.61111C3.61111 8.18334 3.26111 7.83333 2.83333 7.83333H1.27778C0.85 7.83333 0.5 8.18334 0.5 8.61111V10.1667C0.5 10.5944 0.85 10.9444 1.27778 10.9444ZM1.27778 3.16667H2.83333C3.26111 3.16667 3.61111 2.81667 3.61111 2.38889V0.833335C3.61111 0.405557 3.26111 0.0555573 2.83333 0.0555573H1.27778C0.85 0.0555573 0.5 0.405557 0.5 0.833335V2.38889C0.5 2.81667 0.85 3.16667 1.27778 3.16667ZM5.16667 7.05556H13.7222C14.15 7.05556 14.5 6.70556 14.5 6.27778V4.72222C14.5 4.29445 14.15 3.94445 13.7222 3.94445H5.16667C4.73889 3.94445 4.38889 4.29445 4.38889 4.72222V6.27778C4.38889 6.70556 4.73889 7.05556 5.16667 7.05556ZM5.16667 10.9444H13.7222C14.15 10.9444 14.5 10.5944 14.5 10.1667V8.61111C14.5 8.18334 14.15 7.83333 13.7222 7.83333H5.16667C4.73889 7.83333 4.38889 8.18334 4.38889 8.61111V10.1667C4.38889 10.5944 4.73889 10.9444 5.16667 10.9444ZM4.38889 0.833335V2.38889C4.38889 2.81667 4.73889 3.16667 5.16667 3.16667H13.7222C14.15 3.16667 14.5 2.81667 14.5 2.38889V0.833335C14.5 0.405557 14.15 0.0555573 13.7222 0.0555573H5.16667C4.73889 0.0555573 4.38889 0.405557 4.38889 0.833335Z"
+                            fill="#BDC2C2"/>
+                    </svg>
+                </div>
+                <div id="grid-view" class="view" title="Grid View">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.05556 6.72222H5.16667C6.02222 6.72222 6.72222 6.02222 6.72222 5.16667V2.05556C6.72222 1.2 6.02222 0.5 5.16667 0.5H2.05556C1.2 0.5 0.5 1.2 0.5 2.05556V5.16667C0.5 6.02222 1.2 6.72222 2.05556 6.72222Z" fill="#BDC2C2"/>
+                        <path d="M2.05556 14.5H5.16667C6.02222 14.5 6.72222 13.8 6.72222 12.9444V9.83333C6.72222 8.97778 6.02222 8.27778 5.16667 8.27778H2.05556C1.2 8.27778 0.5 8.97778 0.5 9.83333V12.9444C0.5 13.8 1.2 14.5 2.05556 14.5Z" fill="#BDC2C2"/>
+                        <path d="M8.27778 2.05556V5.16667C8.27778 6.02222 8.97778 6.72222 9.83333 6.72222H12.9444C13.8 6.72222 14.5 6.02222 14.5 5.16667V2.05556C14.5 1.2 13.8 0.5 12.9444 0.5H9.83333C8.97778 0.5 8.27778 1.2 8.27778 2.05556Z" fill="#BDC2C2"/>
+                        <path d="M9.83333 14.5H12.9444C13.8 14.5 14.5 13.8 14.5 12.9444V9.83333C14.5 8.97778 13.8 8.27778 12.9444 8.27778H9.83333C8.97778 8.27778 8.27778 8.97778 8.27778 9.83333V12.9444C8.27778 13.8 8.97778 14.5 9.83333 14.5Z" fill="#BDC2C2"/>
+                    </svg>
+                </div>
             </div>
+
+            <span class="vertical-divider"></span>
+
+            <button class="sm dropdown" id="sort-button" title="Sort by">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 12H5C5.55 12 6 11.55 6 11C6 10.45 5.55 10 5 10H1C0.45 10 0 10.45 0 11C0 11.55 0.45 12 1 12ZM0 1C0 1.55 0.45 2 1 2H17C17.55 2 18 1.55 18 1C18 0.45 17.55 0 17 0H1C0.45 0 0 0.45 0 1ZM1 7H11C11.55 7 12 6.55 12 6C12 5.45 11.55 5 11 5H1C0.45 5 0 5.45 0 6C0 6.55 0.45 7 1 7Z" fill="#BDC2C2"/>
+                </svg>
+                <span class="dropdown-body">
+                    <div class="dropdown-item" sort="date">Date</div>
+                    <div class="dropdown-item" sort="price">Price</div>
+                    <div class="dropdown-item" sort="status">Status</div>
+                    <div class="dropdown-item" sort="po">PO#</div>
+                </span>
+            </button>
+
+            <button id="new-purchase-button" class="primary">New Purchase</button>
         </div>
-
-        <span class="vertical-divider"></span>
-
-        <button class="sm dropdown" id="sort-button" title="Sort by">
-            <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 12H5C5.55 12 6 11.55 6 11C6 10.45 5.55 10 5 10H1C0.45 10 0 10.45 0 11C0 11.55 0.45 12 1 12ZM0 1C0 1.55 0.45 2 1 2H17C17.55 2 18 1.55 18 1C18 0.45 17.55 0 17 0H1C0.45 0 0 0.45 0 1ZM1 7H11C11.55 7 12 6.55 12 6C12 5.45 11.55 5 11 5H1C0.45 5 0 5.45 0 6C0 6.55 0.45 7 1 7Z" fill="#BDC2C2"/>
-            </svg>
-            <span class="dropdown-body">
-                <div class="dropdown-item" sort="date">Date</div>
-                <div class="dropdown-item" sort="price">Price</div>
-                <div class="dropdown-item" sort="status">Status</div>
-                <div class="dropdown-item" sort="po">PO#</div>
-            </span>
-        </button>
-
-        <button id="new-purchase-button" class="primary">New Purchase</button>
-    </div>
-    <div id="po-list" class="scroll-zone">
-        @for (int i = 98440; i < 98450; i++)
-        {
-            <div class="po-item col">
-                <div class="row center vertical">
-                    <div class="row po-item-header fill">
-                        <span class="po-item-title">PO-@i</span>
-                        <span class="vertical-divider"></span>
-                        <span class="po-item-name">Assorted Foods - </span>
-                        <span class="po-item-vendor">High Desert Sales</span>
-                    </div>
-                    <div class="row additional-info">
-                        <span class="price">$1.5M</span>
-                        <span class="badge paid row">
-                            <svg viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 0C1.792 0 0 1.792 0 4C0 6.208 1.792 8 4 8C6.208 8 8 6.208 8 4C8 1.792 6.208 0 4 0ZM2.916 5.716L1.48 4.28C1.324 4.124 1.324 3.872 1.48 3.716C1.636 3.56 1.888 3.56 2.044 3.716L3.2 4.868L5.952 2.116C6.108 1.96 6.36 1.96 6.516 2.116C6.672 2.272 6.672 2.524 6.516 2.68L3.48 5.716C3.328 5.872 3.072 5.872 2.916 5.716Z" fill="var(--bgl-100)"/>
-                            </svg>
-                            <span>paid</span>
-                        </span>
-                        <button class="secondary outline dropdown">
-                            <svg width="16" height="4" viewBox="0 0 16 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM14 0C12.9 0 12 0.9 12 2C12 3.1 12.9 4 14 4C15.1 4 16 3.1 16 2C16 0.9 15.1 0 14 0ZM8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0Z" fill="var(--fgl-100)"/>
-                            </svg>
-                            <div class="dropdown-body">
-                                <div class="dropdown-item">Edit</div>
-                                <div class="dropdown-item">Delete</div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row po-item-metadata">
-                    <span class="po-item-buyer row">
-                        <i class="buyer-icon user-icon">V</i>
-                        <span class="buyer-name">Victor Buyer</span>
-                    </span>
-                    <span class="dot-separator"></span>
-                    <span class="po-item-location">
-                        <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.2317 0C2.6704 0 0.353027 1.96366 0.353027 5.00064C0.353027 6.93991 1.84712 9.22068 4.82921 11.8491C5.06094 12.0503 5.40855 12.0503 5.64028 11.8491C8.61627 9.22068 10.1104 6.93991 10.1104 5.00064C10.1104 1.96366 7.793 0 5.2317 0ZM5.2317 6.09834C4.56088 6.09834 4.01203 5.54949 4.01203 4.87867C4.01203 4.20785 4.56088 3.659 5.2317 3.659C5.90251 3.659 6.45136 4.20785 6.45136 4.87867C6.45136 5.54949 5.90251 6.09834 5.2317 6.09834Z" fill="var(--fgl-100)"/>
-                        </svg>
-                        <span class="location-name">123 Vendor Way. Enterprise, AL 36330</span>
-                    </span>
-                    <span class="dot-separator"></span>
-                    <span class="po-item-date">
-                        <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M8.51035 0C8.18035 0 7.91035 0.27 7.91035 0.6V1.2H3.11035V0.6C3.11035 0.27 2.84035 0 2.51035 0C2.18035 0 1.91035 0.27 1.91035 0.6V1.2H1.31035C0.644352 1.2 0.116352 1.74 0.116352 2.4L0.110352 10.8C0.110352 11.46 0.644352 12 1.31035 12H9.71035C10.3704 12 10.9104 11.46 10.9104 10.8V2.4C10.9104 1.74 10.3704 1.2 9.71035 1.2H9.11035V0.6C9.11035 0.27 8.84035 0 8.51035 0ZM9.71035 10.8H1.31035V4.8H9.71035V10.8ZM4.91035 6.6C4.91035 6.27 5.18035 6 5.51035 6C5.84035 6 6.11035 6.27 6.11035 6.6C6.11035 6.93 5.84035 7.2 5.51035 7.2C5.18035 7.2 4.91035 6.93 4.91035 6.6ZM2.51035 6.6C2.51035 6.27 2.78035 6 3.11035 6C3.44035 6 3.71035 6.27 3.71035 6.6C3.71035 6.93 3.44035 7.2 3.11035 7.2C2.78035 7.2 2.51035 6.93 2.51035 6.6ZM7.31035 6.6C7.31035 6.27 7.58035 6 7.91035 6C8.24035 6 8.51035 6.27 8.51035 6.6C8.51035 6.93 8.24035 7.2 7.91035 7.2C7.58035 7.2 7.31035 6.93 7.31035 6.6ZM4.91035 9C4.91035 8.67 5.18035 8.4 5.51035 8.4C5.84035 8.4 6.11035 8.67 6.11035 9C6.11035 9.33 5.84035 9.6 5.51035 9.6C5.18035 9.6 4.91035 9.33 4.91035 9ZM2.51035 9C2.51035 8.67 2.78035 8.4 3.11035 8.4C3.44035 8.4 3.71035 8.67 3.71035 9C3.71035 9.33 3.44035 9.6 3.11035 9.6C2.78035 9.6 2.51035 9.33 2.51035 9ZM7.31035 9C7.31035 8.67 7.58035 8.4 7.91035 8.4C8.24035 8.4 8.51035 8.67 8.51035 9C8.51035 9.33 8.24035 9.6 7.91035 9.6C7.58035 9.6 7.31035 9.33 7.31035 9Z"
-                                fill="var(--fgl-100)"/>
-                        </svg>
-                        <span class="date">12/04/2021</span>
-                    </span>
-                </div>
-
-                <div class="po-item-status col">
-                    <div class="row status-header">
-                        <span class="status-title">Order is being delivered</span>
-                        <span class="status-timestamp">Feb. 1, 2022 @@ 12:45 PM</span>
-                    </div>
-                    <div class="status-bars row">
-                        <svg class="manifest-icon" width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M18 0.0100001C17.87 0.0100001 17.74 0.06 17.65 0.16L16.86 0.95C16.66 1.15 16.35 1.15 16.15 0.95L15.36 0.16C15.16 -0.04 14.85 -0.04 14.65 0.16L13.86 0.95C13.66 1.15 13.35 1.15 13.15 0.95L12.36 0.16C12.16 -0.04 11.85 -0.04 11.65 0.16L10.86 0.95C10.66 1.15 10.35 1.15 10.15 0.95L9.36 0.16C9.16 -0.04 8.85 -0.04 8.65 0.16L7.86 0.95C7.66 1.15 7.35 1.15 7.15 0.95L6.35 0.15C6.15 -0.05 5.84 -0.05 5.64 0.15L4.85 0.95C4.65 1.15 4.34 1.15 4.14 0.95L3.35 0.15C3.15 -0.05 2.84 -0.05 2.64 0.15L1.85 0.95C1.65 1.15 1.34 1.15 1.14 0.95L0.35 0.15C0.26 0.06 0.13 0.0100001 0 0.0100001V19.6C0.13 19.6 0.26 19.55 0.35 19.45L1.14 18.66C1.34 18.46 1.65 18.46 1.85 18.66L2.64 19.45C2.84 19.65 3.15 19.65 3.35 19.45L4.14 18.66C4.34 18.46 4.65 18.46 4.85 18.66L5.64 19.45C5.84 19.65 6.15 19.65 6.35 19.45L7.14 18.66C7.34 18.46 7.65 18.46 7.85 18.66L8.64 19.45C8.84 19.65 9.15 19.65 9.35 19.45L10.14 18.66C10.34 18.46 10.65 18.46 10.85 18.66L11.64 19.45C11.84 19.65 12.15 19.65 12.35 19.45L13.14 18.66C13.34 18.46 13.65 18.46 13.85 18.66L14.64 19.45C14.84 19.65 15.15 19.65 15.35 19.45L16.14 18.66C16.34 18.46 16.65 18.46 16.85 18.66L17.64 19.45C17.74 19.55 17.87 19.6 17.99 19.6V0.0100001H18ZM14 14.8H4C3.45 14.8 3 14.35 3 13.8C3 13.25 3.45 12.8 4 12.8H14C14.55 12.8 15 13.25 15 13.8C15 14.35 14.55 14.8 14 14.8ZM14 10.8H4C3.45 10.8 3 10.35 3 9.8C3 9.25 3.45 8.8 4 8.8H14C14.55 8.8 15 9.25 15 9.8C15 10.35 14.55 10.8 14 10.8ZM14 6.8H4C3.45 6.8 3 6.35 3 5.8C3 5.25 3.45 4.8 4 4.8H14C14.55 4.8 15 5.25 15 5.8C15 6.35 14.55 6.8 14 6.8Z"
-                                fill="var(--wl000)"/>
-                        </svg>
-                        <div class="manifest-bar bar" style="--fill: 75%; --color: var(--wl000)"></div>
-                        <svg class="shipping-icon" width="23" height="17" viewBox="0 0 23 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19.0957 4.8H16.5957V2.8C16.5957 1.7 15.6957 0.800003 14.5957 0.800003H2.5957C1.4957 0.800003 0.595703 1.7 0.595703 2.8V11.8C0.595703 12.9 1.4957 13.8 2.5957 13.8C2.5957 15.46 3.9357 16.8 5.5957 16.8C7.2557 16.8 8.5957 15.46 8.5957 13.8H14.5957C14.5957 15.46 15.9357 16.8 17.5957 16.8C19.2557 16.8 20.5957 15.46 20.5957 13.8H21.5957C22.1457 13.8 22.5957 13.35 22.5957 12.8V9.47C22.5957 9.04 22.4557 8.62 22.1957 8.27L19.8957 5.2C19.7057 4.95 19.4057 4.8 19.0957 4.8ZM5.5957 14.8C5.0457 14.8 4.5957 14.35 4.5957 13.8C4.5957 13.25 5.0457 12.8 5.5957 12.8C6.1457 12.8 6.5957 13.25 6.5957 13.8C6.5957 14.35 6.1457 14.8 5.5957 14.8ZM19.0957 6.3L21.0557 8.8H16.5957V6.3H19.0957ZM17.5957 14.8C17.0457 14.8 16.5957 14.35 16.5957 13.8C16.5957 13.25 17.0457 12.8 17.5957 12.8C18.1457 12.8 18.5957 13.25 18.5957 13.8C18.5957 14.35 18.1457 14.8 17.5957 14.8Z" fill="var(--fgl-100)"/>
-                        </svg>
-
-                        <div class="shipment-bar bar" style="--fill: 0%"></div>
-                        <svg class="processing-icon" width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.19165 1.8C0.19165 1.24688 0.638525 0.800003 1.19165 0.800003H3.46978C4.32915 0.800003 5.09478 1.35 5.36665 2.16875L8.24478 10.8C9.1854 10.8156 10.0198 11.2656 10.5573 11.9563L16.8729 9.85C17.3979 9.675 17.9635 9.95938 18.1385 10.4813C18.3135 11.0031 18.0292 11.5719 17.5073 11.7469L11.1917 13.8531C11.1635 15.4844 9.83228 16.8 8.19165 16.8C6.5354 16.8 5.19165 15.4563 5.19165 13.8C5.19165 12.8375 5.64478 11.9813 6.3479 11.4313L3.46978 2.8H1.19165C0.638525 2.8 0.19165 2.35313 0.19165 1.8ZM7.84165 5.00313C7.66978 4.47813 7.95727 3.9125 8.48228 3.74375L9.9104 3.28125L10.5292 5.18438L12.4323 4.56563L11.8104 2.6625L13.2385 2.2C13.7635 2.02813 14.3292 2.31563 14.4979 2.84063L16.0417 7.59688C16.2135 8.12188 15.926 8.6875 15.401 8.85625L10.6448 10.4C10.1198 10.5719 9.55415 10.2844 9.3854 9.75938L7.84165 5.00313Z" fill="var(--fgl-100)"/>
-                        </svg>
-
-                        <div class="processing-bar bar" style="--fill: 0%"></div>
-                        <svg class="completed-icon" width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.5319 0.800003H2.25436C1.44683 0.800003 0.793474 1.46071 0.793474 2.26823L0.786133 11.7603C0.786133 12.2669 1.04307 12.7147 1.43215 12.9789L6.98939 16.6789C7.23899 16.8404 7.55466 16.8404 7.80426 16.6789L13.3542 12.9789C13.7432 12.7147 14.0002 12.2669 14.0002 11.7603V2.26823C14.0002 1.46071 13.3395 0.800003 12.5319 0.800003ZM12.0181 5.71856L6.44615 11.2905C6.15984 11.5768 5.69735 11.5768 5.41105 11.2905L2.77558 8.65502C2.48928 8.36871 2.48928 7.90622 2.77558 7.61992C3.06188 7.33361 3.52438 7.33361 3.81068 7.61992L5.92493 9.73416L10.9756 4.68346C11.2619 4.39716 11.7244 4.39716 12.0107 4.68346C12.297 4.96977 12.3044 5.43226 12.0181 5.71856Z" fill="var(--fgl-100)"/>
-                        </svg>
-
-
-                    </div>
-                </div>
-
-            </div>
-        }
-    </div>
-</main>
+        <div id="po-list" class="scroll-zone">
+            @for (int i = 98440; i < 98450; i++)
+            {
+            }
+        </div>
+    </main>
 </div>
 
 <script src="/js/purchase-orders.min.js" type="module"></script>
