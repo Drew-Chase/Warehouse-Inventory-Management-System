@@ -1,8 +1,8 @@
-"use strict";
-let activeFilters = 0;
+import { buildDateString } from "./calendar.js";
+let activeFilters = {};
 const resetButton = $("#reset-filters-button");
 resetButton.on("click", e => {
-    if (activeFilters == 0)
+    if (Object.keys(activeFilters).length == 0)
         return;
     $(".calendar-input").each((i, el) => {
         const target = $(el);
@@ -16,27 +16,51 @@ resetButton.on("click", e => {
         if (type == "checkbox") {
             target.prop("checked", false);
         }
-        target.val("");
+        else {
+            target.val("");
+        }
         target.removeAttr("modified");
     });
     $(".order-status-filter-item.active")
         .removeClass("active").parent().removeAttr("modified");
     $(".order-status-filter-item")[0].classList.add("active");
-    activeFilters = 0;
+    activeFilters = {};
     updateActiveFilters();
 });
 $(".calendar-input").on("change", e => {
-    if ($(e.target).attr('modified') != null)
+    const target = $(e.target);
+    const name = target.attr('name');
+    const value = target.attr('selected-date');
+    if (name == null || value == null)
         return;
-    $(e.target).attr("modified", "");
-    activeFilters++;
+    activeFilters[name] = value;
     updateActiveFilters();
 });
 $("input").on("change", e => {
-    if ($(e.target).attr('modified') != null)
+    const target = $(e.target);
+    const name = target.attr('name');
+    const value = target.val();
+    if (name == null || value == null)
         return;
-    $(e.target).attr("modified", "");
-    activeFilters++;
+    if (target.attr("type") == "checkbox") {
+        const isChecked = target.prop("checked");
+        if (isChecked) {
+            if (activeFilters[name] == null)
+                activeFilters[name] = value;
+            else
+                activeFilters[name] += `,${value}`;
+        }
+        else {
+            if (activeFilters[name] != null) {
+                activeFilters[name] = activeFilters[name].split(',').filter((x) => x != value).join(',');
+                if (activeFilters[name].length == 0)
+                    delete activeFilters[name];
+            }
+        }
+        updateActiveFilters();
+        return;
+    }
+    activeFilters[name] = value;
     updateActiveFilters();
 });
 $(".order-status-filter-item").on("click", e => {
@@ -46,18 +70,46 @@ $(".order-status-filter-item").on("click", e => {
     target.addClass("active");
     if (parent.attr('modified') == null) {
         parent.attr('modified', '');
-        activeFilters++;
-        updateActiveFilters();
     }
+    activeFilters["OrderStatus"] = target.attr("status");
+    updateActiveFilters();
 });
+function loadFilters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.forEach((value, key) => {
+        const target = $(`[name="${key}"]`);
+        if (target.attr("type") == "checkbox") {
+            const values = value.split(',');
+            values.forEach((v) => {
+                target.filter(`[value="${v}"]`).prop("checked", true);
+            });
+        }
+        else {
+            target.val(value);
+        }
+        if (target.hasClass("calendar-input")) {
+            target.attr("selected-date", value);
+            target.find(".value").html(buildDateString(new Date(Number.parseInt(value))));
+        }
+        if (target.hasClass("order-status-filter-item")) {
+            target.addClass("active");
+            target.parent().attr("modified", "");
+        }
+        activeFilters[key] = value;
+    });
+    updateActiveFilters();
+}
 function updateActiveFilters() {
-    if (activeFilters == 0) {
+    if (Object.keys(activeFilters).length == 0) {
         resetButton.find(".value").html(``);
         resetButton.addClass("disabled");
+        window.history.replaceState("", "", window.location.pathname);
     }
     else {
-        resetButton.find(".value").html(`${activeFilters.toString()}`);
+        resetButton.find(".value").html(`${Object.keys(activeFilters).length}`);
         resetButton.removeClass("disabled");
+        window.history.replaceState("", "", `?${$.param(activeFilters)}`);
     }
 }
+window.onload = () => loadFilters();
 //# sourceMappingURL=filter-panel.js.map
