@@ -45,17 +45,19 @@ $(".calendar-input").on('click', e => {
     const selectedDate = selectedDateAttribute && selectedDateAttribute > 0 ? new Date(selectedDateAttribute) : new Date();
     selectMonthYear(calendar, selectedDate.getMonth() + 1, selectedDate.getFullYear(), selectedDate.getDate());
     calendar.on('change', (_, date) => {
-        var _a, _b;
-        const dayOfWeekString = (_a = days[date.getDay()]) !== null && _a !== void 0 ? _a : "Unknown";
-        const monthString = (_b = months[date.getMonth() + 1]) !== null && _b !== void 0 ? _b : "Unknown";
-        const dayModifier = date.getDate() % 10 === 1 ? "st" : date.getDate() % 10 === 2 ? "nd" : date.getDate() % 10 === 3 ? "rd" : "th";
-        const dayString = `${date.getDate()}${dayModifier}`;
-        const dateString = `${dayOfWeekString}, ${monthString} ${dayString}, ${date.getFullYear()}`;
         input.attr('selected-date', date.getTime());
-        input.find('.value').html(dateString);
+        input.find('.value').html(buildDateString(date));
         input.trigger('change', date);
     });
 });
+function buildDateString(date) {
+    var _a, _b;
+    const dayOfWeekString = (_a = days[date.getDay()]) !== null && _a !== void 0 ? _a : "Unknown";
+    const monthString = (_b = months[date.getMonth() + 1]) !== null && _b !== void 0 ? _b : "Unknown";
+    const dayModifier = date.getDate() === 1 ? "st" : date.getDate() === 2 ? "nd" : date.getDate() === 3 ? "rd" : "th";
+    const dayString = `${date.getDate()}${dayModifier}`;
+    return `${dayOfWeekString}, ${monthString} ${dayString}, ${date.getFullYear()}`;
+}
 /**
  * Opens a calendar at the specified coordinates.
  *
@@ -233,10 +235,12 @@ function selectMonthYear(calendar, month, year, selectedDay = -1) {
                 if (day === selectedDay) {
                     dayItem.addClass('selected-day');
                 }
-                dayItem.attr('date', `${year}-${month}-${day}`);
+                let currentDate = new Date();
+                currentDate.setFullYear(year, month - 1, day);
+                dayItem.attr('date', currentDate.getTime().toString());
                 $(dayItem).on('click', e => {
                     var _a;
-                    const dateString = (_a = $(e.target).attr('date')) !== null && _a !== void 0 ? _a : "";
+                    const dateString = Number.parseInt((_a = $(e.target).attr('date')) !== null && _a !== void 0 ? _a : '0');
                     calendar.attr("selected-date", dateString);
                     calendar.attr("day", day.toString());
                     calendar.trigger('change', new Date(dateString));
@@ -341,5 +345,5 @@ function toggleYearSelector(calendar) {
         showYearSelector(calendar);
     }
 }
-export { openCalendar, selectMonthYear };
+export { openCalendar, selectMonthYear, buildDateString };
 //# sourceMappingURL=calendar.js.map

@@ -45,18 +45,20 @@ $(".calendar-input").on('click', e => {
     selectMonthYear(calendar, selectedDate.getMonth() + 1, selectedDate.getFullYear(), selectedDate.getDate());
 
     calendar.on('change', (_, date: Date) => {
-        const dayOfWeekString: string = days[date.getDay()] ?? "Unknown";
-        const monthString: string = months[date.getMonth() + 1] ?? "Unknown";
-        const dayModifier = date.getDate() % 10 === 1 ? "st" : date.getDate() % 10 === 2 ? "nd" : date.getDate() % 10 === 3 ? "rd" : "th";
-        const dayString = `${date.getDate()}${dayModifier}`;
-        const dateString = `${dayOfWeekString}, ${monthString} ${dayString}, ${date.getFullYear()}`;
 
         input.attr('selected-date', date.getTime());
-        input.find('.value').html(dateString);
+        input.find('.value').html(buildDateString(date));
         input.trigger('change', date);
     });
 })
 
+function buildDateString(date: Date): string {
+    const dayOfWeekString: string = days[date.getDay()] ?? "Unknown";
+    const monthString: string = months[date.getMonth() + 1] ?? "Unknown";
+    const dayModifier = date.getDate() === 1 ? "st" : date.getDate() === 2 ? "nd" : date.getDate() === 3 ? "rd" : "th";
+    const dayString = `${date.getDate()}${dayModifier}`;
+    return `${dayOfWeekString}, ${monthString} ${dayString}, ${date.getFullYear()}`;
+}
 
 /**
  * Opens a calendar at the specified coordinates.
@@ -240,9 +242,11 @@ function selectMonthYear(calendar: JQuery, month: months, year: number, selected
                 if (day === selectedDay) {
                     dayItem.addClass('selected-day');
                 }
-                dayItem.attr('date', `${year}-${month}-${day}`)
+                let currentDate: Date = new Date();
+                currentDate.setFullYear(year, month - 1, day);
+                dayItem.attr('date', currentDate.getTime().toString());
                 $(dayItem).on('click', e => {
-                    const dateString: string = $(e.target).attr('date') ?? "";
+                    const dateString: number = Number.parseInt($(e.target).attr('date') ?? '0');
                     calendar.attr("selected-date", dateString);
                     calendar.attr("day", day.toString());
                     calendar.trigger('change', new Date(dateString));
@@ -350,4 +354,4 @@ function toggleYearSelector(calendar: JQuery): void {
     }
 }
 
-export {openCalendar, selectMonthYear};
+export {openCalendar, selectMonthYear, buildDateString};
