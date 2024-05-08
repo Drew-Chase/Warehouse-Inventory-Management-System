@@ -1,9 +1,19 @@
 ﻿namespace Warehouse.Data.Models;
 
-public struct StatusModel(string name, string description, DateTime? started = null, DateTime? completed = null)
+public enum Status
 {
-    public string Name { get; set; } = name;
-    public string Description { get; set; } = description;
+    All,
+    ManifestReceived,
+    Shipping,
+    Processing,
+    Completed
+}
+
+public struct StatusModel(Status status, string notes, float progress, DateTime? started = null, DateTime? completed = null)
+{
+    public Status Status { get; set; } = status;
+    public string Notes { get; set; } = notes;
+    public float Progress { get; set; } = progress;
     public DateTime? Started { get; set; } = started;
     public DateTime? Completed { get; set; } = completed;
 }
