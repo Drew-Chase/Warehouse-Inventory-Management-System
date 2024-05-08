@@ -1,0 +1,113 @@
+﻿@using System.Globalization
+@using Warehouse.Data.Models
+@model Warehouse.Data.Models.PurchaseOrderModel
+
+@{
+    string purchasePrice = Model.Price switch
+    {
+        >= 1_000_000_000 => $"${Math.Round(Model.Price / 1_000_000_000, 1)}B",
+        >= 1_000_000 => $"${Math.Round(Model.Price / 1_000_000, 1)}M",
+        >= 1_000 => $"${Math.Round(Model.Price / 1_000, 1)}K",
+        _ => $"${Math.Round(Model.Price, 2)}"
+    };
+}
+
+<div class="po-item col">
+    <div class="row center vertical">
+        <div class="row po-item-header fill">
+            <span class="po-item-title">PO-@Model.Id</span>
+            <span class="vertical-divider"></span>
+            <span class="po-item-name">@Model.Name - </span>
+            <span class="po-item-vendor">@(string.Join(',', Model.Vendor.SelectMany(i => i.Name)))</span>
+        </div>
+        <div class="row additional-info">
+            <span class="price" title="@Math.Round(Model.Price, 2).ToString("C", NumberFormatInfo.CurrentInfo)">@purchasePrice</span>
+            <span class="badge paid row">
+                <svg viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 0C1.792 0 0 1.792 0 4C0 6.208 1.792 8 4 8C6.208 8 8 6.208 8 4C8 1.792 6.208 0 4 0ZM2.916 5.716L1.48 4.28C1.324 4.124 1.324 3.872 1.48 3.716C1.636 3.56 1.888 3.56 2.044 3.716L3.2 4.868L5.952 2.116C6.108 1.96 6.36 1.96 6.516 2.116C6.672 2.272 6.672 2.524 6.516 2.68L3.48 5.716C3.328 5.872 3.072 5.872 2.916 5.716Z" fill="var(--bgl-100)"/>
+                </svg>
+                <span>paid</span>
+            </span>
+            <button class="secondary outline dropdown">
+                <svg width="16" height="4" viewBox="0 0 16 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM14 0C12.9 0 12 0.9 12 2C12 3.1 12.9 4 14 4C15.1 4 16 3.1 16 2C16 0.9 15.1 0 14 0ZM8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0Z" fill="var(--fgl-100)"/>
+                </svg>
+                <div class="dropdown-body">
+                    <div class="dropdown-item">View</div>
+                    <div class="dropdown-item">Edit</div>
+                    <div class="dropdown-item">Delete</div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <div class="row po-item-metadata">
+        <span class="po-item-buyer row">
+            <i class="buyer-icon user-icon">
+                <img src="/api/buyers/@Model.Buyer[0].Id/icon" alt="icon"/>
+            </i>
+            <span class="buyer-name">@Model.Buyer[0].Name</span>
+        </span>
+        <span class="dot-separator"></span>
+        <span class="po-item-location">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.2317 0C2.6704 0 0.353027 1.96366 0.353027 5.00064C0.353027 6.93991 1.84712 9.22068 4.82921 11.8491C5.06094 12.0503 5.40855 12.0503 5.64028 11.8491C8.61627 9.22068 10.1104 6.93991 10.1104 5.00064C10.1104 1.96366 7.793 0 5.2317 0ZM5.2317 6.09834C4.56088 6.09834 4.01203 5.54949 4.01203 4.87867C4.01203 4.20785 4.56088 3.659 5.2317 3.659C5.90251 3.659 6.45136 4.20785 6.45136 4.87867C6.45136 5.54949 5.90251 6.09834 5.2317 6.09834Z" fill="var(--fgl-100)"/>
+            </svg>
+            <span class="location-name">@Model.ShippedTo.Address</span>
+        </span>
+        <span class="dot-separator"></span>
+        <span class="po-item-date">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M8.51035 0C8.18035 0 7.91035 0.27 7.91035 0.6V1.2H3.11035V0.6C3.11035 0.27 2.84035 0 2.51035 0C2.18035 0 1.91035 0.27 1.91035 0.6V1.2H1.31035C0.644352 1.2 0.116352 1.74 0.116352 2.4L0.110352 10.8C0.110352 11.46 0.644352 12 1.31035 12H9.71035C10.3704 12 10.9104 11.46 10.9104 10.8V2.4C10.9104 1.74 10.3704 1.2 9.71035 1.2H9.11035V0.6C9.11035 0.27 8.84035 0 8.51035 0ZM9.71035 10.8H1.31035V4.8H9.71035V10.8ZM4.91035 6.6C4.91035 6.27 5.18035 6 5.51035 6C5.84035 6 6.11035 6.27 6.11035 6.6C6.11035 6.93 5.84035 7.2 5.51035 7.2C5.18035 7.2 4.91035 6.93 4.91035 6.6ZM2.51035 6.6C2.51035 6.27 2.78035 6 3.11035 6C3.44035 6 3.71035 6.27 3.71035 6.6C3.71035 6.93 3.44035 7.2 3.11035 7.2C2.78035 7.2 2.51035 6.93 2.51035 6.6ZM7.31035 6.6C7.31035 6.27 7.58035 6 7.91035 6C8.24035 6 8.51035 6.27 8.51035 6.6C8.51035 6.93 8.24035 7.2 7.91035 7.2C7.58035 7.2 7.31035 6.93 7.31035 6.6ZM4.91035 9C4.91035 8.67 5.18035 8.4 5.51035 8.4C5.84035 8.4 6.11035 8.67 6.11035 9C6.11035 9.33 5.84035 9.6 5.51035 9.6C5.18035 9.6 4.91035 9.33 4.91035 9ZM2.51035 9C2.51035 8.67 2.78035 8.4 3.11035 8.4C3.44035 8.4 3.71035 8.67 3.71035 9C3.71035 9.33 3.44035 9.6 3.11035 9.6C2.78035 9.6 2.51035 9.33 2.51035 9ZM7.31035 9C7.31035 8.67 7.58035 8.4 7.91035 8.4C8.24035 8.4 8.51035 8.67 8.51035 9C8.51035 9.33 8.24035 9.6 7.91035 9.6C7.58035 9.6 7.31035 9.33 7.31035 9Z"
+                    fill="var(--fgl-100)"/>
+            </svg>
+            <span class="date">@Model.Created.ToString("M/d/yy")</span>
+        </span>
+    </div>
+
+    <div class="po-item-status col">
+        <div class="row status-header">
+            @{
+                StatusModel currentStatus = Model.Status.First(i => i.Completed == null && i.Started != null);
+                StatusModel manifestStatus = Model.Status.First(i => i.Status == Status.ManifestReceived);
+                StatusModel shippingStatus = Model.Status.First(i => i.Status == Status.Shipping);
+                StatusModel processingStatus = Model.Status.First(i => i.Status == Status.Processing);
+                string orderStatus = currentStatus.Status switch
+                {
+                    Status.ManifestReceived => "Manifest has been received",
+                    Status.Shipping => "Order is being delivered",
+                    Status.Processing => "Order is being processed",
+                    Status.Completed => "Order has been Completed!",
+                    _ => "Unknown order status"
+                };
+            }
+            <span class="status-title">@orderStatus</span>
+            <span class="status-timestamp">@currentStatus.Started</span>
+        </div>
+        <div class="status-bars row">
+            <svg class="manifest-icon" width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M18 0.0100001C17.87 0.0100001 17.74 0.06 17.65 0.16L16.86 0.95C16.66 1.15 16.35 1.15 16.15 0.95L15.36 0.16C15.16 -0.04 14.85 -0.04 14.65 0.16L13.86 0.95C13.66 1.15 13.35 1.15 13.15 0.95L12.36 0.16C12.16 -0.04 11.85 -0.04 11.65 0.16L10.86 0.95C10.66 1.15 10.35 1.15 10.15 0.95L9.36 0.16C9.16 -0.04 8.85 -0.04 8.65 0.16L7.86 0.95C7.66 1.15 7.35 1.15 7.15 0.95L6.35 0.15C6.15 -0.05 5.84 -0.05 5.64 0.15L4.85 0.95C4.65 1.15 4.34 1.15 4.14 0.95L3.35 0.15C3.15 -0.05 2.84 -0.05 2.64 0.15L1.85 0.95C1.65 1.15 1.34 1.15 1.14 0.95L0.35 0.15C0.26 0.06 0.13 0.0100001 0 0.0100001V19.6C0.13 19.6 0.26 19.55 0.35 19.45L1.14 18.66C1.34 18.46 1.65 18.46 1.85 18.66L2.64 19.45C2.84 19.65 3.15 19.65 3.35 19.45L4.14 18.66C4.34 18.46 4.65 18.46 4.85 18.66L5.64 19.45C5.84 19.65 6.15 19.65 6.35 19.45L7.14 18.66C7.34 18.46 7.65 18.46 7.85 18.66L8.64 19.45C8.84 19.65 9.15 19.65 9.35 19.45L10.14 18.66C10.34 18.46 10.65 18.46 10.85 18.66L11.64 19.45C11.84 19.65 12.15 19.65 12.35 19.45L13.14 18.66C13.34 18.46 13.65 18.46 13.85 18.66L14.64 19.45C14.84 19.65 15.15 19.65 15.35 19.45L16.14 18.66C16.34 18.46 16.65 18.46 16.85 18.66L17.64 19.45C17.74 19.55 17.87 19.6 17.99 19.6V0.0100001H18ZM14 14.8H4C3.45 14.8 3 14.35 3 13.8C3 13.25 3.45 12.8 4 12.8H14C14.55 12.8 15 13.25 15 13.8C15 14.35 14.55 14.8 14 14.8ZM14 10.8H4C3.45 10.8 3 10.35 3 9.8C3 9.25 3.45 8.8 4 8.8H14C14.55 8.8 15 9.25 15 9.8C15 10.35 14.55 10.8 14 10.8ZM14 6.8H4C3.45 6.8 3 6.35 3 5.8C3 5.25 3.45 4.8 4 4.8H14C14.55 4.8 15 5.25 15 5.8C15 6.35 14.55 6.8 14 6.8Z"
+                    fill="var(--wl000)"/>
+            </svg>
+            <div class="manifest-bar bar" style="--fill: @(manifestStatus.Progress * 100)%; --color: var(--wl000)"></div>
+            <svg class="shipping-icon" width="23" height="17" viewBox="0 0 23 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.0957 4.8H16.5957V2.8C16.5957 1.7 15.6957 0.800003 14.5957 0.800003H2.5957C1.4957 0.800003 0.595703 1.7 0.595703 2.8V11.8C0.595703 12.9 1.4957 13.8 2.5957 13.8C2.5957 15.46 3.9357 16.8 5.5957 16.8C7.2557 16.8 8.5957 15.46 8.5957 13.8H14.5957C14.5957 15.46 15.9357 16.8 17.5957 16.8C19.2557 16.8 20.5957 15.46 20.5957 13.8H21.5957C22.1457 13.8 22.5957 13.35 22.5957 12.8V9.47C22.5957 9.04 22.4557 8.62 22.1957 8.27L19.8957 5.2C19.7057 4.95 19.4057 4.8 19.0957 4.8ZM5.5957 14.8C5.0457 14.8 4.5957 14.35 4.5957 13.8C4.5957 13.25 5.0457 12.8 5.5957 12.8C6.1457 12.8 6.5957 13.25 6.5957 13.8C6.5957 14.35 6.1457 14.8 5.5957 14.8ZM19.0957 6.3L21.0557 8.8H16.5957V6.3H19.0957ZM17.5957 14.8C17.0457 14.8 16.5957 14.35 16.5957 13.8C16.5957 13.25 17.0457 12.8 17.5957 12.8C18.1457 12.8 18.5957 13.25 18.5957 13.8C18.5957 14.35 18.1457 14.8 17.5957 14.8Z" fill="var(--fgl-100)"/>
+            </svg>
+
+            <div class="shipment-bar bar" style="--fill: @(shippingStatus.Progress * 100)%"></div>
+            <svg class="processing-icon" width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.19165 1.8C0.19165 1.24688 0.638525 0.800003 1.19165 0.800003H3.46978C4.32915 0.800003 5.09478 1.35 5.36665 2.16875L8.24478 10.8C9.1854 10.8156 10.0198 11.2656 10.5573 11.9563L16.8729 9.85C17.3979 9.675 17.9635 9.95938 18.1385 10.4813C18.3135 11.0031 18.0292 11.5719 17.5073 11.7469L11.1917 13.8531C11.1635 15.4844 9.83228 16.8 8.19165 16.8C6.5354 16.8 5.19165 15.4563 5.19165 13.8C5.19165 12.8375 5.64478 11.9813 6.3479 11.4313L3.46978 2.8H1.19165C0.638525 2.8 0.19165 2.35313 0.19165 1.8ZM7.84165 5.00313C7.66978 4.47813 7.95727 3.9125 8.48228 3.74375L9.9104 3.28125L10.5292 5.18438L12.4323 4.56563L11.8104 2.6625L13.2385 2.2C13.7635 2.02813 14.3292 2.31563 14.4979 2.84063L16.0417 7.59688C16.2135 8.12188 15.926 8.6875 15.401 8.85625L10.6448 10.4C10.1198 10.5719 9.55415 10.2844 9.3854 9.75938L7.84165 5.00313Z" fill="var(--fgl-100)"/>
+            </svg>
+
+            <div class="processing-bar bar" style="--fill: @(processingStatus.Progress * 100)%"></div>
+            <svg class="completed-icon" width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.5319 0.800003H2.25436C1.44683 0.800003 0.793474 1.46071 0.793474 2.26823L0.786133 11.7603C0.786133 12.2669 1.04307 12.7147 1.43215 12.9789L6.98939 16.6789C7.23899 16.8404 7.55466 16.8404 7.80426 16.6789L13.3542 12.9789C13.7432 12.7147 14.0002 12.2669 14.0002 11.7603V2.26823C14.0002 1.46071 13.3395 0.800003 12.5319 0.800003ZM12.0181 5.71856L6.44615 11.2905C6.15984 11.5768 5.69735 11.5768 5.41105 11.2905L2.77558 8.65502C2.48928 8.36871 2.48928 7.90622 2.77558 7.61992C3.06188 7.33361 3.52438 7.33361 3.81068 7.61992L5.92493 9.73416L10.9756 4.68346C11.2619 4.39716 11.7244 4.39716 12.0107 4.68346C12.297 4.96977 12.3044 5.43226 12.0181 5.71856Z" fill="var(--fgl-100)"/>
+            </svg>
+
+
+        </div>
+    </div>
+
+</div>
