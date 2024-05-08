@@ -41,4 +41,8 @@
       <ProjectReference Include="..\Warehouse.SQL\Warehouse.SQL.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Pages\Shared\Components\" />
+    </ItemGroup>
+
 </Project>
