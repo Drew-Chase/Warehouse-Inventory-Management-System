@@ -2,15 +2,15 @@
     position: relative;
     background-color: var(--bgl100);
     border-radius: 20px;
-    padding: 1rem;
-    padding-right: 5px;
+    padding: 1rem 5px 1rem 1rem;
     overflow: auto;
     margin: 1rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 
     &#filters-panel {
-        width: 400px;
+        width: 20vw;
         min-width: 400px;
+        max-width: 700px;
         height: 100vh;
         max-height: calc(100dvh - 200px);
 
@@ -178,6 +178,10 @@
 
             .order-status-filter-item-title {
                 font-size: 1rem;
+                max-width: calc(100% - 1rem);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .badge {
@@ -437,6 +441,7 @@ main#content {
 
                     span {
                         margin-bottom: 4px;
+                        white-space: nowrap;
                     }
 
                     svg {
