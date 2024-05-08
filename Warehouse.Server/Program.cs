@@ -63,8 +63,8 @@ internal static class Program
             }
         };
 
-        // Initialize the database
-        ManagedDatabase.Initialize();
+        LocationManager.Init();
+        VendorManager.Init();
 
         app.Run($"http://localhost:{ApplicationConfiguration.Instance.Port}");
     }
