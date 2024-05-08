@@ -31,7 +31,8 @@ var days;
     days[days["Friday"] = 5] = "Friday";
     days[days["Saturday"] = 6] = "Saturday";
 })(days || (days = {}));
-$(".calendar-input").on('click', e => {
+$(".calendar-input").off('click')
+    .on('click', e => {
     var _a, _b, _c, _d, _e, _f;
     const input = $(e.currentTarget);
     const x = (_b = (_a = input.offset()) === null || _a === void 0 ? void 0 : _a.left) !== null && _b !== void 0 ? _b : e.clientX;

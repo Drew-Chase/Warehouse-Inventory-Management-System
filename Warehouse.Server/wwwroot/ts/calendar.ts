@@ -31,26 +31,27 @@ enum days {
     Saturday = 6
 }
 
-$(".calendar-input").on('click', e => {
-    const input = $(e.currentTarget);
-    const x: number = input.offset()?.left ?? e.clientX;
-    let y: number = (input.offset()?.top ?? -1) + (input.height() ?? -1);
+$(".calendar-input").off('click')
+    .on('click', e => {
+        const input = $(e.currentTarget);
+        const x: number = input.offset()?.left ?? e.clientX;
+        let y: number = (input.offset()?.top ?? -1) + (input.height() ?? -1);
 
-    if (y <= 0) y = e.clientY;
-    else y += 16; // Add some padding to the top of the calendar
-    const calendar = openCalendar(x, y);
+        if (y <= 0) y = e.clientY;
+        else y += 16; // Add some padding to the top of the calendar
+        const calendar = openCalendar(x, y);
 
-    const selectedDateAttribute: number = Number.parseInt(input.attr('selected-date') ?? '-1');
-    const selectedDate = selectedDateAttribute && selectedDateAttribute > 0 ? new Date(selectedDateAttribute) : new Date();
-    selectMonthYear(calendar, selectedDate.getMonth() + 1, selectedDate.getFullYear(), selectedDate.getDate());
+        const selectedDateAttribute: number = Number.parseInt(input.attr('selected-date') ?? '-1');
+        const selectedDate = selectedDateAttribute && selectedDateAttribute > 0 ? new Date(selectedDateAttribute) : new Date();
+        selectMonthYear(calendar, selectedDate.getMonth() + 1, selectedDate.getFullYear(), selectedDate.getDate());
 
-    calendar.on('change', (_, date: Date) => {
+        calendar.on('change', (_, date: Date) => {
 
-        input.attr('selected-date', date.getTime());
-        input.find('.value').html(buildDateString(date));
-        input.trigger('change', date);
-    });
-})
+            input.attr('selected-date', date.getTime());
+            input.find('.value').html(buildDateString(date));
+            input.trigger('change', date);
+        });
+    })
 
 function buildDateString(date: Date): string {
     const dayOfWeekString: string = days[date.getDay()] ?? "Unknown";
