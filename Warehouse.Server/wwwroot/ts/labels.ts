@@ -65,17 +65,15 @@ function show(element: JQuery<Node>) {
     if (element.offset() == null || element.width() == null || label.width() == null || element.height() == null) return;
     const offset: JQuery.Coordinates = element.offset() ?? {top: 0, left: 0};
     const width: number = element.width() ?? 0;
-    const height: number = element.height() ?? 0;
+    const height: number = element.outerHeight(true) ?? 0;
     const labelWidth: number = (label.width() ?? 0) + 32; // 32 is the horizontal padding of the label
     const labelHeight: number = (label.height() ?? 0) + 16; // 16 is the vertical padding of the label
     const scrollY: number = window.scrollY;
-
-    let x: number = mouseX - (labelWidth / 2);
-    // let x: number = offset.left + width / 2 - labelWidth / 2
-    let y: number = offset.top + height - scrollY;
+    let x = width <= labelWidth * 2 ? offset.left + width / 2 - labelWidth / 2 : mouseX - (labelWidth / 2);
+    let y: number = (offset.top + height + 16) - scrollY;
 
     // Check if the "label" would exceed the right boundary of the window, if so adjust the x position.
-    console.log(labelWidth, x, x + labelWidth, window.innerWidth)
+    // console.log(labelWidth, x, x + labelWidth, window.innerWidth)
     if (x + labelWidth >= window.innerWidth) {
         x = window.innerWidth - labelWidth - 10
     }
