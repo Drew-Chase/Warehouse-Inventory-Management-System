@@ -1,36 +1,71 @@
-import React from "react";
-import {Link, NavbarMenu, NavbarMenuItem, NavbarMenuToggle} from "@nextui-org/react";
+import React, {ReactElement} from "react";
+import {Button, Image, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Tooltip} from "@nextui-org/react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/navbar";
 import ThemeSwitcher from "./ThemeSwitcher.tsx";
+import logo from "../images/logo.svg";
+import {useNavigate} from "react-router-dom";
+import DashboardIcon from "../images/DashboardIcon.tsx";
+
+interface Page
+{
+    name: string;
+    url: string;
+    icon?: ReactElement;
+}
 
 export default function Navigation()
 {
+    const navigate = useNavigate();
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const pages = {
-        "Home": "/",
-        "About": "/about"
-    };
-    const menuItems = Object.keys(pages).map((item, index) =>
+    const pages: Page[] = [
+        {
+            name: "Dashboard",
+            url: "/app/",
+            icon: <DashboardIcon/>
+        },
+        {
+            name: "Purchases",
+            url: "/app/purchases"
+        },
+        {
+            name: "Inventory",
+            url: "/app/inventory"
+        },
+        {
+            name: "Vendors",
+            url: "/app/vendors"
+        }
+    ];
+    const menuItems = pages.map((item, index) =>
     {
-        const url = Object.values(pages)[index];
-        const isCurrentPage = window.location.pathname === url;
+        const isCurrentPage = window.location.pathname === item.url;
         return (
             <NavbarMenuItem key={`${item}-${index}`}>
-                <Link href={url} color={isCurrentPage ? "primary" : "foreground"} aria-current="page" size="lg" className="w-full">
-                    {item}
-                </Link>
+                <Button
+                    href={item.url}
+                    aria-current={isCurrentPage}
+                    size="lg"
+                    className="w-full bg-background-L-100"
+                    radius={"full"}
+                    startContent={item.icon ?? <></>}
+                    onClick={() => navigate(item.url)}
+                >
+                    {item.name}
+                </Button>
             </NavbarMenuItem>
         );
     });
 
 
     return (
-        <Navbar onMenuOpenChange={setIsMenuOpen}>
+        <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth={"full"}>
             <NavbarContent>
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden"/>
                 <NavbarBrand>
-                    <p className="font-bold text-inherit">Example</p>
+                    <Tooltip delay={1000} content={"Navigate Home"}>
+                        <Image onClick={() => navigate("/")} src={logo} className={"rounded-none cursor-pointer hover:scale-105"}/>
+                    </Tooltip>
                 </NavbarBrand>
             </NavbarContent>
 
