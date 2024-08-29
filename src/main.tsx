@@ -6,9 +6,9 @@ import {NextUIProvider} from "@nextui-org/react";
 
 import "./assets/scss/index.scss";
 import Home from "./assets/pages/Home.tsx";
-import About from "./assets/pages/About.tsx";
 import Navigation from "./assets/components/Navigation.tsx";
 import {applyTheme} from "./assets/ts/Theme.ts";
+import Login from "./assets/pages/Login.tsx";
 
 
 ReactDOM.createRoot($("#root")[0]!).render(
@@ -28,8 +28,8 @@ export function MainContentRenderer()
             <Navigation/>
             <Routes>
                 <Route>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/about" element={<About/>}/>
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="/app/" element={<Home/>}/>
                 </Route>
             </Routes>
         </NextUIProvider>
