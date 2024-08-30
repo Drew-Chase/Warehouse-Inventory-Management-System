@@ -1,16 +1,21 @@
-import React, {ReactElement} from "react";
-import {Button, Image, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Tooltip} from "@nextui-org/react";
+import React, {ReactNode} from "react";
+import {Badge, Button, Image, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Tooltip} from "@nextui-org/react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/navbar";
-import ThemeSwitcher from "./ThemeSwitcher.tsx";
 import logo from "../images/logo.svg";
 import {useNavigate} from "react-router-dom";
-import DashboardIcon from "../images/DashboardIcon.tsx";
+import DashboardIcon from "../images/icons/DashboardIcon.tsx";
+import PurchasesIcon from "../images/icons/PurchasesIcon.tsx";
+import InventoryIcon from "../images/icons/InventoryIcon.tsx";
+import VendorIcon from "../images/icons/VendorIcon.tsx";
+import GearIcon from "../images/icons/GearIcon.tsx";
+import NotificationIcon from "../images/icons/NotificationIcon.tsx";
+import AccountDropdown from "./AccountDropdown.tsx";
 
 interface Page
 {
     name: string;
     url: string;
-    icon?: ReactElement;
+    icon: (props: { isCurrentPage: boolean }) => ReactNode;
 }
 
 export default function Navigation()
@@ -22,19 +27,30 @@ export default function Navigation()
         {
             name: "Dashboard",
             url: "/app/",
-            icon: <DashboardIcon/>
+            icon: ({isCurrentPage}) => (
+                <DashboardIcon fill={isCurrentPage ? "hsl(var(--nextui-primary-L000))" : "hsl(0, 0%, 50%)"}/>
+            )
         },
         {
             name: "Purchases",
-            url: "/app/purchases"
+            url: "/app/purchases",
+            icon: ({isCurrentPage}) => (
+                <PurchasesIcon fill={isCurrentPage ? "hsl(var(--nextui-primary-L000))" : "hsl(0, 0%, 50%)"}/>
+            )
         },
         {
             name: "Inventory",
-            url: "/app/inventory"
+            url: "/app/inventory",
+            icon: ({isCurrentPage}) => (
+                <InventoryIcon fill={isCurrentPage ? "hsl(var(--nextui-primary-L000))" : "hsl(0, 0%, 50%)"}/>
+            )
         },
         {
             name: "Vendors",
-            url: "/app/vendors"
+            url: "/app/vendors",
+            icon: ({isCurrentPage}) => (
+                <VendorIcon fill={isCurrentPage ? "hsl(var(--nextui-primary-L000))" : "hsl(0, 0%, 50%)"}/>
+            )
         }
     ];
     const menuItems = pages.map((item, index) =>
@@ -46,9 +62,14 @@ export default function Navigation()
                     href={item.url}
                     aria-current={isCurrentPage}
                     size="lg"
-                    className="w-full bg-background-L-100"
+                    variant={isCurrentPage ? "flat" : "ghost"}
+                    className="w-full bg-background-L-100 hover:!text-white hover:!bg-background-L200 hover:!border-transparent"
+                    style={{
+                        color: isCurrentPage ? "hsl(0, 0%, 100%)" : "hsl(0, 0%, 50%)",
+                        backgroundColor: isCurrentPage ? "hsl(var(--nextui-background-L200))" : "transparent"
+                    }}
                     radius={"full"}
-                    startContent={item.icon ?? <></>}
+                    startContent={item.icon({isCurrentPage})}
                     onClick={() => navigate(item.url)}
                 >
                     {item.name}
@@ -59,7 +80,7 @@ export default function Navigation()
 
 
     return (
-        <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth={"full"}>
+        <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth={"full"} className={"bg-transparent"} isBlurred={false} position={"static"}>
             <NavbarContent>
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden"/>
                 <NavbarBrand>
@@ -68,18 +89,40 @@ export default function Navigation()
                     </Tooltip>
                 </NavbarBrand>
             </NavbarContent>
+            {
+                window.location.pathname === "/app/" && (
+                    <>
+                        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+                            {menuItems}
+                        </NavbarContent>
+                        <NavbarContent justify="end">
+                            <NavbarItem>
+                                <Tooltip content={"Open Settings"}>
+                                    <Button className={"bg-background-L200 text-foreground-L-100 w-[2.5rem] h-[2.5rem] p-0 min-w-0 aspect-square"}>
+                                        <GearIcon/>
+                                    </Button>
+                                </Tooltip>
+                            </NavbarItem>
+                            <NavbarItem>
+                                <Tooltip content={"Open Notifications"}>
+                                    <Button className={"bg-background-L200 text-foreground-L-100 w-[2.5rem] h-[2.5rem] p-0 min-w-0 aspect-square"}>
+                                        <Badge className={"bg-accent-L000 aspect-square"}>
+                                            <NotificationIcon/>
+                                        </Badge>
+                                    </Button>
+                                </Tooltip>
+                            </NavbarItem>
+                            <NavbarItem>
+                                <AccountDropdown/>
+                            </NavbarItem>
+                        </NavbarContent>
 
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
-                {menuItems}
-            </NavbarContent>
-            <NavbarContent justify="end">
-                <NavbarItem>
-                    <ThemeSwitcher/>
-                </NavbarItem>
-            </NavbarContent>
-
-            <NavbarMenu>
-                {menuItems}
-            </NavbarMenu>
-        </Navbar>);
+                        <NavbarMenu>
+                            {menuItems}
+                        </NavbarMenu>
+                    </>
+                )
+            }
+        </Navbar>
+    );
 }
