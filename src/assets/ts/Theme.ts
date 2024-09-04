@@ -12,9 +12,9 @@ import $ from "jquery";
  */
 export enum Theme
 {
-    default,
-    light,
-    dark
+    default = "default",
+    light = "light",
+    dark = "dark"
 }
 
 /**
@@ -26,7 +26,20 @@ export enum Theme
  */
 export function applyTheme(theme: Theme = Theme.default): void
 {
-    const name: string = theme == Theme.light ? "light" : theme == Theme.dark ? "dark" : (localStorage.getItem("theme") ?? "light");
+    let name: string;
+    switch (theme)
+    {
+        case Theme.light:
+            name = "light";
+            break;
+        case Theme.dark:
+            name = "dark";
+            break;
+        case Theme.default:
+        default:
+            name = getSystemTheme();
+            break;
+    }
     localStorage.setItem("theme", name);
     $("html").removeClass("dark").removeClass("light").addClass(name);
 }
@@ -48,4 +61,10 @@ export function getCurrentTheme(): Theme
         default:
             return Theme.light;
     }
+}
+
+export function getSystemTheme(): Theme
+{
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return systemPrefersDark ? Theme.dark : Theme.light;
 }
