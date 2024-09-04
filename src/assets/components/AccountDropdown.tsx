@@ -1,11 +1,15 @@
 import {Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Select, SelectItem, Tooltip, User} from "@nextui-org/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import Authentication from "../ts/Authentication.ts";
+import {useNavigate} from "react-router-dom";
+import {applyTheme, getCurrentTheme, Theme} from "../ts/Theme.ts";
 
 export default function AccountDropdown()
 {
+    const navigate = useNavigate();
     return (
-        <Dropdown classNames={{content: "bg-background-L200"}}>
+        <Dropdown classNames={{content: "dark:bg-background-L200 bg-background-L-100"}}>
             <DropdownTrigger>
                 <div>
                     <Tooltip content={"Open Profile"}>
@@ -20,7 +24,7 @@ export default function AccountDropdown()
                 itemClasses={{
                     base: [
                         "rounded-md",
-                        "text-default-500",
+                        "text-default-800 dark:text-default-500",
                         "transition-opacity",
                         "data-[hover=true]:text-foreground",
                         "data-[hover=true]:bg-background-L100",
@@ -82,11 +86,12 @@ export default function AccountDropdown()
                             name="theme"
                             size={"sm"}
                             label={"Theme"}
-                            defaultSelectedKeys={["System"]}
+                            defaultSelectedKeys={[getCurrentTheme()]}
+                            onChange={(e) => applyTheme(e.target.value as Theme)}
                         >
-                            <SelectItem key={"System"}>System</SelectItem>
-                            <SelectItem key={"Dark"}>Dark</SelectItem>
-                            <SelectItem key={"Light"}>Light</SelectItem>
+                            <SelectItem key={"default"}>System</SelectItem>
+                            <SelectItem key={"dark"}>Dark</SelectItem>
+                            <SelectItem key={"light"}>Light</SelectItem>
                         </Select>
                     </DropdownItem>
                 </DropdownSection>
@@ -95,7 +100,11 @@ export default function AccountDropdown()
                     <DropdownItem key="help_and_feedback">
                         Help & Feedback
                     </DropdownItem>
-                    <DropdownItem key="logout" color={"danger"} href={"/"}>Log Out</DropdownItem>
+                    <DropdownItem key="logout" color={"danger"} onClick={() =>
+                    {
+                        Authentication.getInstance().logout();
+                        navigate("/");
+                    }}>Log Out</DropdownItem>
                 </DropdownSection>
             </DropdownMenu>
         </Dropdown>
