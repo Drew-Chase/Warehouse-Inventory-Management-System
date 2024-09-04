@@ -1,19 +1,68 @@
-import {Button, Card, CardBody, CardHeader, cn, Divider, Input, Switch} from "@nextui-org/react";
+import {Button, Card, CardBody, CardHeader, cn, Input, Switch} from "@nextui-org/react";
 import {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faEye, faEyeSlash, faKey} from "@fortawesome/free-solid-svg-icons";
-import WithOAuth, {OAuthMethods} from "../components/OAuth/WithOAuth.tsx";
+import Authentication from "../ts/Authentication.ts";
+import {useNavigate} from "react-router-dom";
+import {debug_mode} from "../../main.tsx";
 
 export default function Login()
 {
     document.title = "Login - Warehouse Management System";
 
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
 
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [usernameError, setUsernameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+    const resetErrors = () =>
+    {
+        setUsernameError("");
+        setPasswordError("");
+        setError("");
+    };
+
+    const login = async () =>
+    {
+        if (isLoggingIn) return;
+        resetErrors();
+        if (!username || !password)
+        {
+            if (!username) setUsernameError("Username is required");
+            if (!password) setPasswordError("Password is required");
+            return;
+        }
+        setIsLoggingIn(true);
+        if (debug_mode)
+        {
+            console.log("Logging in", {username, password, rememberMe});
+            navigate("/app/");
+            setIsLoggingIn(false);
+            return;
+
+        }
+        const response = await Authentication.getInstance().login(username, password, rememberMe);
+        if (typeof response === "string")
+        {
+            setUsernameError("Invalid username");
+            setPasswordError("Invalid password");
+            setError(response);
+        }
+        if (typeof response === "object" && response.token) navigate("/app/");
+
+        setIsLoggingIn(false);
+    };
 
     return (
         <Card
-            className={"flex flex-col w-1/3 max-w-[800px] min-w-[400px] mx-auto mt-8 justify-center px-8 py-4"}
+            className={"flex flex-col w-1/3 max-w-[800px] min-w-[400px] mx-auto mt-10 justify-center px-8 py-4"}
         >
             <CardHeader><h1>Login</h1></CardHeader>
             <CardBody>
@@ -24,6 +73,11 @@ export default function Login()
                         type={"text"}
                         startContent={<FontAwesomeIcon icon={faEnvelope} opacity={.5}/>}
                         autoComplete={"username webauthn"}
+                        value={username}
+                        onValueChange={setUsername}
+                        isInvalid={!!usernameError}
+                        errorMessage={usernameError}
+                        onKeyUp={(e) => e.key === "Enter" && login()}
                     />
                     <Input
                         label={"Password"}
@@ -39,6 +93,11 @@ export default function Login()
                                 className={"cursor-pointer"}
                             />
                         }
+                        value={password}
+                        onValueChange={setPassword}
+                        isInvalid={!!passwordError}
+                        errorMessage={passwordError}
+                        onKeyUp={(e) => e.key === "Enter" && login()}
                     />
                     <Switch
                         classNames={{
@@ -57,6 +116,8 @@ export default function Login()
                                 "group-data-[selected]:group-data-[pressed]:ml-4"
                             )
                         }}
+                        isSelected={rememberMe}
+                        onValueChange={setRememberMe}
                     >
                         <div className="flex flex-col gap-1">
                             <p className="text-medium">Remember Me?</p>
@@ -65,42 +126,8 @@ export default function Login()
                             </p>
                         </div>
                     </Switch>
-                    <Button radius={"lg"} color={"primary"}>Log In</Button>
-                </div>
-                <div className={"flex flex-row my-8 mx-auto w-1/3 gap-4 items-center justify-center"}>
-                    <Divider className={"w-full"}/>
-                    <p className={"opacity-50 text-tiny"}>OR</p>
-                    <Divider className={"w-full"}/>
-                </div>
-                <div className={"w-full flex flex-col gap-4"}>
-                    <WithOAuth
-                        color={"brand"}
-                        method={OAuthMethods.GOOGLE}
-                        onSuccess={
-                            res =>
-                            {
-                            }
-                        }
-                        onError={
-                            () =>
-                            {
-                            }
-                        }
-                    />
-                    <WithOAuth
-                        color={"brand"}
-                        method={OAuthMethods.GITHUB}
-                        onSuccess={
-                            res =>
-                            {
-                            }
-                        }
-                        onError={
-                            () =>
-                            {
-                            }
-                        }
-                    />
+                    {error && <p className={"text-danger"}><strong>Error:</strong> {error}</p>}
+                    <Button radius={"lg"} color={"primary"} isLoading={isLoggingIn} onClick={login}>Log In</Button>
                 </div>
             </CardBody>
 
