@@ -1,15 +1,20 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import $ from "jquery";
 import {NextUIProvider} from "@nextui-org/react";
 
 import "./assets/scss/index.scss";
-import Home from "./assets/pages/Home.tsx";
+import Dashboard from "./assets/pages/Dashboard.tsx";
 import Navigation from "./assets/components/Navigation.tsx";
-import {applyTheme} from "./assets/ts/Theme.ts";
+import {applyTheme, getCurrentTheme} from "./assets/ts/Theme.ts";
 import Login from "./assets/pages/Login.tsx";
+import Authentication from "./assets/ts/Authentication.ts";
+import Purchases from "./assets/pages/Purchases.tsx";
 
+export const debug_mode = true;
+
+export const api_domain = "http://localhost:1420";
 
 ReactDOM.createRoot($("#root")[0]!).render(
     <React.StrictMode>
@@ -21,15 +26,37 @@ ReactDOM.createRoot($("#root")[0]!).render(
 
 export function MainContentRenderer()
 {
-    applyTheme();
+    applyTheme(getCurrentTheme());
     const navigate = useNavigate();
+    if (!debug_mode)
+    {
+        useEffect(() =>
+        {
+            Authentication.getInstance().login_with_cookies().then(res =>
+            {
+                if (res.token)
+                {
+                    console.log("Logged in with cookies", res);
+                    if (!window.location.pathname.startsWith("/app/"))
+                    {
+                        navigate("/app/");
+                    }
+                } else
+                {
+                    console.log("No token found in cookies");
+                    if (window.location.pathname.startsWith("/app/")) navigate("/");
+                }
+            });
+        }, []);
+    }
     return (
         <NextUIProvider navigate={navigate}>
             <Navigation/>
             <Routes>
                 <Route>
                     <Route path="/" element={<Login/>}/>
-                    <Route path="/app/" element={<Home/>}/>
+                    <Route path="/app/" element={<Dashboard/>}/>
+                    <Route path={"/app/purchases"} element={<Purchases/>}/>
                 </Route>
             </Routes>
         </NextUIProvider>
