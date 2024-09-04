@@ -1,7 +1,6 @@
 import React, {ReactNode} from "react";
-import {Badge, Button, Image, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Tooltip} from "@nextui-org/react";
+import {Badge, Button, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Tooltip} from "@nextui-org/react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/navbar";
-import logo from "../images/logo.svg";
 import {useNavigate} from "react-router-dom";
 import DashboardIcon from "../images/icons/DashboardIcon.tsx";
 import PurchasesIcon from "../images/icons/PurchasesIcon.tsx";
@@ -10,6 +9,7 @@ import VendorIcon from "../images/icons/VendorIcon.tsx";
 import GearIcon from "../images/icons/GearIcon.tsx";
 import NotificationIcon from "../images/icons/NotificationIcon.tsx";
 import AccountDropdown from "./AccountDropdown.tsx";
+import Logo from "../images/Logo.tsx";
 
 interface Page
 {
@@ -84,13 +84,13 @@ export default function Navigation()
             <NavbarContent>
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden"/>
                 <NavbarBrand>
-                    <Tooltip delay={1000} content={"Navigate Home"}>
-                        <Image onClick={() => navigate("/")} src={logo} className={"rounded-none cursor-pointer hover:scale-105"}/>
+                    <Tooltip delay={1000} content={"Navigate Dashboard"}>
+                        <Logo fill={"hsl(var(--nextui-foreground-L000))"}/>
                     </Tooltip>
                 </NavbarBrand>
             </NavbarContent>
             {
-                window.location.pathname === "/app/" && (
+                window.location.pathname.startsWith("/app/") && (
                     <>
                         <NavbarContent className="hidden sm:flex gap-4" justify="center">
                             {menuItems}
@@ -99,7 +99,7 @@ export default function Navigation()
                             <NavbarItem>
                                 <Tooltip content={"Open Settings"}>
                                     <Button className={"bg-background-L200 text-foreground-L-100 w-[2.5rem] h-[2.5rem] p-0 min-w-0 aspect-square"}>
-                                        <GearIcon/>
+                                        <GearIcon fill={"hsl(var(--nextui-foreground-L000))"}/>
                                     </Button>
                                 </Tooltip>
                             </NavbarItem>
@@ -107,7 +107,7 @@ export default function Navigation()
                                 <Tooltip content={"Open Notifications"}>
                                     <Button className={"bg-background-L200 text-foreground-L-100 w-[2.5rem] h-[2.5rem] p-0 min-w-0 aspect-square"}>
                                         <Badge className={"bg-accent-L000 aspect-square"}>
-                                            <NotificationIcon/>
+                                            <NotificationIcon fill={"hsl(var(--nextui-foreground-L000))"}/>
                                         </Badge>
                                     </Button>
                                 </Tooltip>
