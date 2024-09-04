@@ -8,22 +8,80 @@ export default {
         "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
     ],
     theme:    {
-        extend: {},
+        extend: {
+            backgroundImage: theme => ({
+                'gradient-to-b': 'linear-gradient(to bottom, var(--tw-gradient-stops))',
+            }),
+            colors:          {
+                dark: {
+                    from: '#031117',
+                    to:   '#020A0D',
+                },
+            },
+        },
+    },
+    variants: {
+        extend: {
+            backgroundImage: ['dark'],
+        },
     },
     darkMode: "class",
     plugins:  [
         nextui({
             themes: {
                 light: {
-                    colors: {
-                        primary:    {
-                            DEFAULT:    "#30f28c",
-                            foreground: "#fff",
+                    "colors": {
+                        "white":      "#000000",
+                        "black":      "#ffffff",
+                        "background": {
+                            DEFAULT:    "#ffffff",
+                            foreground: "#000000",
+                            "L-200":    "#f3f4f6",
+                            "L-100":    "#e5e7eb",
+                            "L000":     "#ffffff",
+                            "L100":     "#d1d5db",
+                            "L200":     "#9ca3af",
+                            "L300": "#dee6e6",
+                            "L400": "#c2d1d3"
                         },
-                        secondary:  "#141e22",
-                        background: "#e3e3ea",
-
-                    }
+                        "primary":    {
+                            DEFAULT:    "#30f28c",
+                            foreground: "#000000",
+                            "L-200":    "#207946",
+                            "L-100":    "#258d52",
+                            "L000":     "#39db7d",
+                            "L100":     "#3cf388",
+                            "L200":     "#52f495"
+                        },
+                        "warning":    {
+                            "L-200": "#ffcc00",
+                            "L-100": "#ffc107",
+                            "L000":  "#ffeb3b",
+                            "L100":  "#fff176",
+                            "L200":  "#fff590"
+                        },
+                        "info":       {
+                            "L-200": "#17a2b8",
+                            "L-100": "#1ea7d7",
+                            "L000":  "#51c4d3",
+                            "L100":  "#81d8e3",
+                            "L200":  "#95e2ed"
+                        },
+                        "accent":     {
+                            "L-200": "#fd7e14",
+                            "L-100": "#ff9105",
+                            "L000":  "#ffb347",
+                            "L100":  "#ffcc80",
+                            "L200":  "#ffe0b3"
+                        },
+                        "foreground": {
+                            "L-200": "#434343",
+                            "L-100": "#4f4f4f",
+                            "L000":  "#000000",
+                            "L100":  "#222222",
+                            "L200":  "#5c5c5c"
+                        }
+                    },
                 },
                 dark:  {
                     "colors": {
@@ -37,15 +95,18 @@ export default {
                             "L000":     "#141e22",
                             "L100":     "#1a262d",
                             "L200":     "#202e36",
+                            "L300":     "#031117",
+                            "L400":     "#020A0D"
                         },
                         "primary":    {
                             DEFAULT:    "#30f28c",
                             foreground: "#141e22",
+                            "L-300":    "#27423e",
                             "L-200":    "#207946",
                             "L-100":    "#258d52",
                             "L000":     "#39db7d",
                             "L100":     "#3cf388",
-                            "L200":     "#52f495"
+                            "L200":     "#52f495",
                         },
                         "warning":    {
                             "L-200": "#ff9105",
