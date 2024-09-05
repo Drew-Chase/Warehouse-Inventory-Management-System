@@ -41,8 +41,8 @@ export default {
                             "L000":     "#ffffff",
                             "L100":     "#d1d5db",
                             "L200":     "#9ca3af",
-                            "L300": "#dee6e6",
-                            "L400": "#c2d1d3"
+                            "L300":     "#dee6e6",
+                            "L400":     "#c2d1d3"
                         },
                         "primary":    {
                             DEFAULT:    "#30f28c",
@@ -85,9 +85,11 @@ export default {
                 },
                 dark:  {
                     "colors": {
-                        "white":      "#ffffff",
-                        "black":      "#000000",
-                        "background": {
+                        "white":       "#ffffff",
+                        "black":       "#000000",
+                        "content1":    {DEFAULT: "#1a262d", foreground: "#ffffff"},
+                        "default-100": {DEFAULT: "#141e22", foreground: "#ffffff"},
+                        "background":  {
                             DEFAULT:    "#141e22",
                             foreground: "#ffffff",
                             "L-200":    "#070b0d",
@@ -98,7 +100,7 @@ export default {
                             "L300":     "#031117",
                             "L400":     "#020A0D"
                         },
-                        "primary":    {
+                        "primary":     {
                             DEFAULT:    "#30f28c",
                             foreground: "#141e22",
                             "L-300":    "#27423e",
@@ -108,28 +110,28 @@ export default {
                             "L100":     "#3cf388",
                             "L200":     "#52f495",
                         },
-                        "warning":    {
+                        "warning":     {
                             "L-200": "#ff9105",
                             "L-100": "#ff9d1f",
                             "L000":  "#ffb454",
                             "L100":  "#f0c082",
                             "L200":  "#f3ca96"
                         },
-                        "info":       {
+                        "info":        {
                             "L-200": "#1a90d1",
                             "L-100": "#219fe4",
                             "L000":  "#4db2e9",
                             "L100":  "#81c9f1",
                             "L200":  "#95d2f3"
                         },
-                        "accent":     {
+                        "accent":      {
                             "L-200": "#536b0a",
                             "L-100": "#65820d",
                             "L000":  "#c7ee52",
                             "L100":  "#ceff3c",
                             "L200":  "#d5ff57"
                         },
-                        "foreground": {
+                        "foreground":  {
                             "L-200": "#afb6b6",
                             "L-100": "#bdc2c2",
                             "L000":  "#ffffff",
