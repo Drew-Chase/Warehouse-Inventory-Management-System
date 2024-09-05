@@ -13,12 +13,19 @@ export default function AccountDropdown()
             <DropdownTrigger>
                 <div>
                     <Tooltip content={"Open Profile"}>
-                        <Avatar name={"D"} src={"https://avatars.githubusercontent.com/u/5598099?v=4"} color={"warning"} isBordered className={"text-2xl cursor-pointer"} classNames={{name: "top-[1rem]", base: "outline-warning-L-100 hover:outline-warning-L-200 transition-all dark:hover:bg-warning-L-100"}}/>
+                        <Avatar
+                            name={"D"}
+                            src={"https://avatars.githubusercontent.com/u/5598099?v=4"}
+                            color={"warning"} isBordered className={"text-2xl cursor-pointer"}
+                            classNames={{
+                                name: "top-[1rem]",
+                                base: "outline-warning-L-100 hover:outline-warning-L-200 transition-all dark:hover:bg-warning-L-100"
+                            }}
+                        />
                     </Tooltip>
                 </div>
             </DropdownTrigger>
             <DropdownMenu
-                aria-label="Custom item styles"
                 disabledKeys={["profile"]}
                 className="p-3"
                 itemClasses={{
