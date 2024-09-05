@@ -84,9 +84,7 @@ export default function Navigation()
             <NavbarContent>
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden"/>
                 <NavbarBrand>
-                    <Tooltip delay={1000} content={"Navigate Dashboard"}>
-                        <Logo fill={"hsl(var(--nextui-foreground-L000))"}/>
-                    </Tooltip>
+                    <Logo fill={"hsl(var(--nextui-foreground-L000))"}/>
                 </NavbarBrand>
             </NavbarContent>
             {
