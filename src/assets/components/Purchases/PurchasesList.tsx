@@ -1,19 +1,13 @@
-import {Button, cn, Divider, Input, Tab, Tabs} from "@nextui-org/react";
+import {Button, cn, Divider, Input, ScrollShadow} from "@nextui-org/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
-import ListIcon from "../../images/icons/ListIcon.svg.tsx";
-import GridIcon from "../../images/icons/GridIcon.svg.tsx";
-import {useState} from "react";
+import SortByDropdown from "../SortByDropdown.tsx";
+import ViewSelector from "../ViewSelector.tsx";
+import PurchaseOrderItem from "./PurchaseOrderItem.tsx";
 
-export enum View
-{
-    LIST = "list",
-    GRID = "grid"
-}
 
 export default function PurchasesList()
 {
-    const [view, setView] = useState<View>(View.LIST);
     return (
         <div className={"flex flex-col w-full mx-4"}>
             <div className="flex flex-row w-full items-center gap-4">
@@ -30,21 +24,25 @@ export default function PurchasesList()
                     placeholder={"Search purchase orders..."}
                     startContent={<FontAwesomeIcon icon={faMagnifyingGlass}/>}
                 />
-                <Tabs
-                    size={"lg"}
-                    classNames={{
-                        tabList: "bg-background-L200 data-[selected=true]:text-primary",
-                        tab: "aspect-square w-[38px] h-[38px]",
-                        cursor: "!bg-primary-L-300 outline outline-2 outline-primary"
-                    }}
-                    onSelectionChange={(index) => setView(index === "list" ? View.LIST : View.GRID)}
-                >
-                    <Tab key={"list"} title={<ListIcon size={18} fill={view === View.LIST ? "hsl(var(--nextui-primary-L000))" : "hsl(var(--nextui-foreground-L-100))"}/>}/>
-                    <Tab key={"grid"} title={<GridIcon size={18} fill={view === View.GRID ? "hsl(var(--nextui-primary-L000))" : "hsl(var(--nextui-foreground-L-100))"}/>}/>
-                </Tabs>
+                <ViewSelector/>
                 <Divider orientation={"vertical"}/>
-                <Button size={"sm"} className={"bg-background-L200"}></Button>
+                <SortByDropdown/>
+                <Button color={"primary"} className={"font-medium h-12"}>New Purchase</Button>
             </div>
+            <ScrollShadow size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
+                {Array.from({length: 10}).map(() => (
+                    <PurchaseOrderItem
+                        id={Math.floor(Math.random() * 100_000)}
+                        name={"Test Product"}
+                        vendor={"Test Vendor"}
+                        buyer={"Test Buyer"}
+                        location={"Test Location"}
+                        date={new Date()}
+                        paid={Math.random() > 0.5}
+                        price={Math.floor(Math.random() * 100_000)}
+                    />
+                ))}
+            </ScrollShadow>
         </div>
     );
 }
