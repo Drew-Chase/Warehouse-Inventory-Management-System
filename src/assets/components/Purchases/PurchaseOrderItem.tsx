@@ -49,6 +49,18 @@ export default function PurchaseOrderItem(props: PurchaseOrderItemProps)
         iconColor = "hsl(var(--nextui-primary-L000))";
     }
 
+    let nextStage = "";
+    if (props.progress < 100)
+    {
+        nextStage = "Mark as Delivered";
+    } else if (props.progress < 200)
+    {
+        nextStage = "Mark as Packaged";
+    } else if (props.progress < 300)
+    {
+        nextStage = "Mark as complete";
+    }
+
 
     return (
         <div className={"w-full bg-background-L100 p-4 rounded-2xl flex flex-col gap-4 min-h-[240px] h-[240px] grow shadow-lg"}>
@@ -124,6 +136,19 @@ export default function PurchaseOrderItem(props: PurchaseOrderItemProps)
                                 <DropdownItem>
                                     Mark as {props.paid ? "Unpaid" : "Paid"}
                                 </DropdownItem>
+                                {
+                                    (() =>
+                                    {
+                                        if (nextStage !== "")
+                                        {
+                                            return (
+                                                <DropdownItem>
+                                                    {nextStage}
+                                                </DropdownItem>
+                                            ) as any;
+                                        }
+                                    })()
+                                }
                                 <DropdownItem
                                     endContent={<FontAwesomeIcon className={"text-foreground/50"} icon={faEye}/>}
                                 >
