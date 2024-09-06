@@ -11,6 +11,7 @@ import {applyTheme, getCurrentTheme} from "./assets/ts/Theme.ts";
 import Login from "./assets/pages/Login.tsx";
 import Authentication from "./assets/ts/Authentication.ts";
 import Purchases from "./assets/pages/Purchases.tsx";
+import NewPurchaseOrder from "./assets/pages/AddPages/NewPurchaseOrder.tsx";
 
 export const debug_mode = true;
 
@@ -57,6 +58,7 @@ export function MainContentRenderer()
                     <Route path="/" element={<Login/>}/>
                     <Route path="/app/" element={<Dashboard/>}/>
                     <Route path={"/app/purchases"} element={<Purchases/>}/>
+                    <Route path={"/app/purchases/new"} element={<NewPurchaseOrder/>}/>
                 </Route>
             </Routes>
         </NextUIProvider>

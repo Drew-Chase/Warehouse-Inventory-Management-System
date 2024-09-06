@@ -4,10 +4,12 @@ import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import SortByDropdown from "../SortByDropdown.tsx";
 import ViewSelector from "../ViewSelector.tsx";
 import PurchaseOrderItem from "./PurchaseOrderItem.tsx";
+import {useNavigate} from "react-router-dom";
 
 
 export default function PurchasesList()
 {
+    const navigate = useNavigate();
     return (
         <div className={"flex flex-col w-full mx-4"}>
             <div className="flex flex-row w-full items-center gap-4">
@@ -27,7 +29,7 @@ export default function PurchasesList()
                 <ViewSelector/>
                 <Divider orientation={"vertical"}/>
                 <SortByDropdown/>
-                <Button color={"primary"} className={"font-medium h-12"}>New Purchase</Button>
+                <Button color={"primary"} className={"font-medium h-12"} onClick={() => navigate("/app/purchases/new")}>New Purchase</Button>
             </div>
             <ScrollShadow size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
                 {Array.from({length: 10}).map(() => (

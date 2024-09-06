@@ -68,6 +68,7 @@ export default function AccountDropdown()
                     <DropdownItem
                         key="new_project"
                         endContent={<FontAwesomeIcon icon={faPlus}/>}
+                        href={"/app/purchases/new"}
                     >
                         New Purchase Order
                     </DropdownItem>
