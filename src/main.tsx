@@ -58,7 +58,9 @@ export function MainContentRenderer()
                     <Route path="/" element={<Login/>}/>
                     <Route path="/app/" element={<Dashboard/>}/>
                     <Route path={"/app/purchases"} element={<Purchases/>}/>
-                    <Route path={"/app/purchases/new"} element={<NewPurchaseOrder/>}/>
+                    <Route path={"/app/purchases/new"} element={<NewPurchaseOrder tab={"general"}/>}/>
+                    <Route path={"/app/purchases/new/additional"} element={<NewPurchaseOrder tab={"additional"}/>}/>
+                    <Route path={"/app/purchases/new/finalize"} element={<NewPurchaseOrder tab={"finalize"}/>}/>
                 </Route>
             </Routes>
         </NextUIProvider>
