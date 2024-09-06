@@ -8,7 +8,7 @@ import AccordionViewIcon from "../../images/icons/AccordionViewIcon.svg.tsx";
 
 export default function FiltersPanel()
 {
-    const [useAccordion, setUseAccordion] = useState<boolean>(false);
+    const [useAccordion, setUseAccordion] = useState<boolean>(true);
     return (
         <div className={"flex flex-col min-w-[300px] w-1/4 h-full ml-4"}>
             <h5>Purchase Orders</h5>
@@ -27,9 +27,14 @@ export default function FiltersPanel()
                         {
                             setUseAccordion(index === "accordion");
                         }}
+                        selectedKey={useAccordion ? "accordion" : "list"}
                     >
-                        <Tab key={"list"} title={<ListIcon size={18} fill={!useAccordion ? "hsl(var(--nextui-primary-L000))" : "hsl(var(--nextui-foreground-L-100))"}/>}/>
-                        <Tab key={"accordion"} title={<AccordionViewIcon width={24} height={18} fill={useAccordion ? "hsl(var(--nextui-primary-L000))" : "hsl(var(--nextui-foreground-L-100))"}/>}/>
+                        <Tab key={"list"} title={
+                            <ListIcon size={18} fill={!useAccordion ? "hsl(var(--nextui-primary-L000))" : "hsl(var(--nextui-foreground-L-100))"}/>
+                        }/>
+                        <Tab key={"accordion"} title={
+                            <AccordionViewIcon width={24} height={18} fill={useAccordion ? "hsl(var(--nextui-primary-L000))" : "hsl(var(--nextui-foreground-L-100))"}/>
+                        }/>
                     </Tabs>
                 </div>
                 <Divider className={"mb-4"}/>
