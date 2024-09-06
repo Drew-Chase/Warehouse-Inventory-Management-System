@@ -33,13 +33,14 @@ export default function PurchasesList()
                 {Array.from({length: 10}).map(() => (
                     <PurchaseOrderItem
                         id={Math.floor(Math.random() * 100_000)}
-                        name={"Test Product"}
-                        vendor={"Test Vendor"}
-                        buyer={"Test Buyer"}
-                        location={"Test Location"}
+                        name={"Assorted Foods"}
+                        vendor={"High Desert Sales"}
+                        buyer={"Victor Buyer"}
+                        location={"123 Vendor Way. Enterprise, AL 36330"}
                         date={new Date()}
                         paid={Math.random() > 0.5}
                         price={Math.floor(Math.random() * 100_000)}
+                        progress={Math.floor(Math.random() * 400)}
                     />
                 ))}
             </ScrollShadow>
