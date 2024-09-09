@@ -12,6 +12,7 @@ import Login from "./assets/pages/Login.tsx";
 import Authentication from "./assets/ts/Authentication.ts";
 import Purchases from "./assets/pages/Purchases.tsx";
 import NewPurchaseOrder from "./assets/pages/AddPages/NewPurchaseOrder.tsx";
+import Vendors from "./assets/pages/Vendors.tsx";
 
 export const debug_mode = true;
 
@@ -61,6 +62,7 @@ export function MainContentRenderer()
                     <Route path={"/app/purchases/new"} element={<NewPurchaseOrder tab={"general"}/>}/>
                     <Route path={"/app/purchases/new/additional"} element={<NewPurchaseOrder tab={"additional"}/>}/>
                     <Route path={"/app/purchases/new/finalize"} element={<NewPurchaseOrder tab={"finalize"}/>}/>
+                    <Route path={"/app/vendors"} element={<Vendors/>}/>
                 </Route>
             </Routes>
         </NextUIProvider>
