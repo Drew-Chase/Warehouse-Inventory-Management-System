@@ -28,8 +28,29 @@ export default function VendorsList()
                 />
                 <ViewSelector/>
                 <Divider orientation={"vertical"}/>
-                <SortByDropdown/>
-                <Button color={"primary"} className={"font-medium h-12"} onClick={() => navigate("/app/purchases/new")}>New Vendor</Button>
+                <SortByDropdown
+                    sortOptions={
+                        [
+                            {
+                                name: "Name",
+                                description: "Sort by Item Name"
+                            },
+                            {
+                                name: "Date",
+                                description: "Sort by Creation Date"
+                            },
+                            {
+                                name: "Total Payments",
+                                description: "Sort by Total Payments"
+                            },
+                            {
+                                name: "Number of PO's",
+                                description: "Sort by Number of Purchase Orders"
+                            }
+                        ]
+                    }
+                />
+                <Button color={"primary"} className={"font-medium h-12"} onClick={() => navigate("/app/vendors/new")}>New Vendor</Button>
             </div>
             <ScrollShadow size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
                 {Array.from({length: 10}).map(() => (
@@ -39,7 +60,7 @@ export default function VendorsList()
                         shortname={"HDS"}
                         location={"123 Vendor Way. Enterprise, AL 36330"}
                         date={new Date()}
-                        price={Math.floor(Math.random() * 100_000)}
+                        vendorTotalPayments={Math.floor(Math.random() * 100_000)}
                     />
                 ))}
             </ScrollShadow>
