@@ -3,9 +3,9 @@ import AddDocumentsIcon from "../../images/icons/AddDocumentsIcon.svg.tsx";
 import SaveIcon from "../../images/icons/SaveIcon.svg.tsx";
 import InformationIcon from "../../images/icons/InformationIcon.svg.tsx";
 import {useNavigate} from "react-router-dom";
-import Finalize from "../../components/New Purchase Order/Finalize.tsx";
-import AdditionalInformation from "../../components/New Purchase Order/AdditionalInformation.tsx";
-import GeneralInformation from "../../components/New Purchase Order/GeneralInformation.tsx";
+import GeneralInformation from "../../components/Purchases/New Purchase Order/GeneralInformation.tsx";
+import AdditionalInformation from "../../components/Purchases/New Purchase Order/AdditionalInformation.tsx";
+import Finalize from "../../components/Purchases/New Purchase Order/Finalize.tsx";
 
 export default function NewPurchaseOrder({tab}: { tab: string })
 {
