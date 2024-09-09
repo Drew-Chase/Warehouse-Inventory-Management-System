@@ -3,9 +3,9 @@ import {buildBackend, buildFrontend, cleanup, deploy, incrementVersion} from "./
 publish();
 
 async function publish() {
-    console.log("Publishing...");
+    console.log(`Publishing for ${process.platform}...`);
     cleanup();
-    incrementVersion();
+    // incrementVersion();
     buildFrontend();
     buildBackend();
     await deploy();

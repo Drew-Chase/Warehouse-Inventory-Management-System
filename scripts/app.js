@@ -49,7 +49,7 @@ export function incrementVersion() {
 export async function deploy() {
     console.log("Deploying...");
     // Specify the output file
-    const output = createWriteStream(`warehouse-${version}.zip`);
+    const output = createWriteStream(`warehouse-${process.platform}-${version}.zip`);
     const archive = archiver('zip', {
         zlib: {level: 9}  // Set the compression level
     });
@@ -66,8 +66,6 @@ export async function deploy() {
 
     // Pipe the archive data to the file
     archive.pipe(output);
-
-    archive.directory(outputDirectory, '', {name: 'stacked'});
 
     // Finalize the archive (this is necessary)
     await archive.finalize();
