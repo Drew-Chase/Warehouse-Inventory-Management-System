@@ -5,7 +5,6 @@ use authentication::access_tokens::{
 	generate_unique_registration_access_token, get_all_access_tokens,
 };
 use authentication::data::{UserLogin, UserRegistration};
-use image_formater::metadata;
 use serde_json::json;
 use std::collections::HashMap;
 use std::path::Path;
@@ -122,35 +121,4 @@ pub async fn check_if_access_token_exists(req: HttpRequest) -> impl Responder {
 struct UploadFile {
 	#[multipart(rename = "file")]
 	file: TempFile,
-}
-
-#[post("/users/{id}/profile/image")]
-pub async fn upload_profile_image(
-	id: web::Path<u32>,
-	MultipartForm(form): MultipartForm<UploadFile>,
-) -> impl Responder {
-	let user = match authentication::management::get_user_by_id(id.into_inner()) {
-		Ok(user) => match user {
-			Some(user) => user,
-			None => return HttpResponse::BadRequest().json(json!({"error": "User not found"})),
-		},
-		Err(e) => return HttpResponse::BadRequest().json(json!({"error": e})),
-	};
-
-	let dir_path = Path::new("./wwwroot/images/profiles/");
-	std::fs::create_dir_all(dir_path).unwrap();
-	let file_path = Path::join(dir_path, format!("profile-{}.png", user.id));
-//	let file_path = file_path.canonicalize().unwrap();
-	let file_path = file_path.to_str().unwrap();
-
-	match form.file.file.persist(&file_path) {
-		Ok(_) => {}
-		Err(e) => return HttpResponse::BadRequest().json(json!({"error": e.to_string()})),
-	}
-
-	let (width, height) = match metadata::get_image_dimensions(file_path) {
-		Ok(dimensions) => dimensions,
-		Err(e) => return HttpResponse::BadRequest().json(json!({"error": e.to_string()})),
-	};
-	HttpResponse::Ok().json(json!({"message": "Image uploaded", "width": width, "height": height}))
 }

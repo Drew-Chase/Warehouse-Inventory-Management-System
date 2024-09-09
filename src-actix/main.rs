@@ -72,7 +72,6 @@ async fn main() -> std::io::Result<()> {
 							.service(authentication_endpoint::get_access_tokens)
 							.service(authentication_endpoint::check_if_access_token_exists)
 							.service(authentication_endpoint::get_users)
-							.service(authentication_endpoint::upload_profile_image)
 					)
 					.service(status),
 			)
