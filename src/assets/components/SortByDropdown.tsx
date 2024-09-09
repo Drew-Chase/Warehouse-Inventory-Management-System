@@ -4,21 +4,21 @@ import {useState} from "react";
 
 interface SortByDropdownProps
 {
-    sort?: SortBy;
+    sort?: string;
+    sortOptions: SortOption[];
     ascending?: boolean;
-    onSortChange?: (sort: SortBy, ascending: boolean) => void;
+    onSortChange?: (sort: string, ascending: boolean) => void;
 }
 
-export enum SortBy
+interface SortOption
 {
-    DATE = "date",
-    NAME = "name",
-    PROGRESS = "progress"
+    name: string;
+    description: string;
 }
 
 export default function SortByDropdown(props: SortByDropdownProps)
 {
-    const [sort, setSort] = useState<SortBy>(SortBy.DATE);
+    const [sort, setSort] = useState<string>("");
     const [ascending, setAscending] = useState<boolean>(true);
     return (
         <Popover classNames={{content: "dark:bg-background-L200 bg-background-L-100"}} placement={"bottom"}>
@@ -43,13 +43,13 @@ export default function SortByDropdown(props: SortByDropdownProps)
                         value={sort}
                         onValueChange={(value) =>
                         {
-                            setSort(value as SortBy);
-                            if (props.onSortChange) props.onSortChange(value as SortBy, ascending);
+                            setSort(value as string);
+                            if (props.onSortChange) props.onSortChange(value as string, ascending);
                         }}
                     >
-                        <CustomRadio value={"date"} description={"Sort by Creation Date"}>Date</CustomRadio>
-                        <CustomRadio value={"name"} description={"Sort by Name or PO number"}>Name/PO</CustomRadio>
-                        <CustomRadio value={"progress"} description={"Sort by completion percentage"}>Progress</CustomRadio>
+                        {props.sortOptions.map((option) => (
+                            <CustomRadio key={option.name.replace(/\s/g, "")} value={option.name} description={option.description}>{option.name}</CustomRadio>
+                        ))}
                     </RadioGroup>
                     <p className={"text-tiny opacity-50 font-medium"}>Sort Order</p>
                     <RadioGroup
