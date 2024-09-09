@@ -1,7 +1,7 @@
 import PageForm from "../PageForm.tsx";
 import VendorCard from "../VendorCard.tsx";
-import InformationIcon from "../../images/icons/InformationIcon.svg.tsx";
 import {Textarea} from "@nextui-org/react";
+import FileChip from "./Finalize/FileChip.tsx";
 
 export default function Finalize()
 {
@@ -27,10 +27,7 @@ export default function Finalize()
             <p>Files</p>
             <div className={"flex flex-row gap-4 max-w-full overflow-y-auto flex-wrap border-2 border-foreground-L-200/20 rounded-2xl p-4 min-h-[140px] grow"}>
                 {Array.from({length: 45}, (_, i) => (
-                    <div className={"bg-background-L200 text-foreground-L000 p-2 px-4 flex flex-row flex-nowrap gap-4 rounded-xl items-center"}>
-                        <InformationIcon/>
-                        <span>File {i}.xsl</span>
-                    </div>
+                    <FileChip name={`File ${i}.xsl`} content={"Hello World"} />
                 ))}
             </div>
             <Textarea
