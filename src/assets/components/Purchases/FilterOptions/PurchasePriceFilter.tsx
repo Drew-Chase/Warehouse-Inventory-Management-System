@@ -9,7 +9,7 @@ export default function PurchasePriceFilter()
                 minValue={0}
                 maxValue={1_000_000}
                 step={1000}
-                defaultValue={[1_000, 500_000]}
+                defaultValue={[0, 500_000]}
                 formatOptions={{style: "currency", currency: "USD"}}
             />
         </div>
