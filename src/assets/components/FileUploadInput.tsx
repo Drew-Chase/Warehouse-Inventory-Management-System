@@ -22,9 +22,9 @@ interface FileUploadInputClassNames
 export default function FileUploadInput(props: FileUploadInputProps)
 {
     return (
-        <div className={cn("flex flex-col my-10", props.className)}>
-            <p>{props.label ?? ""}</p>
-            <div className={cn("flex flex-row w-full border-2 border-foreground-L-200/20 p-8 rounded-lg", props.classNames?.wrapper)}>
+        <div className={cn("flex flex-col", props.className)}>
+            <p className={cn("ml-2 mb-2", props.classNames?.label)}>{props.label ?? ""}</p>
+            <div className={cn("flex flex-row w-full border-2 border-foreground-L-200/20 p-8 rounded-3xl", props.classNames?.wrapper)}>
                 <div className={"w-full items-center justify-center flex gap-8"}>
                     <p className={cn("text-center text-xl opacity-50 p-8 mx-auto cursor-pointer", props.classNames?.dragdropArea)}>
                         Drag<br/>
