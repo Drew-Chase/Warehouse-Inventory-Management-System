@@ -11,7 +11,7 @@ export interface VendorItemProps
     shortname: string;
     location: string;
     date: string | Date;
-    price: number;
+    vendorTotalPayments: number;
 }
 
 
@@ -31,24 +31,24 @@ export default function VendorItem(props: VendorItemProps)
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "USD"
-                        }).format(props.price)}
+                        }).format(props.vendorTotalPayments)}
                     >
                         <p className={"text-medium cursor-default"}>${
                             (() =>
                             {
-                                if (props.price > 1_000_000_000)
+                                if (props.vendorTotalPayments > 1_000_000_000)
                                 {
-                                    return `${(props.price / 1_000_000_000).toFixed(1)}B`;
+                                    return `${(props.vendorTotalPayments / 1_000_000_000).toFixed(1)}B`;
                                 }
-                                if (props.price > 1_000_000)
+                                if (props.vendorTotalPayments > 1_000_000)
                                 {
-                                    return `${(props.price / 1_000_000).toFixed(1)}M`;
-                                } else if (props.price > 1_000)
+                                    return `${(props.vendorTotalPayments / 1_000_000).toFixed(1)}M`;
+                                } else if (props.vendorTotalPayments > 1_000)
                                 {
-                                    return `${(props.price / 1_000).toFixed(1)}K`;
+                                    return `${(props.vendorTotalPayments / 1_000).toFixed(1)}K`;
                                 } else
                                 {
-                                    return props.price;
+                                    return props.vendorTotalPayments;
                                 }
                             })()
                         }</p>
