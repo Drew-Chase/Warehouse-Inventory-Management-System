@@ -28,7 +28,24 @@ export default function PurchasesList()
                 />
                 <ViewSelector/>
                 <Divider orientation={"vertical"}/>
-                <SortByDropdown/>
+                <SortByDropdown
+                    sortOptions={
+                        [
+                            {
+                                name: "Name",
+                                description: "Sort by Item Name"
+                            },
+                            {
+                                name: "Date",
+                                description: "Sort by Creation Date"
+                            },
+                            {
+                                name: "Progress",
+                                description: "Sort by the completion percentage"
+                            }
+                        ]
+                    }
+                />
                 <Button color={"primary"} className={"font-medium h-12"} onClick={() => navigate("/app/purchases/new")}>New Purchase</Button>
             </div>
             <ScrollShadow size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
