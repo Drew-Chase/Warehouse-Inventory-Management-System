@@ -10,7 +10,6 @@ path = "src-actix/main.rs"
 
 [dependencies]
 authentication = { path = "src-actix/authentication" }
-image_formater = { path = "src-actix/image_formater" }
 actix-web = { version = "4.9.0" }
 actix-multipart = "0.7.2"
 actix-ws = "0.3.0"
