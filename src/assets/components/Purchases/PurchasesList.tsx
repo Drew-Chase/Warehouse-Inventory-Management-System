@@ -1,10 +1,11 @@
-import {Button, cn, Divider, Input, ScrollShadow} from "@nextui-org/react";
+import {Button, cn, Divider, Input, Pagination, ScrollShadow} from "@nextui-org/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import SortByDropdown from "../SortByDropdown.tsx";
 import ViewSelector from "../ViewSelector.tsx";
 import PurchaseOrderItem from "./PurchaseOrderItem.tsx";
 import {useNavigate} from "react-router-dom";
+import $ from "jquery";
 
 
 export default function PurchasesList()
@@ -48,7 +49,7 @@ export default function PurchasesList()
                 />
                 <Button color={"primary"} className={"font-medium h-12"} onClick={() => navigate("/app/purchases/new")}>New Purchase</Button>
             </div>
-            <ScrollShadow size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
+            <ScrollShadow id={"purchase-list"} size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
                 {Array.from({length: 10}).map(() => (
                     <PurchaseOrderItem
                         id={Math.floor(Math.random() * 100_000)}
@@ -62,6 +63,24 @@ export default function PurchasesList()
                         progress={Math.floor(Math.random() * 400)}
                     />
                 ))}
+                <Pagination
+                    className={"mt-4 mx-auto shrink-0"}
+                    total={100}
+                    showShadow
+                    showControls
+                    classNames={{
+                        item: "hover:!bg-background-L200 !rounded-medium",
+                        next: "hover:!bg-background-L200 !rounded-medium",
+                        prev: "hover:!bg-background-L200 !rounded-medium"
+                    }}
+
+                    onChange={(page) =>
+                    {
+                        console.log("Page changed to", page);
+                        // scroll to top
+                        $("#purchase-list")[0].scrollTo({top: 0, behavior: "smooth"});
+                    }}
+                />
             </ScrollShadow>
         </div>
     );
