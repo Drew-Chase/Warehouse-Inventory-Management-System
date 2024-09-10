@@ -61,7 +61,7 @@ export default function AccountDropdown()
                             }}
                         />
                     </DropdownItem>
-                    <DropdownItem key="dashboard">
+                    <DropdownItem key="dashboard" href={"/app/me/dashboard"}>
                         Dashboard
                     </DropdownItem>
                     <DropdownItem key="settings">Settings</DropdownItem>
@@ -105,7 +105,7 @@ export default function AccountDropdown()
                 </DropdownSection>
 
                 <DropdownSection aria-label="Help & Feedback">
-                    <DropdownItem key="help_and_feedback">
+                    <DropdownItem key="help_and_feedback" href={"https://github.com/drew-chase/Warehouse-Inventory-Management-System/issues/new"} target={"_blank"}>
                         Help & Feedback
                     </DropdownItem>
                     <DropdownItem key="logout" color={"danger"} onClick={() =>
