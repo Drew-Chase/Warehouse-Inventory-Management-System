@@ -63,7 +63,7 @@ export default function PurchaseOrderItem(props: PurchaseOrderItemProps)
 
 
     return (
-        <div className={"w-full bg-background-L100 p-4 rounded-2xl flex flex-col gap-4 min-h-[240px] h-[240px] grow shadow-lg"}>
+        <div className={"w-full dark:bg-background-L100 bg-background-L000 p-4 rounded-2xl flex flex-col gap-4 min-h-[240px] h-[240px] grow shadow-lg"}>
             <div className={"flex flex-row items-center w-full"}>
                 <div className={"flex flex-row w-full items-center"}>
                     <p className={"text-2xl"}>PO-{props.id}</p>
@@ -101,13 +101,13 @@ export default function PurchaseOrderItem(props: PurchaseOrderItemProps)
                     </Tooltip>
                     {props.paid ? (
                         <Chip
-                            className={"text-background-L000 bg-accent-L000"}
+                            className={"dark:text-background-L000 bg-accent-L000"}
                             radius={"sm"}
                         >
                             <FontAwesomeIcon icon={faCheckCircle}/>
                             <span className={"ml-2"}>paid</span>
                         </Chip>
-                    ) : (<Chip className={"bg-danger"} radius={"sm"}>unpaid</Chip>)}
+                    ) : (<Chip className={"text-white bg-danger"} radius={"sm"}>unpaid</Chip>)}
                     <Dropdown classNames={{content: "dark:bg-background-L200 bg-background-L-100"}}>
                         <DropdownTrigger>
                             <Button
@@ -193,7 +193,7 @@ export default function PurchaseOrderItem(props: PurchaseOrderItemProps)
                     })()}
                 </div>
             </div>
-            <div className={"flex flex-col items-start w-full bg-background-L200 rounded-lg h-full p-4"}>
+            <div className={"flex flex-col items-start w-full dark:bg-background-L200 bg-foreground-L000/90 text-white rounded-lg h-full p-4"}>
                 <div className={"w-full flex flex-row gap-2 mb-2 items-center"}>
                     <span className={"text-lg"}>{
                         (() =>
@@ -214,7 +214,7 @@ export default function PurchaseOrderItem(props: PurchaseOrderItemProps)
                             return ``;
                         })()
                     }</span>
-                    <span className={"text-foreground-L-200"}>Feb. 1, 2022 @ 12:45 PM</span>
+                    <span className={"dark:text-foreground-L-200 text-background-L000/90"}>Feb. 1, 2022 @ 12:45 PM</span>
                 </div>
 
                 <div className={"flex flex-row items-center w-full gap-3"}>
