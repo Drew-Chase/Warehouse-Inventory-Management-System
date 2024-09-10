@@ -31,18 +31,18 @@ export default {
             themes: {
                 light: {
                     "colors": {
-                        "white":      "#000000",
-                        "black":      "#ffffff",
+                        "white":      "#ffffff",
+                        "black":      "#000000",
                         "background": {
                             DEFAULT:    "#ffffff",
                             foreground: "#000000",
-                            "L-200":    "#f3f4f6",
-                            "L-100":    "#e5e7eb",
+                            "L-200":    "#ffffff",
+                            "L-100":    "#ffffff",
                             "L000":     "#ffffff",
-                            "L100":     "#d1d5db",
-                            "L200":     "#9ca3af",
-                            "L300":     "#dee6e6",
-                            "L400":     "#c2d1d3"
+                            "L100":     "#eaeaea",
+                            "L200":     "#e3e3e3",
+                            "L300":     "#d3d3d3",
+                            "L400":     "#c6c6c6"
                         },
                         "primary":    {
                             DEFAULT:    "#30f28c",
@@ -68,11 +68,11 @@ export default {
                             "L200":  "#95e2ed"
                         },
                         "accent":     {
-                            "L-200": "#fd7e14",
-                            "L-100": "#ff9105",
-                            "L000":  "#ffb347",
-                            "L100":  "#ffcc80",
-                            "L200":  "#ffe0b3"
+                            "L-200": "#536b0a",
+                            "L-100": "#65820d",
+                            "L000":  "#c7ee52",
+                            "L100":  "#ceff3c",
+                            "L200":  "#d5ff57"
                         },
                         "foreground": {
                             "L-200": "#434343",
