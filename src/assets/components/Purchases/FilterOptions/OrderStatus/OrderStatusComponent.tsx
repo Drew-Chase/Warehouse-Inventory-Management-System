@@ -58,7 +58,7 @@ const CustomRadio = (props: CustomRadioProps) =>
                 base: cn(
                     "flex flex-row m-0 bg-background-L200 hover:bg-background-L000 items-center w-full",
                     "cursor-pointer rounded-lg gap-4 px-1 py-3 border-2 border-foreground-L-200/20 truncate",
-                    "data-[selected=true]:border-primary text-nowrap min-w-[150px] relative"
+                    "dark:data-[selected=true]:border-primary text-nowrap min-w-[150px] relative dark:data-[selected=true]:bg-primary-L000/5 data-[selected=true]:bg-primary-L000"
                 ),
                 label: "flex flex-row w-full",
                 wrapper: "hidden",
@@ -70,8 +70,7 @@ const CustomRadio = (props: CustomRadioProps) =>
                 {children}
             </div>
             <Chip
-                color={"primary"}
-                className={"absolute right-0 bg-primary-L-300 text-primary aspect-square p-0 items-center justify-center flex"}
+                className={"absolute right-0 dark:bg-primary-L-300 dark:text-primary aspect-square p-0 items-center justify-center flex"}
                 radius={"sm"}
                 classNames={{content: "p-0 items-center justify-center flex"}}
             >
