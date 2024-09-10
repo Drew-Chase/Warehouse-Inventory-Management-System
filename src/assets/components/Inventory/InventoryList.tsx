@@ -1,9 +1,10 @@
-import {cn, Divider, Input, ScrollShadow} from "@nextui-org/react";
+import {cn, Divider, Input, Pagination, ScrollShadow} from "@nextui-org/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import SortByDropdown from "../SortByDropdown.tsx";
 import ViewSelector from "../ViewSelector.tsx";
 import InventoryItem from "./InventoryItem.tsx";
+import $ from "jquery";
 
 
 export default function InventoryList()
@@ -43,8 +44,8 @@ export default function InventoryList()
                     ]
                 }/>
             </div>
-            <ScrollShadow size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
-                {Array.from({length: 10}).map(() => (
+            <ScrollShadow id={"inv-list"} size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
+                {Array.from({length: 25}).map(() => (
                     <InventoryItem
                         name={"Apples"}
                         price={Math.floor(Math.random() * 100_000)}
@@ -53,6 +54,25 @@ export default function InventoryList()
                         category={"Fruit"}
                     />
                 ))}
+
+                <Pagination
+                    className={"mt-4 mx-auto shrink-0"}
+                    total={100}
+                    showShadow
+                    showControls
+                    classNames={{
+                        item: "hover:!bg-background-L200 !rounded-medium",
+                        next: "hover:!bg-background-L200 !rounded-medium",
+                        prev: "hover:!bg-background-L200 !rounded-medium"
+                    }}
+
+                    onChange={(page) =>
+                    {
+                        console.log("Page changed to", page);
+                        // scroll to top
+                        $("#inv-list")[0].scrollTo({top: 0, behavior: "smooth"});
+                    }}
+                />
             </ScrollShadow>
         </div>
     );
