@@ -1,10 +1,11 @@
-import {Button, cn, Divider, Input, ScrollShadow} from "@nextui-org/react";
+import {Button, cn, Divider, Input, Pagination, ScrollShadow} from "@nextui-org/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import SortByDropdown from "../SortByDropdown.tsx";
 import ViewSelector from "../ViewSelector.tsx";
 import VendorItem from "./VendorItem.tsx";
 import {useNavigate} from "react-router-dom";
+import $ from "jquery";
 
 
 export default function VendorsList()
@@ -52,8 +53,8 @@ export default function VendorsList()
                 />
                 <Button color={"primary"} className={"font-medium h-12"} onClick={() => navigate("/app/vendors/new")}>New Vendor</Button>
             </div>
-            <ScrollShadow size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
-                {Array.from({length: 10}).map(() => (
+            <ScrollShadow id={"vendors-list"} size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
+                {Array.from({length: 20}).map(() => (
                     <VendorItem
                         id={Math.floor(Math.random() * 100_000)}
                         name={"High Desert Sales"}
@@ -63,6 +64,25 @@ export default function VendorsList()
                         vendorTotalPayments={Math.floor(Math.random() * 100_000)}
                     />
                 ))}
+
+                <Pagination
+                    className={"mt-4 mx-auto shrink-0"}
+                    total={100}
+                    showShadow
+                    showControls
+                    classNames={{
+                        item: "hover:!bg-background-L200 !rounded-medium",
+                        next: "hover:!bg-background-L200 !rounded-medium",
+                        prev: "hover:!bg-background-L200 !rounded-medium"
+                    }}
+
+                    onChange={(page) =>
+                    {
+                        console.log("Page changed to", page);
+                        // scroll to top
+                        $("#vendors-list")[0].scrollTo({top: 0, behavior: "smooth"});
+                    }}
+                />
             </ScrollShadow>
         </div>
     );
