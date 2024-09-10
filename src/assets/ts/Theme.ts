@@ -58,6 +58,7 @@ export function getCurrentTheme(): Theme
         case "dark":
             return Theme.dark;
         case "light":
+            return Theme.light;
         default:
             return getSystemTheme();
     }
