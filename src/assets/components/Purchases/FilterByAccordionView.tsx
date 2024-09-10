@@ -13,9 +13,9 @@ export default function FilterByAccordionView()
             itemClasses={{
                 base: "py-0 w-full",
                 title: "font-normal text-medium",
-                trigger: "px-2 py-0 data-[hover=true]:bg-background-L000 bg-background-L200 rounded-lg h-14 flex items-center shadow-lg",
+                trigger: "px-2 py-0 dark:data-[hover=true]:bg-background-L000 data-[hover=true]:bg-background-L100/50 dark:data-[open=true]:bg-background-L-100 data-[open=true]:bg-background-L100/50 data-[open=true]:rounded-b-none dark:bg-background-L200 bg-background-L000 rounded-lg h-14 flex items-center dark:shadow-lg transition-all",
                 indicator: "text-medium",
-                content: "text-small p-4 bg-background-L-100 rounded-b-lg"
+                content: "text-small p-4 dark:bg-background-L-100 bg-background-L100/50 rounded-b-lg"
             }}
             className="p-2 flex flex-col gap-2"
         >
