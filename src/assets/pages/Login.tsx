@@ -5,6 +5,7 @@ import {faEnvelope, faEye, faEyeSlash, faKey} from "@fortawesome/free-solid-svg-
 import Authentication from "../ts/Authentication.ts";
 import {useNavigate} from "react-router-dom";
 import {debug_mode} from "../../main.tsx";
+import Footer from "../components/Footer.tsx";
 
 export default function Login()
 {
@@ -61,76 +62,83 @@ export default function Login()
     };
 
     return (
-        <Card
-            className={"flex flex-col w-1/3 max-w-[800px] min-w-[400px] mx-auto mt-10 justify-center px-8 py-4"}
-        >
-            <CardHeader><h1>Login</h1></CardHeader>
-            <CardBody>
-                <div className={"flex flex-col gap-4"}>
-                    <Input
-                        label={"Email or Username"}
-                        placeholder={"Enter your username or email"}
-                        type={"text"}
-                        startContent={<FontAwesomeIcon icon={faEnvelope} opacity={.5}/>}
-                        autoComplete={"username webauthn"}
-                        value={username}
-                        onValueChange={setUsername}
-                        isInvalid={!!usernameError}
-                        errorMessage={usernameError}
-                        onKeyUp={(e) => e.key === "Enter" && login()}
-                    />
-                    <Input
-                        label={"Password"}
-                        placeholder={"Enter your password"}
-                        type={showPassword ? "text" : "password"}
-                        autoComplete={"current-password"}
-                        startContent={<FontAwesomeIcon icon={faKey} opacity={.5}/>}
-                        endContent={
-                            <FontAwesomeIcon
-                                onClick={() => setShowPassword(prev => !prev)}
-                                icon={showPassword ? faEye : faEyeSlash}
-                                opacity={showPassword ? 1 : 0.5}
-                                className={"cursor-pointer"}
-                            />
-                        }
-                        value={password}
-                        onValueChange={setPassword}
-                        isInvalid={!!passwordError}
-                        errorMessage={passwordError}
-                        onKeyUp={(e) => e.key === "Enter" && login()}
-                    />
-                    <Switch
-                        classNames={{
-                            base: cn(
-                                "inline-flex flex-row-reverse w-full max-w-full bg-content1 hover:bg-content2 items-center",
-                                "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                                "data-[selected=true]:border-primary"
-                            ),
-                            wrapper: "p-0 h-4 overflow-visible",
-                            thumb: cn("w-6 h-6 border-2 shadow-lg",
-                                "group-data-[hover=true]:border-primary",
-                                //selected
-                                "group-data-[selected=true]:ml-6",
-                                // pressed
-                                "group-data-[pressed=true]:w-7",
-                                "group-data-[selected]:group-data-[pressed]:ml-4"
-                            )
-                        }}
-                        isSelected={rememberMe}
-                        onValueChange={setRememberMe}
-                    >
-                        <div className="flex flex-col gap-1">
-                            <p className="text-medium">Remember Me?</p>
-                            <p className="text-tiny text-default-400">
-                                This will keep you logged in until you log out.
-                            </p>
-                        </div>
-                    </Switch>
-                    {error && <p className={"text-danger"}><strong>Error:</strong> {error}</p>}
-                    <Button radius={"lg"} color={"primary"} isLoading={isLoggingIn} onClick={login}>Log In</Button>
-                </div>
-            </CardBody>
+        <>
+            <div className={"h-[calc(100dvh_-_12rem)]"}>
 
-        </Card>
+                <Card
+                    className={"flex flex-col w-1/3 max-w-[800px] min-w-[400px] mx-auto mt-10 justify-center px-8 py-4"}
+                >
+                    <CardHeader><h1>Login</h1></CardHeader>
+                    <CardBody>
+                        <div className={"flex flex-col gap-4"}>
+                            <Input
+                                label={"Email or Username"}
+                                placeholder={"Enter your username or email"}
+                                type={"text"}
+                                startContent={<FontAwesomeIcon icon={faEnvelope} opacity={.5}/>}
+                                autoComplete={"username webauthn"}
+                                value={username}
+                                onValueChange={setUsername}
+                                isInvalid={!!usernameError}
+                                errorMessage={usernameError}
+                                onKeyUp={(e) => e.key === "Enter" && login()}
+                            />
+                            <Input
+                                label={"Password"}
+                                placeholder={"Enter your password"}
+                                type={showPassword ? "text" : "password"}
+                                autoComplete={"current-password"}
+                                startContent={<FontAwesomeIcon icon={faKey} opacity={.5}/>}
+                                endContent={
+                                    <FontAwesomeIcon
+                                        onClick={() => setShowPassword(prev => !prev)}
+                                        icon={showPassword ? faEye : faEyeSlash}
+                                        opacity={showPassword ? 1 : 0.5}
+                                        className={"cursor-pointer"}
+                                    />
+                                }
+                                value={password}
+                                onValueChange={setPassword}
+                                isInvalid={!!passwordError}
+                                errorMessage={passwordError}
+                                onKeyUp={(e) => e.key === "Enter" && login()}
+                            />
+                            <Switch
+                                classNames={{
+                                    base: cn(
+                                        "inline-flex flex-row-reverse w-full max-w-full bg-content1 hover:bg-content2 items-center",
+                                        "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
+                                        "data-[selected=true]:border-primary"
+                                    ),
+                                    wrapper: "p-0 h-4 overflow-visible",
+                                    thumb: cn("w-6 h-6 border-2 shadow-lg",
+                                        "group-data-[hover=true]:border-primary",
+                                        //selected
+                                        "group-data-[selected=true]:ml-6",
+                                        // pressed
+                                        "group-data-[pressed=true]:w-7",
+                                        "group-data-[selected]:group-data-[pressed]:ml-4"
+                                    )
+                                }}
+                                isSelected={rememberMe}
+                                onValueChange={setRememberMe}
+                            >
+                                <div className="flex flex-col gap-1">
+                                    <p className="text-medium">Remember Me?</p>
+                                    <p className="text-tiny text-default-400">
+                                        This will keep you logged in until you log out.
+                                    </p>
+                                </div>
+                            </Switch>
+                            {error && <p className={"text-danger"}><strong>Error:</strong> {error}</p>}
+                            <Button radius={"lg"} color={"primary"} isLoading={isLoggingIn} onClick={login}>Log In</Button>
+                        </div>
+                    </CardBody>
+
+                </Card>
+
+            </div>
+            <Footer/>
+        </>
     );
 }
