@@ -64,7 +64,7 @@ export default function AccountDropdown()
                     <DropdownItem key="dashboard" href={"/app/me/dashboard"}>
                         Dashboard
                     </DropdownItem>
-                    <DropdownItem key="settings">Settings</DropdownItem>
+                    <DropdownItem key="settings" href={"/app/settings/account"}>Settings</DropdownItem>
                     <DropdownItem
                         key="new_project"
                         endContent={<FontAwesomeIcon icon={faPlus}/>}
