@@ -16,7 +16,6 @@ import Vendors from "./assets/pages/Vendors.tsx";
 import NewVendor from "./assets/pages/AddPages/NewVendor.tsx";
 import Inventory from "./assets/pages/Inventory.tsx";
 import Settings from "./assets/pages/Settings.tsx";
-import Test from "./assets/pages/Test.tsx";
 
 export const debug_mode = true;
 
@@ -61,7 +60,6 @@ export function MainContentRenderer()
             <Routes>
                 <Route>
                     <Route path="/" element={<Login/>}/>
-                    <Route path="/test" element={<Test/>}/>
                     {/*  Dashboards   */}
                     <Route path="/app/" element={<Dashboard/>}/>
                     <Route path="/app/me/dashboard" element={<Dashboard user={"me"}/>}/>
