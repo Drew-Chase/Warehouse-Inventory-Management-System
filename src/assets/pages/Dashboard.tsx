@@ -6,7 +6,8 @@ import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Footer from "../components/Footer.tsx";
 
-export default function Dashboard()
+// @ts-ignore
+export default function Dashboard({user}: { user?: string })
 {
 
     /**
