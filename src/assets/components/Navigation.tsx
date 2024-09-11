@@ -98,7 +98,7 @@ export default function Navigation()
                         <NavbarContent justify="end">
                             <NavbarItem>
                                 <Tooltip content={"Open Settings"}>
-                                    <Button className={"bg-background-L200 text-foreground-L-100 w-[2.5rem] h-[2.5rem] p-0 min-w-0 aspect-square"}>
+                                    <Button className={"bg-background-L200 text-foreground-L-100 w-[2.5rem] h-[2.5rem] p-0 min-w-0 aspect-square"} onClick={() => navigate("/app/settings")}>
                                         <GearIcon fill={"hsl(var(--nextui-foreground-L000))"}/>
                                     </Button>
                                 </Tooltip>
