@@ -15,6 +15,8 @@ import NewPurchaseOrder from "./assets/pages/AddPages/NewPurchaseOrder.tsx";
 import Vendors from "./assets/pages/Vendors.tsx";
 import NewVendor from "./assets/pages/AddPages/NewVendor.tsx";
 import Inventory from "./assets/pages/Inventory.tsx";
+import Settings from "./assets/pages/Settings.tsx";
+import Test from "./assets/pages/Test.tsx";
 
 export const debug_mode = true;
 
@@ -59,17 +61,31 @@ export function MainContentRenderer()
             <Routes>
                 <Route>
                     <Route path="/" element={<Login/>}/>
+                    <Route path="/test" element={<Test/>}/>
+                    {/*  Dashboards   */}
                     <Route path="/app/" element={<Dashboard/>}/>
+                    <Route path="/app/me/dashboard" element={<Dashboard user={"me"}/>}/>
+                    {/*  Purchases   */}
                     <Route path={"/app/purchases"} element={<Purchases/>}/>
                     <Route path={"/app/purchases/new"} element={<NewPurchaseOrder tab={"general"}/>}/>
                     <Route path={"/app/purchases/new/additional"} element={<NewPurchaseOrder tab={"additional"}/>}/>
                     <Route path={"/app/purchases/new/finalize"} element={<NewPurchaseOrder tab={"finalize"}/>}/>
+                    {/*  Vendors   */}
                     <Route path={"/app/vendors"} element={<Vendors/>}/>
                     <Route path={"/app/vendors/new"} element={<NewVendor tab={"general"}/>}/>
                     <Route path={"/app/vendors/new/contact"} element={<NewVendor tab={"contact"}/>}/>
                     <Route path={"/app/vendors/new/additional"} element={<NewVendor tab={"additional"}/>}/>
                     <Route path={"/app/vendors/new/finalize"} element={<NewVendor tab={"finalize"}/>}/>
+                    {/*  Inventory   */}
                     <Route path={"/app/inventory"} element={<Inventory/>}/>
+                    {/*  Application Settings   */}
+                    <Route path="/app/settings" element={<Settings tab={"general"}/>}/>
+                    <Route path="/app/settings/networking" element={<Settings tab={"networking"}/>}/>
+                    <Route path="/app/settings/authentication" element={<Settings tab={"authentication"}/>}/>
+                    <Route path="/app/settings/database" element={<Settings tab={"database"}/>}/>
+                    {/*  User Settings  */}
+                    <Route path="/app/settings/profile" element={<Settings tab={"profile"}/>}/>
+
                 </Route>
             </Routes>
         </NextUIProvider>
