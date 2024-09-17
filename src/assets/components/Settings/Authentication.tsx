@@ -8,7 +8,7 @@ export default function Authentication()
     return (
         <div className={"flex flex-col gap-4"}>
             <Card>
-                <CardHeader><h5>Authentication Settings</h5></CardHeader>
+                <CardHeader><h5 id="authentication">Authentication Settings</h5></CardHeader>
                 <CardBody className={"flex flex-col gap-4"}>
                     <PasswordRequirements/>
                     <PasswordResetInterval/>
