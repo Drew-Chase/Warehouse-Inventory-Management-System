@@ -5,7 +5,7 @@ export default function Profile()
     return (
         <div className={"flex flex-col gap-4"}>
             <Card>
-                <CardHeader><h5>Profile Settings</h5></CardHeader>
+                <CardHeader><h5 id="profile">Profile Settings</h5></CardHeader>
                 <CardBody>
                 </CardBody>
             </Card>
