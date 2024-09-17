@@ -23,50 +23,45 @@ export default function Settings({tab}: SettingsProps)
         if (element)
         {
             element.scrollIntoView({behavior: "smooth"});
+            setTimeout(() =>
+            {
+                navigate(`/app/settings/${tab === "general" ? "" : tab}`);
+            }, 500);
         }
     };
-
-    // useEffect(() =>
-    // {
-    //     scrollTo(tab);
-    // }, []);
 
     useEffect(() =>
     {
         const sections = ["general", "networking", "authentication", "database", "profile"];
         const sectionElements = sections.map(section => $(`#${section}`)[0]);
+        const scrollView = $("#scroll-view");
+        let lastCallTime = 0;
 
-        const observers = sectionElements.map((_, index) =>
+        scrollView.on("scroll", () =>
         {
-            return new IntersectionObserver((entries) =>
+            if (lastCallTime) clearTimeout(lastCallTime);
+            lastCallTime = setTimeout(() =>
             {
-                entries.forEach(entry =>
+                clearTimeout(lastCallTime);
+                const viewportHeight = scrollView.innerHeight() || window.innerHeight || document.documentElement.clientHeight;
+                const viewportMidpoint = viewportHeight / 2;
+                sectionElements.forEach((element, index) =>
                 {
-                    if (entry.isIntersecting)
+                    if (element)
                     {
-                        navigate(`/app/settings/${sections[index] === "general" ? "" : sections[index]}`);
+                        const entryRect = element.getBoundingClientRect();
+                        const entryMidpoint = entryRect.top + entryRect.height / 2;
+                        if (entryMidpoint <= viewportMidpoint)
+                        {
+                            navigate(`/app/settings/${sections[index] === "general" ? "" : sections[index]}`);
+                        }
                     }
+
                 });
-            }, {
-                root: null,
-                rootMargin: "10%",
-                threshold: .5
-            });
+            }, 200);
         });
 
-        sectionElements.forEach((element, index) =>
-        {
-            if (element)
-            {
-                observers[index].observe(element);
-            }
-        });
-
-        return () =>
-        {
-            observers.forEach(observer => observer.disconnect());
-        };
-    }, [navigate]);
+    }, []);
 
     return (
         <div className={"flex flex-row h-[calc(100dvh_-_85px)] mx-4 gap-4"}>
@@ -93,22 +88,12 @@ export default function Settings({tab}: SettingsProps)
                     </Tabs>
                 </CardBody>
             </Card>
-            <div id={"scroll-view"} className={"flex flex-col max-h-[calc(100dvh_-_64px)] h-screen overflow-y-auto w-full gap-4"}>
-                <div id="general">
-                    <General/>
-                </div>
-                <div id="networking">
-                    <Networking/>
-                </div>
-                <div id="authentication">
-                    <Authentication/>
-                </div>
-                <div id="database">
-                    <Database/>
-                </div>
-                <div id="profile">
-                    <Profile/>
-                </div>
+            <div id={"scroll-view"} className={"flex flex-col max-h-[calc(100dvh_-_64px)] h-screen overflow-y-auto w-full gap-4 pb-[calc(100dvh_-_175px)]"}>
+                <General/>
+                <Networking/>
+                <Authentication/>
+                <Database/>
+                <Profile/>
             </div>
         </div>
     );
