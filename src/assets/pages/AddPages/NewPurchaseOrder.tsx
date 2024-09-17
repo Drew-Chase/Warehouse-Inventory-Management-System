@@ -2,30 +2,72 @@ import {Button, Divider, Tab, Tabs} from "@nextui-org/react";
 import AddDocumentsIcon from "../../images/icons/AddDocumentsIcon.svg.tsx";
 import SaveIcon from "../../images/icons/SaveIcon.svg.tsx";
 import InformationIcon from "../../images/icons/InformationIcon.svg.tsx";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import GeneralInformation from "../../components/Purchases/New Purchase Order/GeneralInformation.tsx";
 import AdditionalInformation from "../../components/Purchases/New Purchase Order/AdditionalInformation.tsx";
 import Finalize from "../../components/Purchases/New Purchase Order/Finalize.tsx";
+import {ReactNode, useEffect, useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFileInvoice} from "@fortawesome/free-solid-svg-icons";
+import ManifestData from "../../components/Purchases/New Purchase Order/ManifestData.tsx";
 
-export default function NewPurchaseOrder({tab}: { tab: string })
+interface TabItem
+{
+    id: string;
+    title: string;
+    icon: ReactNode;
+    body: ReactNode;
+}
+
+export default function NewPurchaseOrder()
 {
     document.title = `New Purchase Order - Warehouse`;
     const navigate = useNavigate();
+    const [currentTab, setCurrentTab] = useState<string>(useParams()?.tab ?? "");
+
+    const tabs: TabItem[] = [
+        {
+            id: "",
+            title: "General Information",
+            icon: <InformationIcon size={20} fill={currentTab === "" ? "hsl(var(--nextui-primary-L000))" : undefined}/>,
+            body: <GeneralInformation/>
+        },
+        {
+            id: "manifest",
+            title: "Manifest Data",
+            icon: <FontAwesomeIcon icon={faFileInvoice} width={20} height={20} style={{height: "20px"}} color={currentTab === "manifest" ? "hsl(var(--nextui-primary-L000))" : undefined}/>,
+            body: <ManifestData/>
+        },
+        {
+            id: "additional",
+            title: "Additional Information",
+            icon: <AddDocumentsIcon size={20} fill={currentTab === "additional" ? "hsl(var(--nextui-primary-L000))" : undefined}/>,
+            body: <AdditionalInformation/>
+        },
+        {
+            id: "finalize",
+            title: "Finalize",
+            icon: <SaveIcon size={20} fill={currentTab === "finalize" ? "hsl(var(--nextui-primary-L000))" : undefined}/>,
+            body: <Finalize/>
+        }
+    ];
+
     const nextTab = () =>
     {
-        switch (tab)
+        const currentTabIndex: number = tabs.findIndex(i => i.id === currentTab);
+
+        if (currentTabIndex === -1)
         {
-            case "additional":
-                navigate("/app/purchases/new/finalize");
-                break;
-            case "finalize":
-                navigate("/app/purchases/new/finalize");
-                break;
-            default:
-                navigate("/app/purchases/new/additional");
-                break;
+            console.error(`Unable to find tab with id of '${currentTab}'`, tabs);
+            return;
         }
+
+        const nextItemIndex = currentTabIndex >= tabs.length ? 0 : currentTabIndex + 1;
+        if (nextItemIndex !== 0) setCurrentTab(tabs[nextItemIndex].id);
     };
+
+    useEffect(() => navigate(`/app/purchases/new/${currentTab}`), [currentTab]);
+
     return (
         <div className={"flex flex-row h-[calc(100dvh_-_172px)] w-screen min-h-[500px] mt-8"}>
 
@@ -38,59 +80,33 @@ export default function NewPurchaseOrder({tab}: { tab: string })
                     cursor: "!bg-background-L200",
                     tabContent: "w-full"
                 }}
-                defaultSelectedKey={tab}
-                onSelectionChange={(index) => navigate(`/app/purchases/new/${(index as string) === "general" ? "" : index}`)}
+                defaultSelectedKey={currentTab}
+                selectedKey={currentTab}
+                onSelectionChange={(index) => setCurrentTab(index as string)}
             >
-                <Tab
-                    key={"general"}
-                    title={
-                        <div className={"flex flex-row items-center text-start gap-2"}>
-                            <InformationIcon size={20} fill={tab === "general" ? "hsl(var(--nextui-primary-L000))" : undefined}/>
-                            <div className={"flex flex-col justify-start w-full p-2"}>
-                                <p className={"opacity-50 uppercase"}>step 1</p>
-                                <p className={"capitalize"} style={{color: tab === "general" ? "hsl(var(--nextui-primary-L000))" : "white"}}>General Information</p>
+                {tabs.map((tab, index) => (
+                    <Tab
+                        key={tab.id}
+                        title={
+                            <div className={"flex flex-row items-center text-start gap-2"}>
+                                {tab.icon}
+                                <div className={"flex flex-col justify-start w-full p-2"}>
+                                    <p className={"opacity-50 uppercase"}>step {index + 1}</p>
+                                    <p className={"capitalize"} style={{color: currentTab === tab.id ? "hsl(var(--nextui-primary-L000))" : "white"}}>{tab.title}</p>
+                                </div>
                             </div>
-                        </div>
-                    }
-                >
-                    <GeneralInformation/>
-                </Tab>
-                <Tab
-                    key={"additional"}
-                    title={
-                        <div className={"flex flex-row items-center text-start gap-2"}>
-                            <AddDocumentsIcon size={20} fill={tab === "additional" ? "hsl(var(--nextui-primary-L000))" : undefined}/>
-                            <div className={"flex flex-col justify-start w-full p-2"}>
-                                <p className={"opacity-50 uppercase"}>step 2</p>
-                                <p className={"capitalize"} style={{color: tab === "additional" ? "hsl(var(--nextui-primary-L000))" : "white"}}>Additional Information</p>
-                            </div>
-                        </div>
-                    }
-                >
-                    <AdditionalInformation/>
-                </Tab>
-                <Tab
-                    key={"finalize"}
-                    title={
-                        <div className={"flex flex-row items-center text-start gap-2"}>
-                            <SaveIcon size={20} fill={tab === "finalize" ? "hsl(var(--nextui-primary-L000))" : undefined}/>
-                            <div className={"flex flex-col justify-start w-full p-2"}>
-                                <p className={"opacity-50 uppercase w-full"}>step 3</p>
-                                <p className={"capitalize w-full"} style={{color: tab === "finalize" ? "hsl(var(--nextui-primary-L000))" : "white"}}>Finalize</p>
-                            </div>
-                        </div>
-                    }
-                >
-                    <Finalize/>
-                </Tab>
-
+                        }
+                    >
+                        {tab.body}
+                    </Tab>
+                ))}
             </Tabs>
 
-            <div className={"flex flex-row gap-4 items-center justify-end p-4 pr-8 fixed bottom-0 left-0 right-0 bg-background-L-100 h-[100px] border-t-3 border-t-background-L200 shadow-lg"}>
+            <div className={"flex flex-row gap-4 items-center justify-end p-4 pr-8 fixed bottom-0 left-0 right-0 bg-background-L-100 h-[100px] border-t-3 border-t-background-L200 shadow-lg z-[100]"}>
                 <Button variant={"ghost"} color={"primary"} size={"lg"}> Save as Draft </Button>
                 <Divider orientation={"vertical"}/>
-                <Button color={"primary"} size={"lg"} onClick={nextTab}> {tab !== "finalize" ? "Next" : "Finish"} </Button>
+                <Button color={"primary"} size={"lg"} onClick={nextTab}> {currentTab !== "finalize" ? "Next" : "Finish"} </Button>
             </div>
         </div>
     );
-}
+};
