@@ -23,7 +23,8 @@ export default function OrderStatusComponent(props: OrderStatusComponentProps)
             <p className={"font-medium text-medium opacity-70 uppercase"}>order status</p>
             <RadioGroup
                 classNames={{
-                    wrapper: "grid grid-rows-2 grid-flow-col"
+                    // wrapper: "grid grid-rows-2 grid-flow-col"
+                    wrapper: "flex flex-row flex-wrap gap-2"
                 }}
                 value={selected}
                 onValueChange={key =>
@@ -58,7 +59,8 @@ const CustomRadio = (props: CustomRadioProps) =>
                 base: cn(
                     "flex flex-row m-0 bg-background-L200 hover:bg-background-L000 items-center w-full",
                     "cursor-pointer rounded-lg gap-4 px-1 py-3 border-2 border-foreground-L-200/20 truncate",
-                    "dark:data-[selected=true]:border-primary text-nowrap min-w-[150px] relative dark:data-[selected=true]:bg-primary-L000/5 data-[selected=true]:bg-primary-L000"
+                    "dark:data-[selected=true]:border-primary text-nowrap relative dark:data-[selected=true]:bg-primary-L000/5 data-[selected=true]:bg-primary-L000",
+                    "min-w-[130px] w-[calc(50%_-_4px)] max-w-[100vw] grow shrink"
                 ),
                 label: "flex flex-row w-full",
                 wrapper: "hidden",
