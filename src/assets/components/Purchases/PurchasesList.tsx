@@ -1,16 +1,14 @@
-import {Button, cn, Divider, Input, Pagination, ScrollShadow} from "@nextui-org/react";
+import {Button, cn, Divider, Input, Link, Pagination, ScrollShadow} from "@nextui-org/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import SortByDropdown from "../SortByDropdown.tsx";
 import ViewSelector from "../ViewSelector.tsx";
 import PurchaseOrderItem from "./PurchaseOrderItem.tsx";
-import {useNavigate} from "react-router-dom";
 import $ from "jquery";
 
 
 export default function PurchasesList()
 {
-    const navigate = useNavigate();
     return (
         <div className={"flex flex-col w-full mx-4"}>
             <div className="flex flex-row w-full items-center gap-4">
@@ -47,7 +45,7 @@ export default function PurchasesList()
                         ]
                     }
                 />
-                <Button color={"primary"} className={"font-medium h-12"} onClick={() => navigate("/app/purchases/new")}>New Purchase</Button>
+                <Button as={Link} color={"primary"} className={"font-medium h-12 min-w-[100px] grow shrink"} href={"/app/purchases/new"}>New Purchase</Button>
             </div>
             <ScrollShadow id={"purchase-list"} size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
                 {Array.from({length: 10}).map(() => (
