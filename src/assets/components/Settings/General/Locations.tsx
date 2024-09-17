@@ -19,7 +19,18 @@ export default function Locations()
     const [isAdding, setIsAdding] = useState(false);
     const [deleteLocation, setDeleteLocation] = useState<WarehouseLocation | null>(null);
     const [editLocation, setEditLocation] = useState<WarehouseLocation | null>(null);
-    const [items, setItems] = useState<WarehouseLocation[]>([]);
+    const [items, setItems] = useState<WarehouseLocation[]>([
+        {
+            id: 1,
+            name: "Warehouse A",
+            address: "1234 Example St, City, State, ZIP"
+        },
+        {
+            id: 2,
+            name: "Warehouse B",
+            address: "5678 Example St, City, State, ZIP"
+        }
+    ]);
 
 
     useEffect(() =>
