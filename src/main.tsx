@@ -65,9 +65,7 @@ export function MainContentRenderer()
                     <Route path="/app/me/dashboard" element={<Dashboard user={"me"}/>}/>
                     {/*  Purchases   */}
                     <Route path={"/app/purchases"} element={<Purchases/>}/>
-                    <Route path={"/app/purchases/new"} element={<NewPurchaseOrder tab={"general"}/>}/>
-                    <Route path={"/app/purchases/new/additional"} element={<NewPurchaseOrder tab={"additional"}/>}/>
-                    <Route path={"/app/purchases/new/finalize"} element={<NewPurchaseOrder tab={"finalize"}/>}/>
+                    <Route path={"/app/purchases/new/:tab?"} element={<NewPurchaseOrder/>}/>
                     {/*  Vendors   */}
                     <Route path={"/app/vendors"} element={<Vendors/>}/>
                     <Route path={"/app/vendors/new"} element={<NewVendor tab={"general"}/>}/>
