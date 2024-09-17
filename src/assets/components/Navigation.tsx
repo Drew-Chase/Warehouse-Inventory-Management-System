@@ -163,7 +163,9 @@ export default function Navigation()
                             </NavbarItem>
                         </NavbarContent>
 
-                        <NavbarMenu>
+                        <NavbarMenu
+                            className={"sm:hidden"}
+                        >
                             {menuItems}
                         </NavbarMenu>
                     </>
