@@ -1,4 +1,4 @@
-import ExpandedSwitch from "../../Extends/ExpandedSwitch.tsx";
+import ExtendedSwitch from "../../Extends/ExtendedSwitch.tsx";
 import {useState} from "react";
 import {User} from "../../../ts/Authentication.ts";
 import ExtendedListbox from "../../Extends/ExtendedListbox.tsx";
@@ -9,9 +9,13 @@ import {WarehouseLocation} from "../General/Locations.tsx";
 
 export default function UsersList()
 {
+    // @ts-ignore
     const [isAdding, setIsAdding] = useState(false);
+    // @ts-ignore
     const [deleteUser, setDeleteUser] = useState<WarehouseLocation | null>(null);
+    // @ts-ignore
     const [editUser, setEditUser] = useState<WarehouseLocation | null>(null);
+    // @ts-ignore
     const [users, setUsers] = useState<User[]>([
         {
             id: 1,
@@ -40,7 +44,7 @@ export default function UsersList()
                     <Button color={"primary"} variant={"ghost"} onClick={() => setIsAdding(true)}><FontAwesomeIcon icon={faPlus}/></Button>
                 </div>
             </div>
-            <ExpandedSwitch
+            <ExtendedSwitch
                 label={"Open Registration"}
                 description={"Allow users to register themselves without an invite code. This is not recommended for public-facing applications."}
             />
