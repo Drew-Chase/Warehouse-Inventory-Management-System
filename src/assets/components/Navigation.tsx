@@ -22,6 +22,11 @@ interface Page
 
 export default function Navigation()
 {
+
+    if (window.location.pathname.startsWith("/print"))
+    {
+        return;
+    }
     const navigate = useNavigate();
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -61,6 +66,7 @@ export default function Navigation()
         return (
             <NavbarMenuItem key={`${item}-${index}`}>
                 <Button
+                    tabIndex={-1}
                     href={item.url}
                     aria-current={isCurrentPage}
                     size="lg"
