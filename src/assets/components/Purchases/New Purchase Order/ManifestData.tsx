@@ -36,6 +36,11 @@ export default function ManifestData()
         $("#manifest-upc-input").trigger("focus");
     };
 
+    const removeManifestItem = (index: number) =>
+    {
+        setManifestItems(manifestItems.filter((_, i) => i !== index));
+    };
+
     const handleKeyUp = (e: KeyboardEvent) =>
     {
         if (e.key === "Enter") addManifestItem();
@@ -65,7 +70,7 @@ export default function ManifestData()
                             <p className={"w-full"}>{item.quantity}</p>
                             <p className={"w-full"}>{Intl.NumberFormat("en-us", {currency: "USD", style: "currency"}).format(item.cost)}</p>
                             <Tooltip content={"Remove item"} color={"danger"}>
-                                <Button color={"danger"} variant={"light"}><FontAwesomeIcon icon={faTrash}/></Button>
+                                <Button color={"danger"} variant={"light"} onClick={() => removeManifestItem(index)}><FontAwesomeIcon icon={faTrash}/></Button>
                             </Tooltip>
                         </div>
                     )) as any}
