@@ -47,6 +47,7 @@ export default function InventoryList()
             <ScrollShadow id={"inv-list"} size={20} className={"flex flex-col gap-4 mt-4 max-h-[calc(100vh_-_140px)] overflow-y-auto pr-4"}>
                 {Array.from({length: 25}).map(() => (
                     <InventoryItem
+                        id={"LIS-44353"}
                         name={"Apples"}
                         price={Math.floor(Math.random() * 100_000)}
                         quantity={Math.floor(Math.random() * 100)}
