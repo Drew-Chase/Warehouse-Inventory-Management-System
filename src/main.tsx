@@ -16,6 +16,7 @@ import Vendors from "./assets/pages/Vendors.tsx";
 import NewVendor from "./assets/pages/AddPages/NewVendor.tsx";
 import Inventory from "./assets/pages/Inventory.tsx";
 import Settings from "./assets/pages/Settings.tsx";
+import SplitMachine, {PrintSplitMachineData} from "./assets/pages/SplitMachine.tsx";
 
 export const debug_mode = true;
 
@@ -74,6 +75,8 @@ export function MainContentRenderer()
                     <Route path={"/app/vendors/new/finalize"} element={<NewVendor tab={"finalize"}/>}/>
                     {/*  Inventory   */}
                     <Route path={"/app/inventory"} element={<Inventory/>}/>
+                    <Route path={"/app/inventory/split/:id"} element={<SplitMachine/>}/>
+                    <Route path={"/print/inventory/split/:id"} element={<PrintSplitMachineData />}/>
                     {/*  Application Settings   */}
                     <Route path="/app/settings" element={<Settings tab={"general"}/>}/>
                     <Route path="/app/settings/networking" element={<Settings tab={"networking"}/>}/>
