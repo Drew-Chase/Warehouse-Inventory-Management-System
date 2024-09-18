@@ -4,6 +4,7 @@ import {faEdit, faEllipsisH, faEye, faTrash} from "@fortawesome/free-solid-svg-i
 
 export interface InventoryItemProps
 {
+    id: string
     name: string;
     category: string | string[];
     poCount: number;
@@ -79,6 +80,12 @@ export default function InventoryItem(props: InventoryItemProps)
                             }}
                         >
                             <DropdownSection title={"Actions"} showDivider>
+                                <DropdownItem
+                                    href={`/app/inventory/split/${props.id}`}
+                                    endContent={<FontAwesomeIcon className={"text-foreground/50"} icon={faEye}/>}
+                                >
+                                    Split
+                                </DropdownItem>
                                 <DropdownItem
                                     endContent={<FontAwesomeIcon className={"text-foreground/50"} icon={faEye}/>}
                                 >
