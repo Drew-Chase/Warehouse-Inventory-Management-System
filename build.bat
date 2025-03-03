@@ -1,0 +1,1 @@
+pwp -j 192.168.21.209 -u administrator -a C:\Users\drew.chase\.ssh\mss-sshkey_ossh.key -s warehouse-app --binary warehouse --build-command "npm run build" --build
