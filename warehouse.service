@@ -1,0 +1,15 @@
+[Unit]
+Description=Warehouse App
+StartLimitIntervalSec=0
+After=network.target
+
+[Service]
+Type=exec
+Restart=always
+RestartSec=1
+User=administrator
+WorkingDirectory=/www/wwwroot/warehouse.mardens.com/
+ExecStart=/home/administrator/.local/bin/warehouse
+
+[Install]
+WantedBy=multi-user.target
