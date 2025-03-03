@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="e543e8d5-d482-4355-9774-7f24d965c2c3" name="Production" url="http://warehouse.mardens.com">
-        <fileTransfer host="warehouse.mardens.com" port="21">
+        <fileTransfer rootFolder="/www/wwwroot/warehouse.mardens.com" accessType="SFTP" host="pricing-new.mardens.com" port="22" sshConfigId="e326df71-6237-44f7-b51e-20b6c509f360" sshConfig="administrator@pricing-new.mardens.com:22 key" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
