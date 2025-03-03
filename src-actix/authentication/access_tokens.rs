@@ -1,6 +1,6 @@
-use crate::create_db_connection;
 use rand::Rng;
 use serde::Serialize;
+use crate::authentication::create_db_connection;
 
 #[derive(Debug, Serialize)]
 pub struct AccessToken {

@@ -1,7 +1,7 @@
-use crate::access_tokens::use_access_token;
-use crate::data::{PublicUser, PublicUsersList, UserLogin, UserRegistration, UserResponse};
-use crate::validation::{generate_token, validate_token};
-use crate::{create_db_connection, get_user_by_username};
+use crate::authentication::access_tokens::use_access_token;
+use crate::authentication::{create_db_connection, get_user_by_username};
+use crate::authentication::data::{PublicUser, PublicUsersList, UserLogin, UserRegistration, UserResponse};
+use crate::authentication::validation::{generate_token, validate_token};
 
 pub fn create_user(user: UserRegistration, is_admin: bool) -> Result<(), String> {
     if !is_admin {

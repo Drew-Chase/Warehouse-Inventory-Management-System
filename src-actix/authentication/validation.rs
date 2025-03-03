@@ -1,5 +1,5 @@
-use crate::data::{Token, User};
-use crate::get_user_by_username;
+use crate::authentication::data::{Token, User};
+use crate::authentication::get_user_by_username;
 use base64::prelude::BASE64_STANDARD;
 use base64::Engine;
 use serde_json::json;
